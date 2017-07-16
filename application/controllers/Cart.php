@@ -13,11 +13,25 @@ class Cart extends RR_Controller {
 	   echo json_encode($data);
 	}
 
+	public function remove($rowid){
+		$data = $this->Cart->update($rowid,0);
+	 	echo json_encode($data);
+	}
 
-	public function checkout($security=null){
-		ep($this->cart->contents());
+
+	public function index($security=null){
+		$this->layout = 'layout/multi_page';
+
+		if($this->cart->total_items() > 0) {
+			$module = $this->view('cart/index');
+		} else {
+			$module = $this->view('cart/empty');
+		}
+
+		echo $this->show_main($module);
+		//ep($this->cart->contents());
 		/*
-		$this->layout = 'multi_page';
+
 		$this->css_view = array('bootstrap.min2','site/main');
 		if($security){
 			$lateCheckout = $this->_latecheckout($security);
@@ -36,6 +50,15 @@ class Cart extends RR_Controller {
 		$module = $this->view('pagos/checkout', $data);
 		$this->_show($module);
 		*/
+	}
+
+
+	public function checkout($security=null){
+		$this->layout = 'layout/multi_page';
+		$module = $this->view('cart/checkout');
+		echo $this->show_main($module);
+
+
 	}
 	/*
 
@@ -111,10 +134,7 @@ class Cart extends RR_Controller {
 		$this->_show($module);
 	}
 
-	public function remove($rowid){
-		$data = $this->Cart->update($rowid,0);
-		 echo json_encode($data);
-	}
+
 
 	public function do_gateway(){
 		$data = $this->Cart->set_gateway();

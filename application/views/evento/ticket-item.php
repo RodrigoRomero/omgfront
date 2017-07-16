@@ -38,7 +38,7 @@ if(count($ticket_description) >0 ){
 }
 ?>
 
-<div class="pricing-box pricing-extended bottommargin clearfix" style="min-height: 295px">
+<div class="pricing-box pricing-extended bottommargin clearfix" style="min-height: 350px">
 
 	<div class="pricing-desc">
 		<div class="pricing-title">
@@ -91,6 +91,7 @@ if(count($ticket_description) >0 ){
 		<div class="pricing-action">
 			<?php if($item->agotadas) { ?>
 			<?php } else { ?>
+				<p>Seleccione Cantidad Entradas</p>
 				<input class="jRange" name="quantity" data-max="<?php echo $max_qty?>" data-min="<?php echo $min_qty ?>" data-steps="<?php echo $steps ?>" />
 				<input type="submit" value="Comprar"  class="button button-3d button-xlarge btn-block nomargin" onclick="validateForm('<?php echo $form_name ?>')" />
 

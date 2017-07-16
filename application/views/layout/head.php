@@ -9,7 +9,10 @@ $metas = array(
 
 echo meta($metas);
 ?>
+<script>
+_base_url = "<?php echo config_item('base_url')?>"
 
+</script>
 <!-- Stylesheets
 ============================================= -->
 <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />

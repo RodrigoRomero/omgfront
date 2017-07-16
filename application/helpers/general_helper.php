@@ -132,7 +132,7 @@ function js_asset($asset_name, $module_name = NULL)
 
 }
 
-		
+
 
 /**
 
@@ -199,34 +199,25 @@ function _parse_asset_html($attributes = NULL)
 function _other_asset_url($asset_name, $module_name = NULL, $asset_type = NULL){
 
 		if($asset_type=="css" && $asset_name=="style_lang.css"){
-
 				$asset_name = "style.php?file=$asset_name&lang=".config_item("language");
-
 		}
 
 	$obj =& get_instance();
-
 	$base_url        = $obj->config->item('base_url');
-
 	$asset_location  = $base_url;
-
 	$asset_location .= "assets/".$asset_type;
 
 	if(!empty($module_name)):
-
 		$asset_location .= '/'.$module_name;
-
 	endif;
-
 		$asset_location .= '/'.$asset_name;
-
 	return $asset_location;
 
 }
 
- 
 
-/** 
+
+/**
 
 * Last Query
 
@@ -238,9 +229,9 @@ function _other_asset_url($asset_name, $module_name = NULL, $asset_type = NULL){
 
 
 
-function lq(){  
+function lq(){
 
-		$CI   =& get_instance();    
+		$CI   =& get_instance();
 
 		echo $CI->db->last_query();
 
@@ -254,13 +245,13 @@ function lq(){
 
 function replace_code($body, $replace){
 
-		preg_match_all("/({%)(.*?)(%})/", $body, $matches, PREG_SET_ORDER);  
+		preg_match_all("/({%)(.*?)(%})/", $body, $matches, PREG_SET_ORDER);
 
 		foreach ($matches as $k=>$val) {
 
 				$val1 = $val[0];
 
-				$val2 = $val[2];          
+				$val2 = $val[2];
 
 				$body = str_replace($val1,  $replace[$val2], $body);
 
@@ -282,15 +273,15 @@ function replace_code($body, $replace){
 
  * @param $dump bool TRUE/FALSE
 
- */ 
+ */
 
 
 
-function ep($arr, $dump=false){    
+function ep($arr, $dump=false){
 
 		echo "<pre>";
 
-		if($dump) {var_dump($arr);} else { print_r($arr);}        
+		if($dump) {var_dump($arr);} else { print_r($arr);}
 
 		echo "</pre>";
 
@@ -308,7 +299,7 @@ function ep($arr, $dump=false){
 
  * @return bool TRUE/FALSE
 
- */ 
+ */
 
 function checkParam($param){
 
@@ -320,7 +311,7 @@ function checkParam($param){
 
 		}
 
-		
+
 
 		return $return;
 
@@ -344,7 +335,7 @@ function quitarAcentos($text,$cab=0,$snan=0,$sub='',$cr='') {
 
 		$text = htmlentities($text, ENT_QUOTES, 'UTF-8');
 
-		
+
 
 		$patron = array (
 
@@ -368,7 +359,7 @@ function quitarAcentos($text,$cab=0,$snan=0,$sub='',$cr='') {
 
 		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 
-		
+
 
 		if (($snan>1)&&($cr!='')) {
 
@@ -388,7 +379,7 @@ function quitarAcentos($text,$cab=0,$snan=0,$sub='',$cr='') {
 
 		else if ($cab==2) $text = strtolower($text);
 
-		
+
 
 		return $text;
 
@@ -402,7 +393,7 @@ function set_url($params=array()){
 
 		$segs = $CI->uri->uri_to_assoc(1);
 
-	 
+
 
 		foreach($params as $key=>$value){
 
@@ -420,15 +411,15 @@ function set_url($params=array()){
 
 }
 
-		
+
 
 function getFechasSQLFicha($fecha_revision, $fecha_proxima_revision, $hora_revision){
 
-		#MES / DIA / AÑO    
+		#MES / DIA / AÑO
 
 		$fecha_revision = explode("/",$fecha_revision);
 
-				
+
 
 		switch($fecha_proxima_revision){
 
@@ -438,7 +429,7 @@ function getFechasSQLFicha($fecha_revision, $fecha_proxima_revision, $hora_revis
 
 						break;
 
-				
+
 
 				case '+2':
 
@@ -446,7 +437,7 @@ function getFechasSQLFicha($fecha_revision, $fecha_proxima_revision, $hora_revis
 
 						break;
 
-						
+
 
 				case '+3':
 
@@ -454,7 +445,7 @@ function getFechasSQLFicha($fecha_revision, $fecha_proxima_revision, $hora_revis
 
 						break;
 
-						
+
 
 				case '+4':
 
@@ -462,7 +453,7 @@ function getFechasSQLFicha($fecha_revision, $fecha_proxima_revision, $hora_revis
 
 						break;
 
-				
+
 
 				default:
 
@@ -474,19 +465,19 @@ function getFechasSQLFicha($fecha_revision, $fecha_proxima_revision, $hora_revis
 
 		}
 
-		
 
-		
+
+
 
 		$fecha_revision         = mktime(0,0,0,$fecha_revision[1],$fecha_revision[0],$fecha_revision[2]);
 
-		
+
 
 		$fecha_revison = date('Y-m-d',$fecha_revision);
 
 		$fecha_proxima_revision = date('Y-m-d',$fecha_proxima_revision);
 
-		
+
 
 		return array('fecha_revision'=>$fecha_revison.' '.$hora_revision, 'fecha_proxima_revision'=>$fecha_proxima_revision);
 
@@ -534,7 +525,7 @@ function anchor_js($title = '', $attributes = ''){
 
 		$title = (string) $title;
 
-				$uri = 'javascript:void(0)';	
+				$uri = 'javascript:void(0)';
 
 
 
@@ -589,13 +580,13 @@ function isJson($string) {
 
 
 
-function getMes($mes){   
+function getMes($mes){
 
 		$meses = array('Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
 
 		return $meses[$mes-1];
 
-} 
+}
 
  function SpanishDate($FechaStamp){
 	 $FechaStamp = strtotime($FechaStamp);
@@ -603,7 +594,7 @@ function getMes($mes){
 	 $mes = date('n',$FechaStamp);
 	 $dia = date('d',$FechaStamp);
 	 $hora = date('H:i A',$FechaStamp);
-	
+
 	 $diasemana = date('w',$FechaStamp);
 	 $diassemanaN= array("Domingo","Lunes","Martes","Miércoles",
 									"Jueves","Viernes","Sábado");

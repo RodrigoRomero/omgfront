@@ -2,9 +2,21 @@ $(document).ready(function() {
 
 });
 
+function validateCupon(){
+	if(jQuery('input[name=cupon]').length>0){
+        val = jQuery('input[name=cupon]').val();
+        if(val.length>0){
+            ajaxUrl = _base_url+'cupons/validate_cupon/'+val;
+            frm_send('none', ajaxUrl,'xxx')
+        }
+    }
+}
+
 
 function validateForm(form) {
+
 	if(typeof form == "string") e = $('#'+form);
+
 	if($("select[id*=right]")){
 		$("select[id*=right]").each(function(n,el){
 			var id = $(el).attr('id');
@@ -19,7 +31,7 @@ function validateForm(form) {
 		submitHandler: function () {
 			frm_send($('#' + form));
 		},
-		errorClass: "help-inline",
+		errorClass: "text-danger",
 		errorElement: "span",
 		onblur: false,
 		onkeyup: false,
@@ -57,8 +69,6 @@ function validateForm(form) {
 		},
 		invalidHandler: function(form, validator) {
 
-  //   console.log($(validator.errorList[0].element).offset())
-
 		if (!validator.numberOfInvalids())
 			return;
 		$('html, body').animate({
@@ -67,6 +77,29 @@ function validateForm(form) {
 		},  1000);
 	}
 	});
+
+}
+
+
+function clear_form_elements() {
+    $(window).find(':input').each(function() {
+
+        switch(this.type) {
+            case 'password':
+            case 'select-multiple':
+            case 'select-one':
+            case 'text':
+            case 'textarea':
+                $(this).val('');
+                break;
+
+            case 'checkbox':
+            case 'radio':
+                this.checked = false;
+
+        }
+
+    });
 
 }
 
@@ -257,4 +290,45 @@ function showNotify(data){
 
 			return false;
 
+}
+
+function appendFormMessagesModal(data){
+    console.log(data);
+    if(data.success==true){
+        clear_form_elements();
+    }
+    open_modal(data);
+}
+
+
+function open_modal(data){
+    var dialog = $("#modal");
+    if(!exists(('#modal'))) {
+        dialog = $('<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"></div>').appendTo('body');
+    }
+
+    dialog.html(data.html).modal();
+
+    if(data.modal_redirect){
+
+        $('#modal').on('hide.bs.modal', function () {
+
+            window.location.href = data.modal_redirect
+
+        })
+
+    }
+
+}
+
+
+function removeFromCart(e){
+	ajaxUrl = _base_url+'cart/remove/'+e;
+	frm_send('none', ajaxUrl,'xxx')
+}
+
+
+function reloadCart(data){
+    $(".jFullCart").empty().html(data.html.fullcart);
+    $(".jResumeCart").empty().html(data.html.resume);
 }

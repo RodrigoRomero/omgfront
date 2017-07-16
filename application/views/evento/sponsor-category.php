@@ -10,7 +10,7 @@
 	echo heading($item->nombre, ($position))
 	?>
 
-	<div class="masonry-thumbs col-6" data-big="1"  data-lightbox="gallery">
+	<div class="masonry-thumbs col-6"  data-lightbox="gallery">
 		<?php foreach ($sponsors as $sponsor){
 			$this->load->view('evento/sponsor-items', ['item'=>$sponsor]);
 		}

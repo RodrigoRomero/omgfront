@@ -1683,11 +1683,19 @@ body:not(.device-sm):not(.device-xs):not(.device-xxs) #primary-menu.style-2.cent
 #top-search,
 #top-cart,
 #side-panel-trigger,
+#top-links,
 #top-account {
 	float: right;
 	margin: 40px 0 40px 15px;
 }
 
+#top-links a {
+	color: #444;
+}
+
+#top-links a:hover {
+color: #1ABC9C
+}
 #top-cart { position: relative; }
 
 #top-search a,
@@ -2008,7 +2016,8 @@ body:not(.device-sm):not(.device-xs):not(.device-xxs) #header.transparent-header
 }
 
 #top-search,
-#top-cart {
+#top-cart,
+#top-links {
 	-webkit-transition: margin .4s ease, opacity .3s ease;
 	-o-transition: margin .4s ease, opacity .3s ease;
 	transition: margin .4s ease, opacity .3s ease;
@@ -2018,6 +2027,7 @@ body:not(.top-search-open) #header-wrap #logo,
 body:not(.top-search-open) #primary-menu > ul,
 body:not(.top-search-open) #primary-menu > .container > ul,
 body:not(.top-search-open) #top-cart,
+body:not(.top-search-open) #top-links,
 body:not(.top-search-open) #side-panel-trigger,
 body:not(.top-search-open) #top-account {
 	opacity: 1;
@@ -2030,6 +2040,7 @@ body.top-search-open #header-wrap #logo,
 body.top-search-open #primary-menu > ul,
 body.top-search-open #primary-menu > .container > ul,
 body.top-search-open #top-cart,
+body.top-search-open #top-links,
 body.top-search-open #side-panel-trigger,
 body.top-search-open #top-account { opacity: 0; }
 
@@ -2069,6 +2080,7 @@ body.top-search-open #top-account { opacity: 0; }
 
 #header.sticky-header:not(.static-sticky) #top-search,
 #header.sticky-header:not(.static-sticky) #top-cart,
+#header.sticky-header:not(.static-sticky) #top-links,
 #header.sticky-header:not(.static-sticky) #side-panel-trigger {
 	margin-top: 20px !important;
 	margin-bottom: 20px !important;

@@ -44,7 +44,7 @@ class cart_mod extends RR_Model {
 
 
 	public function add($sku='',$name='',$price='',$qty='', $modal=true) {
-		$this->cart->destroy();
+		//$this->cart->destroy();
 		$options = [];
 
 		$name  = ($name) ? $name : filter_input(INPUT_POST,'ticket_name');
@@ -100,13 +100,16 @@ class cart_mod extends RR_Model {
 
 			if($cart_product_id){
 				if($modal){
+					$success = 'true';
+            		$responseType = 'function';
+		            $function     = 'appendFormMessagesModal';
+		            $messages     = $this->view('alerts/modal_alert',
+		            	['texto'	=> 'La(s) entrada(s) '. $ticket->nombre.' se ha(n) agregado a su carrito.',
+		            	 'title'	=> $this->evento->nombre,
+		            	 'link' 	=> base_url('cart'),
+		            	 'class_type'=>'error']);
+		            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
 
-					$success      = true;
-					$responseType = 'function';
-					$function     = 'showNotify';
-					$message = 'La entrada seleccionada se ha agregado exitosamente. <a href="'.base_url('cart/checkout').'">Click aqui</> para completar la inscripción;';
-					$components   = ['position'=> 'bottom-full-width', 'type'=> 'success', 'message'=>$message, 'time'=>5000, 'close'=>true];
-					$data = array('success' =>$success,'responseType'=>$responseType, 'response'=>$components, 'value'=>$function);
 				} else {
 					return $cart_product_id;
 				}
@@ -117,7 +120,22 @@ class cart_mod extends RR_Model {
 		}
 		catch(Exception $error)
 		{
+
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=> $this->evento->nombre,
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+
 			#TODO LOG
+			/*
 			$error_code_id = $error->getCode();
 			$message = $this->error_codes[$error_code_id];
 			$success      = true;
@@ -125,11 +143,38 @@ class cart_mod extends RR_Model {
 			$function     = 'showNotify';
 			$components   = ['position'=> 'bottom-full-width', 'type'=> 'error', 'message'=>$error->getMessage(), 'time'=>5000, 'close'=>true];
 			$data = array('success' =>$success,'responseType'=>$responseType, 'response'=>$components, 'value'=>$function);
+			*/
 
 		}
 
 		return $data;
 
+
+	}
+
+	public function update($rowId, $value){
+		$data = array(
+				'rowid' => $rowId,
+				'qty'   => $value,
+			);
+
+		if($this->cart->update($data) && count($this->cart->contents())>0){
+			$success     = true;
+			$responseType = 'function';
+			$function = 'reloadCart';
+			$html = ['fullcart' => $this->view('cart/detail'),
+					 'resume'	=> $this->view('cart/resume')
+					 ];
+			$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
+
+		} else {
+			$success     = true;
+			$responseType = 'redirect';
+			$url     = base_url();
+
+			$data = array('success' =>$success,'responseType'=>$responseType, 'value'=>$url);
+		}
+		 return $data;
 
 	}
 
@@ -214,29 +259,7 @@ class cart_mod extends RR_Model {
 
 
 
-	public function update($rowId, $value){
-		$data = array(
-				'rowid' => $rowId,
-				'qty'   => $value,
-			);
 
-		if($this->cart->update($data) && count($this->cart->contents())>0){
-			$success     = true;
-			$responseType = 'function';
-			$function = 'reloadCart';
-			$html = $this->view('pagos/cart', array('param'=>'checkout'));
-			$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
-
-		} else {
-			$success     = true;
-			$responseType = 'function';
-			$function     = 'appendFormMessagesModal';
-			$messages     = $this->view('alerts/modal_alerts', array('texto'=>'<li>No posee articulos seleccionados</li>', 'title'=>$this->evento_name, 'class_type'=>'info'));
-			$data = array('success' =>$success,'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function, 'modal_redirect'=>lang_url(''));
-		}
-		 return $data;
-
-	}
 
 
 	public function addCupon($c,$ammount,$description){
