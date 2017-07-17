@@ -195,6 +195,46 @@ class cart_mod extends RR_Model {
 		return $this->db->get_where('tickets',array('sku'=>$sku, 'evento_id'=>$this->evento->id))->row();
 	}
 
+	public function setPayment(){
+
+
+		$success = 'false';
+		$config = array();
+		$config[1] = array('field'=>'medio_pago', 'label'=>'Medio de Pago', 'rules'=>'trim|required');
+
+		$this->form_validation->set_rules($config);
+
+		try {
+			if($this->form_validation->run()==FALSE){
+				$this->form_validation->set_error_delimiters('', '<br/>');
+				$errors = validation_errors();
+				throw new Exception($errors, 1);
+			}
+
+			$medio_pago = filter_input(INPUT_POST,'medio_pago');
+			set_session('cart_medio_pago',$medio_pago, false);
+			$success = true;
+			$responseType = 'redirect';
+			$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('cart/checkout'));
+
+		} catch (Exception $error) {
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Cupones',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+		}
+
+		return $data;
+	}
+
 /*
 
 

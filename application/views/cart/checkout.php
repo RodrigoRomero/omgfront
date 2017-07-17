@@ -15,13 +15,11 @@
 		<div class="col-md-6">
 			<div class="table-responsive">
 				<h4>Resumen de la compra</h4>
-				<?php $this->load->view('cart/resume',['proceedToCheckout' => false]);	?>
+				<?php $this->load->view('cart/resume');	?>
 			</div>
-			<?php $this->load->view('cart/gateways'); ?>
-
+			<h4>Tu Medio de Pago</h4>
+			<?php $this->load->view('cart/gateways', ['proceedToCheckout' => true, 'show_options' => false]); ?>
 
 		</div>
 	</div>
-
-
 </div>

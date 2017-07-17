@@ -21,13 +21,15 @@ abstract class RR_Controller extends CI_Controller {
 	protected $module_title;
 	protected $layout     = 'layout/one_page';
 
-	protected $css_layout = array('bootstrap', 'style', 'swiper', 'dark', 'font-icons', 'animate', 'magnific-popup', 'responsive', 'pricing-table', 'ion.rangeslider');
+	protected $css_layout = array('bootstrap', 'style', 'swiper', 'dark', 'font-icons', 'animate', 'magnific-popup', 'responsive', 'pricing-table', 'ion.rangeslider','components/radio-checkbox');
 	protected $css_view   = array();
 
-	protected $js_layout  = array('jquery','plugins', 'functions', 'rangeslider.min', 'main');
+	protected $js_layout  = array('jquery','modernizr','plugins', 'functions', 'rangeslider.min', 'keeper', 'main');
 	protected $js_view    = array();
 
-	protected $widget_layout = array('validate'=>array('js'=>array('jquery.validate','messages_es')));
+	protected $widget_layout = array('validate'=>array('js'=>array('jquery.validate','messages_es')),
+									 'datepicker'=>array('js'=>array('datepicker'), 'css'=> array('datepicker'))
+									);
 	protected $widget_view  = array();
 	protected $class;
 

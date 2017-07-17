@@ -25,7 +25,7 @@
 
 								<div class="col_full nobottommargin">
 
-									<button class="button button-3d nomargin" id="login-form-submit"  onclick="validateForm('<?php echo $form_name ?>')">Ingresar</button>
+									<button class="button button-3d" id="login-form-submit"  onclick="validateForm('<?php echo $form_name ?>')">Ingresar</button>
 
 								</div>
 

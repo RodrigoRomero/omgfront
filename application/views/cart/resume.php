@@ -25,12 +25,5 @@
 				<span class="amount color lead"><strong>$ <?php echo number_format($this->cart->total(), 2,",",".") ?></strong></span>
 			</td>
 		</tr>
-		<?php if($proceedToCheckout) { ?>
-		<tr>
-			<td colspan="2">
-				<a href="<?php echo base_url('/cart/checkout') ?>" class="button button-3d nomargin fright">Finalizar</a>
-			</td>
-		</tr>
-		<?php } ?>
 	</tbody>
 </table>

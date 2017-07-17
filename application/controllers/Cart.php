@@ -52,13 +52,25 @@ class Cart extends RR_Controller {
 		*/
 	}
 
-
 	public function checkout($security=null){
+		if(!$this->auth->loggedin()){
+			redirect(base_url('/account'));
+		}
+
 		$this->layout = 'layout/multi_page';
 		$module = $this->view('cart/checkout');
 		echo $this->show_main($module);
+	}
 
+	public function payments(){
+		$data = $this->Cart->setPayment();
+	 	echo json_encode($data);
+	}
 
+	public function thanks(){
+		$this->layout = 'layout/multi_page';
+		$module = $this->view('cart/thanks');
+		echo $this->show_main($module);
 	}
 	/*
 

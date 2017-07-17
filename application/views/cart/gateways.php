@@ -1,7 +1,7 @@
 <?php
-$gateways = ['transferencia_bancaria' => ['id'=>'transferencia_bancaria', 'type'=>'radio','name'=>'medio_pago', 'class'=>'required', 'value'=>'transferencia_bancaria', 'style'=>'margin-left: 10px'],
-              'mercado_pago' => ['id'=>'mercado_pago', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'mercado_pago', 'style'=>'margin-left: 10px'],
-              'pago_mis_cuentas' => ['id'=>'pago_mis_cuentas', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'pago_mis_cuentas', 'style'=>'margin-left: 10px']
+$gateways = ['transferencia_bancaria' => ['id'=>'transferencia_bancaria', 'type'=>'radio','name'=>'medio_pago', 'class'=>'required', 'value'=>'transferencia_bancaria', 'class'=>'required'],
+              'mercado_pago' => ['id'=>'mercado_pago', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'mercado_pago'],
+              'pago_mis_cuentas' => ['id'=>'pago_mis_cuentas', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'pago_mis_cuentas']
             ];
 //$data   = array ('id'=>'gatewayForm', 'class'=>'');
 //$action = lang_url('cart/do-gateway');
@@ -13,16 +13,50 @@ $gateways = ['transferencia_bancaria' => ['id'=>'transferencia_bancaria', 'type'
 
 
 <?php
+
+if($show_options) {
+$form_name = 'payments-form';
+$data   = array ('id'=>$form_name);
+$action =  base_url('/cart/payments');
+echo form_open($action,$data);
+?>
+
+<?php
 foreach($gateways as $k=>$gateway) {
 $name = ucwords(str_replace('_',' ',$k));
+if(get_session('cart_medio_pago',false)){
+	$gateway_selectd = get_session('cart_medio_pago',false);
+}
+
+$checked = ( $gateway['value'] == $gateway_selectd) ? 'checked' : '';
 ?>
 <div>
-<input id="radio-10" class="radio-style" name="radio-group-3" type="radio" checked>
-<label for="radio-10" class="required radio-style-3-label"><?php echo $name ?></label>
+
+<input id="<?php echo $gateway['id']?>" class="radio-style <?php echo $gateway['class']?>" name="<?php echo $gateway['name']?>" type="radio" value="<?php echo $gateway['value']?>" <?php echo $checked ?> r/>
+<label for="<?php echo $gateway['id']?>" class="required radio-style-3-label"><?php echo $name ?></label>
 </div>
 
 
 <?php } ?>
+<?php if($proceedToCheckout) { ?>
+<div>
+	<button class="button button-3d nomargin fright" id="login-form-submit"  onclick="validateForm('<?php echo $form_name ?>')">Finalizar</button>
+</div>
+<?php } ?>
 
-			</div>
-			<a href="#" class="button button-3d fright">Finalizar</a>
+<?php echo form_close();
+} else {
+$name = ucwords(str_replace('_',' ',get_session('cart_medio_pago',false)));
+
+?>
+<div>
+<input id="<?php echo get_session('cart_medio_pago',false) ?>" class="radio-style" name="<?php echo $name ?>" type="radio" value="<?php echo get_session('cart_medio_pago',false) ?>" checked>
+<label class="radio-style-3-label"><?php echo $name ?></label>
+
+</div>
+
+<?php }
+
+?>
+
+</div>

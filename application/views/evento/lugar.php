@@ -56,6 +56,3 @@ $lat_lng = json_decode($lugar->json_direccion);
 	<div class="clear"></div>
 	</div>
 </section>
-
-
-

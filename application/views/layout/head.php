@@ -8,9 +8,23 @@ $metas = array(
 );
 
 echo meta($metas);
+
+
 ?>
 <script>
 _base_url = "<?php echo config_item('base_url')?>"
+
+  var config = {
+    shop_url : "<?php echo config_item('base_url')?>",
+    page_handle: "<?php echo uri_string() ?>",
+    customer : {
+      first_name: "<?php echo (get_session('nombre', false)) ?  get_session('nombre', false) : '' ?>",
+      last_name: "<?php echo (get_session('apellido', false)) ? get_session('apellido', false) : '' ?>",
+      empresa: "<?php echo (get_session('empresa', false)) ?  get_session('empresa', false) : '' ?>",
+      id: "<?php echo (get_session('id', false)) ?  get_session('id', false) : '' ?>",
+      is_logged_in: <?php echo ($this->auth->loggedin()) ? 1 : 0 ?>
+    }
+  }
 
 </script>
 <!-- Stylesheets

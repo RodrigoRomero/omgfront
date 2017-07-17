@@ -1,5 +1,20 @@
 $(document).ready(function() {
 
+if(config.page_handle == 'cart/thanks'){
+	countdown(4)
+}
+
+$('.tleft.past-enabled').datepicker({
+	autoclose: true,
+
+ 	format: 'dd-mm-yyyy'
+/*});
+
+if(config.page_handle != 'account'){
+	RR.keeper.save('comesfrom', config.page_handle);
+
+}
+*/
 });
 
 function validateCupon(){
@@ -11,6 +26,22 @@ function validateCupon(){
         }
     }
 }
+
+
+function countdown(secs){
+    var int = setInterval(function(){
+      secs--;
+
+      if(secs>0){
+      //  $('#countdown').html(secs);
+      }
+      else {
+        clearInterval(int);
+         window.location.href = "/account/summary";
+      }
+    },1000);
+}
+
 
 
 function validateForm(form) {
@@ -184,7 +215,13 @@ function frm_send(form, ajaxUrl, ajaxId, extraData) {
 					if (data.value == "") {
 						console.log(106, form.attr("id"));
 					}
-					window.location.href = data.value
+
+					if(data.value == 'comesfrom') {
+						from = RR.keeper.get('comesfrom')
+						window.location.href = config.shop_url+from
+					} else {
+						window.location.href = data.value
+					}
 				break;
 
 				default:

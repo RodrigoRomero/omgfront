@@ -57,7 +57,7 @@ class Auth_mod extends RR_Model {
 
 			$success = true;
 			$responseType = 'redirect';
-			$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('account/summary'));
+			$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>'comesfrom');
 
 		} catch (Exception $error) {
 			$error_code_id = $error->getCode();

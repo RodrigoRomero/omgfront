@@ -60,7 +60,8 @@ class account_mod extends RR_Model {
 						 'nombre' => filter_input(INPUT_POST,'nombre'),
 						 'apellido' => filter_input(INPUT_POST,'apellido'),
 						 'email' => filter_input(INPUT_POST,'email'),
-						 'password' => md5(filter_input(INPUT_POST,'password'))
+						 'password' => md5(filter_input(INPUT_POST,'password')),
+						 'newsletter' => 1
 						];
 
 			$values  = array_merge($customer, $this->i);
@@ -94,6 +95,126 @@ class account_mod extends RR_Model {
 		}
 
 		return $data;
+
+	}
+
+
+	public function update($id){
+		$success = 'false';
+		$config = array();
+		$config[1] = array('field'=>'empresa', 'label'=>'Empresa', 'rules'=>'trim|required');
+		$config[2] = array('field'=>'cargo', 'label'=>'Cargo', 'rules'=>'trim|required');
+		$config[3] = array('field'=>'email', 'label'=>'Email', 'rules'=>'trim|required|valid_email');
+		$config[4] = array('field'=>'nombre', 'label'=>'Nombre', 'rules'=>'trim|required');
+		$config[5] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
+
+		$this->form_validation->set_rules($config);
+
+		try {
+			if($this->form_validation->run()==FALSE){
+				$this->form_validation->set_error_delimiters('', '<br/>');
+				$errors = validation_errors();
+				throw new Exception($errors, 1);
+			}
+
+			$newsletter = (filter_input(INPUT_POST,'newsletter') == 'on') ? 1 : 0;
+			$fecha_nacimiento = explode("-", filter_input(INPUT_POST,'fecha_nacimiento'));
+			$fecha_nacimiento = $fecha_nacimiento[2].'-'.$fecha_nacimiento[1].'-'.$fecha_nacimiento[0];
+
+			$customer = ['empresa' => filter_input(INPUT_POST,'empresa'),
+						 'cargo' => filter_input(INPUT_POST,'cargo'),
+						 'nombre' => filter_input(INPUT_POST,'nombre'),
+						 'apellido' => filter_input(INPUT_POST,'apellido'),
+						 'email' => filter_input(INPUT_POST,'email'),
+						 'fecha_nacimiento' => empty($fecha_nacimiento) ? null : $fecha_nacimiento,
+						 'dni' => filter_input(INPUT_POST,'dni'),
+						 'telefono' => filter_input(INPUT_POST,'telefono'),
+						 'conocio' => filter_input(INPUT_POST,'conocio'),
+						 'newsletter' => $newsletter
+						];
+
+
+			$values  = array_merge($customer, $this->u);
+			$this->db->where('id', $id);
+			$update = $this->db->update('customers', $values);
+			if($update){
+				$success = 'true';
+	            $responseType = 'function';
+	            $function     = 'appendFormMessagesModal';
+	            $messages     = $this->view('alerts/modal_alert',
+	            	['texto'=> "Su cuenta ha sido actualizada exitosamente",
+	            	 'title'=>'Registro de Usuarios',
+	            	 'class_type'=>'error']);
+	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+			}
+
+
+
+		} catch (Exception $error) {
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Cupones',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+		}
+
+		return $data;
+
+	}
+
+
+
+	public function getCustomerById(){
+		$customer = $this->db->get_where('customers', ['id'=>get_session('id', false)])->row();
+
+		return $customer;
+	}
+
+
+	public function getOrdersByCustomerById(){
+		$grouped_orders = [];
+
+		$order_event = $this->db->select('e.*')
+							    ->group_by('o.evento_id')
+							    ->where('o.customer_id', get_session('id', false))
+							    ->from('orders o')
+							    ->join('eventos e', 'e.id = o.evento_id','INNER')
+							    ->order_by('e.id',DESC)
+							    ->get()
+							    ->result();
+
+
+		foreach($order_event as $event){
+
+
+
+        $orders = $this->db->select('o.id, o.total_price, o.discount_amount, o.total_discounted_price, o.status, p.status payment_status', false)
+        				   ->join('pagos p', 'p.order_id = o.id','INNER')
+        				   ->where('o.customer_id',get_session('id', false))
+        				   ->where('o.evento_id', $event->id)
+        				   ->order_by('o.id','DESC')
+        				   ->from('orders o')
+        				   ->get()
+        				   ->result();
+
+
+   		$grouped_orders[$event->id]['name'] = $event->nombre;
+		$grouped_orders[$event->id]['orders'] = $orders;
+
+
+
+
+
+     	}
+
+     	return $grouped_orders;
 
 	}
 

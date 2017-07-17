@@ -8,8 +8,9 @@
 	</div>
 
 	<div class="row clearfix">
+	<div class="col-md-6 clearfix">
 	<?php if($this->evento->cupons_enabled) { ?>
-		<div class="col-md-6 clearfix">
+
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="col-md-8 col-xs-7 nopadding">
@@ -20,17 +21,20 @@
 					</div>
 				</div>
 			</div>
-		</div>
+
 		<?php } ?>
+
+		</div>
 		<div class="col-md-6  clearfix">
+
 			<div class="table-responsive">
 				<h4>Resúmen</h4>
 				<div class="table-responsive bottommargin jResumeCart">
-					<?php $this->load->view('cart/resume', ['proceedToCheckout' => true]);	?>
+					<?php $this->load->view('cart/resume');	?>
 				</div>
-
-
 			</div>
+			<h4>Elija Medio de Pago</h4>
+			<?php $this->load->view('cart/gateways',  ['proceedToCheckout' => true, 'show_options' => true]); ?>
 		</div>
 	</div>
 </div>
