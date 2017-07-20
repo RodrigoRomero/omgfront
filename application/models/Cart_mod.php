@@ -35,9 +35,10 @@ class cart_mod extends RR_Model {
 
 	public function __construct() {
 		parent::__construct();
-	   # $this->load->model('eventos_mod','Evento');
-	   # $this->load->model('email_mod','Email');
-	   # $this->load->model('payments_mod','MP');
+	    $this->load->model('account_mod','Account');
+	    $this->load->model('email_mod','Email');
+	    $this->load->model('cupons_mod','Cupons');
+
 		$this->load->library('cart');
 
 	}
@@ -72,14 +73,17 @@ class cart_mod extends RR_Model {
 				throw new Exception("Se ha producido un error al agregar al carrito, por favor intentelo nuevamente mas tarde.",1);
 			}
 
+			//ep($ticket);
 			if($ticket->min_qty == 0  && $ticket->max_qty == 0 ){
 				$options['nominar'] = $qty;
+				$options['packs'] = 'N/A';;
 			} elseif($ticket->min_qty>0 && $ticket->max_qty == 0 ) {
 				$options['nominar'] = $qty;
-				$qty = $qty/$ticket->min_qty;
+				$options['packs'] = $qty/$ticket->min_qty;
 
 			} elseif($ticket->min_qty>0 && $ticket->max_qty > 0 ) {
 				  $options['nominar'] = $qty;
+				  $options['packs'] = 'N/A';
 			}
 
 			$options['extras']    = (!empty($ticket->descripcion)) ? $ticket->descripcion : '';
@@ -162,7 +166,7 @@ class cart_mod extends RR_Model {
 			$success     = true;
 			$responseType = 'function';
 			$function = 'reloadCart';
-			$html = ['fullcart' => $this->view('cart/detail'),
+			$html = ['fullcart' => $this->view('cart/detail', ['delete'=>true]),
 					 'resume'	=> $this->view('cart/resume')
 					 ];
 			$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
@@ -235,6 +239,201 @@ class cart_mod extends RR_Model {
 		return $data;
 	}
 
+	public function finish(){
+
+		try {
+			#GENERO LA ORDEN
+			#
+			$tickets = [];
+			$quantity = 0;
+			$ticket_id = 0;
+
+			$discount_code = [];
+			$discount_amount = 0;
+
+			$item_price = 0;
+			$nominar = 0;
+
+			$total_price = 0;
+
+			foreach ($this->cart->contents() as $key => $row) {
+				if(preg_match('/^code/', $row['id'], $matches) === 1){
+					array_push($discount_code, $row);
+					$discount_amount += $row['subtotal'];
+
+				}  else {
+
+				array_push($tickets, ['quantity' => $row['qty'], 'nominar' => $row['options']['nominar'], 'ticket_price'=>$row['price'], 'ticket_id' =>  $row['options']['ticket_id'], 'customer_id' => get_session('id', false), 'evento_id'=>$this->evento->id ]);
+				$total_price = $total_price + ($row['qty']*$row['price']);
+
+				}
+			}
+
+			$values = ['customer_id' 			  => get_session('id', false),
+					  'evento_id' 			  => $this->evento->id,
+					 'total_price'  		  => $total_price,
+            		 'discount_amount'  	  => $discount_amount,
+        		 	 'total_discounted_price' => $this->cart->total(),
+					 'gateway'                => (get_session('cart_medio_pago', false)) ? get_session('cart_medio_pago', false) : 'FOC',
+					 'full_cart'        	  => json_encode($this->cart->contents()),
+					 'status'				  => 1
+					 ];
+
+
+		    $this->db->trans_start();
+			#GENERO LA ORDEN
+			$values = array_merge($values, $this->i);
+          	$this->db->insert('orders',$values);
+          	$order_id = $this->db->insert_id();
+          	$codeGenerated = getBarCode($order_id);
+
+          	#GUARDO EL SECURITY
+          	$this->db->where('id',$order_id);
+          	$this->db->update('orders',array('salt'=>md5($codeGenerated['barcode'])));
+
+          	#BAJO LOS CUPONES PARA QUE NO SE PUEDAN USAR DE NUEVO
+			$c = [];
+          	foreach($discount_code as $used_code){
+          		$discount = $this->Cupons->downCupons($used_code['options']['code'], $used_code['options']['plan_id'] );
+          		array_push($c, ['order_id'=>$order_id, 'discount_code'=>$discount->code, 'discount_id' =>$discount->id, 'discounted_amount' => $used_code['subtotal']]);
+          	}
+
+          	foreach($tickets as $k=>$ticket){
+          		$tickets[$k] = array_merge($ticket, ['order_id' => $order_id]);
+          	}
+
+          	#GUARDO LOS TICKETS Y LOS CUPONES
+          	$order_cupons  = $this->db->insert_batch('order_discounts', $c);
+          	$order_tickets = $this->db->insert_batch('order_tickets', $tickets);
+
+      	 	#GENERO EL PAYMENT TRANSACTION -1 SIN REGISTRO
+          	$payment = array(
+	            'order_id'            => $order_id,
+	            'payment_type'        => get_session('cart_medio_pago', false),
+	            'transaction_amount'  => $this->cart->total(),
+	            'currency_id'         => 'ARS',
+	            'pago_status'         => ($values['gateway'] == 'FOC') ? 2 : '-1',
+	            'status'              => ($values['gateway'] == 'FOC') ? 'approved' : 'in_progress',
+	          );
+	        $order_payment = $this->db->insert('pagos',$payment);
+	        $this->db->trans_complete();
+
+	        if ($this->db->trans_status() === FALSE)
+			{
+				throw new Exception("Error Procesando la Orden", 1);
+
+			}
+
+
+	        switch($values['gateway']){
+	        	case 'transferencia_bancaria':
+	        		$subject    = "PreAcreditación ".$this->evento_name;
+	        		$customer   = $this->Account->getCustomerById();
+	        		$order = (object)$values;
+                	$body  = $this->view('email/transferencia_bancaria', array('user_info'=>$customer, 'evento'=>$this->evento, 'order_id'=>$order_id));
+                	$email = $this->Email->send('email_info', $customer->email, $subject, $body, array('cc'=>$customer->email));
+
+	        		break;
+
+	        	case 'mercado_pago':
+	        		break;
+
+	        	case 'pago_mis_cuentas':
+	        		#TODO
+	        		break;
+	        }
+
+      		$success = true;
+			$responseType = 'redirect';
+			$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('cart/thanks'));
+
+		} catch (Exception $error) {
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Orden Error',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+
+		}
+
+		return $data;
+	}
+
+	public function addCupon($c,$ammount,$description, $qty, $plan_id){
+		$data = array(
+				   'id'      => 'code_'.$c,
+				   'qty'     => $qty,
+				   'price'   => $ammount,
+				   'name'    => $description,
+				   'options' => array('code'=>$c, 'plan_id'=>$plan_id)
+				);
+		return $this->cart->insert($data);
+	}
+
+
+	public function abandonment($salt){
+		try {
+
+			$order_cart = $this->db->get_where('orders', ['salt'=>$salt])->row();
+			if(empty($order_cart)){
+				throw new Exception("Security Code Inválido",1);
+			}
+
+			if($order_cart->evento_id != $this->evento->id){
+				throw new Exception("Evento no vigente",1);
+			}
+
+			$customer = $this->db->get_where('customers', ['id' =>$order_cart->id])->row();
+
+			if(empty($customer)){
+				throw new Exception("No se pudo recuperar customer",1);
+			}
+
+			set_session("id", $customer->id, false);
+			set_session("empresa", $customer->empresa, false);
+			set_session("nombre", $customer->nombre, false);
+			set_session("apellido", $customer->apellido, false);
+			set_session("email", $customer->email, false);
+			set_session("cart_medio_pago", $order_cart->gateway, false);
+			set_session("cart_id", $order_cart->id, false);
+			$cart = json_decode($order_cart->full_cart, true);
+
+			foreach($cart as $product_in_cart){
+				unset($product_in_cart['rowid']);
+				$add = $this->cart->insert($product_in_cart);
+			}
+
+		} catch (Exception $error) {
+
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Carrito Error',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+
+		}
+
+
+
+
+
+
+	}
+
 /*
 
 
@@ -302,16 +501,7 @@ class cart_mod extends RR_Model {
 
 
 
-	public function addCupon($c,$ammount,$description){
-		$data = array(
-				   'id'      => 'code_'.$c,
-				   'qty'     => 1,
-				   'price'   => $ammount,
-				   'name'    => $description,
-				   'options' => array('code'=>$c)
-				);
-		return $this->cart->insert($data);
-	}
+
 
 
 	public function addExtras(){
@@ -339,33 +529,6 @@ class cart_mod extends RR_Model {
 	}
 
 
-	public function set_gateway(){
-		#VALIDO FORM POR PHP
-		$success = 'false';
-		$config = array();
-		$config[1] = array('field'=>'medio_pago', 'label'=>'Medio de Pago', 'rules'=>'trim|required|xss_clean');
-		$this->form_validation->set_rules($config);
-		if($this->form_validation->run()==FALSE){
-			$this->form_validation->set_error_delimiters('<li>', '</li>');
-			$responseType = 'function';
-			$function     = 'appendFormMessagesModal';
-			$messages     = $this->view('alerts/modal_alerts',array('texto'=>validation_errors(), 'title'=>'Formulario de Contacto', 'class_type'=>'error'));
-			$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
-		} else {
-			$medio_pago = filter_input(INPUT_POST,'medio_pago');
-
-			if($medio_pago){
-				$this->session->set_userdata('cart_medio_pago',$medio_pago);
-				$success = true;
-				$responseType = 'function';
-				$function     = 'appendFormMessagesModal';
-				$messages     = $this->view('alerts/seleccion_gateway', array('medio_pago'=>ucwords(str_replace("_"," ",$medio_pago)), 'title'=>$this->evento_name, 'class_type'=>'info'));
-				$data = array('success' =>$success,'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function, 'modal_redirect'=>lang_url('account/create'));
-			}
-		}
-
-		return $data;
-	}
 
 	public function restoreCart($security){
 

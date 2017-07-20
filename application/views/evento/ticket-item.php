@@ -12,7 +12,7 @@ $fecha_venta = implode("-",array($fecha_venta[2], getMes($fecha_venta[1]), $fech
 
 $data_price = (!empty($item->precio_oferta) && ($hoy < $timelimit)) ? $item->precio_oferta : $item->precio_regular;
 
-
+/*
 $min_qty = 0;
 $max_qty = 10;
 $steps = 1;
@@ -26,7 +26,7 @@ if($item->min_qty == $item->max_qty){
 	$steps = $item->min_qty;
 	$max_qty = floor($max_qty/$item->min_qty)*$item->max_qty;
 }
-
+*/
 
 $ticket_description = json_decode($item->descripcion);
 $descripcion = '';
@@ -36,6 +36,32 @@ if(count($ticket_description) >0 ){
 		$descripcion .= '<li>'.$desc.'</li>';
 	}
 }
+
+$step = 1;
+$start = 0;
+$end = 10;
+if($item->min_qty == 0  && $item->max_qty == 0 ){
+    $step = 1;
+} elseif($item->min_qty == 10 && $item->max_qty == 0 ) {
+
+    $step = $item->min_qty;
+    $end = ($item->min_qty*$end);
+} elseif($item->min_qty>0 && $item->max_qty == 0 ) {
+    $step = $item->min_qty;
+} elseif($item->min_qty>0 && $item->max_qty > 0 ) {
+     $step = 1;
+     $start = $item->min_qty;
+     $end = $item->max_qty;
+}
+
+$options = array_combine(range($start, $end, $step),range($start, $end, $step));
+
+if(!array_key_exists ( 0 , $options )){
+    $options[0] = 0;
+}
+ksort($options);
+
+
 ?>
 
 <div class="pricing-box pricing-extended bottommargin clearfix" style="min-height: 350px">
@@ -92,7 +118,17 @@ if(count($ticket_description) >0 ){
 			<?php if($item->agotadas) { ?>
 			<?php } else { ?>
 				<p>Seleccione Cantidad Entradas</p>
-				<input class="jRange" name="quantity" data-max="<?php echo $max_qty?>" data-min="<?php echo $min_qty ?>" data-steps="<?php echo $steps ?>" />
+				<div class="form-group">
+				<?php
+
+        $css = 'class="form-control"';
+        echo form_dropdown('quantity',$options, 0,  $css);
+    ?>
+	</div>
+
+
+
+				<!--  <input class="jRange" name="quantity" data-max="<?php echo $max_qty?>" data-min="<?php echo $min_qty ?>" data-steps="<?php echo $steps ?>" />-->
 				<input type="submit" value="Comprar"  class="button button-3d button-xlarge btn-block nomargin" onclick="validateForm('<?php echo $form_name ?>')" />
 
 			<?php } ?>

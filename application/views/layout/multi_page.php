@@ -25,10 +25,10 @@
 								<li><a href="<?php echo base_url('/account/summary') ?>">Mi Cuenta</a></li>
 							<?php } else { ?>
 								<li><a href="<?php echo base_url('/account') ?>">Registrarme</a></li>
-								<li><a href="login-register.html">Login</a>
+								<li><a href="javascript:void(0)">Login</a>
 								<div class="top-link-section">
 									<?php
-									$form_name = 'login-form';
+									$form_name = 'login-header-form';
 									$data   = array ('id'=>$form_name);
 									$action =  base_url('/auth/login');
 									echo form_open($action,$data);
@@ -130,6 +130,7 @@
 	<!-- Go To Top
 	============================================= -->
 	<div id="gotoTop" class="icon-angle-up"></div>
+	<script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
 	<?php
 		foreach ($js_layout as $js) {
 	    	echo js_asset($js.'.js');

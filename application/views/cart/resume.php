@@ -1,22 +1,42 @@
+<?php
+
+$discount_total =  0;
+$total_price    = 0;
+foreach($this->cart->contents() as $product){
+	$discount = ( preg_match('/^code/', $product['id'], $matches) === 1) ? 'discount' : '';
+	if($discount){
+
+		$discount_total += $product['subtotal'];
+	} else {
+		$total_price += $product['subtotal'];
+	}
+}
+
+
+?>
+
+
 <table class="table cart">
 	<tbody>
 		<tr class="cart_item">
 			<td class="cart-product-name">
-				<strong>Cart Subtotal</strong>
+				<strong>Subtotal</strong>
 			</td>
 			<td class="cart-product-name">
-				<span class="amount">$ <?php echo number_format($this->cart->total_items(), 2,",",".") ?></span>
+				<span class="amount">$ <?php echo number_format($total_price, 2,",",".") ?></span>
 			</td>
 		</tr>
+		<?php if($discount_total < 0) {  ?>
 		<tr class="cart_item">
 			<td class="cart-product-name">
-				<strong>Shipping</strong>
+				<strong>Descuentos</strong>
 			</td>
 
 			<td class="cart-product-name">
-				<span class="amount">Free Delivery</span>
+				<span class="amount text-danger">($ <?php echo number_format($discount_total, 2,",",".") ?>)</span>
 			</td>
 		</tr>
+		<?php } ?>
 		<tr class="cart_item">
 			<td class="cart-product-name">
 				<strong>Total</strong>

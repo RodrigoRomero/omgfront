@@ -6,8 +6,7 @@
 	<?php
 
 	foreach($oradores as $k => $item) {
-
-	$this->load->view('evento/orador-item', ['position'=>$k, 'item' => $item]);
+		$this->load->view('evento/orador-item', ['position'=>$k, 'item' => $item]);
 	}
 	?>
 	<div class="clear"></div>

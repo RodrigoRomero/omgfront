@@ -70,7 +70,7 @@ class CI_Cart {
 	 *
 	 * @var bool
 	 */
-	public $product_name_safe = TRUE;
+	public $product_name_safe = FALSE;
 
 	// --------------------------------------------------------------------------
 
@@ -182,6 +182,9 @@ class CI_Cart {
 	 */
 	protected function _insert($items = array())
 	{
+
+
+
 		// Was any cart data passed? No? Bah...
 		if ( ! is_array($items) OR count($items) === 0)
 		{
@@ -220,6 +223,7 @@ class CI_Cart {
 			return FALSE;
 		}
 
+
 		// --------------------------------------------------------------------
 
 		// Validate the product name. It can only be alpha-numeric, dashes, underscores, colons or periods.
@@ -230,10 +234,13 @@ class CI_Cart {
 			return FALSE;
 		}
 
-		// --------------------------------------------------------------------
+		// ---------	-----------------------------------------------------------
 
 		// Prep the price. Remove leading zeros and anything that isn't a number or decimal point.
 		$items['price'] = (float) $items['price'];
+
+
+
 
 		// We now need to create a unique identifier for the item being inserted into the cart.
 		// Every time something is added to the cart it is stored in the master cart array.

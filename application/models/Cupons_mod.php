@@ -10,6 +10,8 @@ class Cupons_mod extends RR_Model {
 		parent::__construct();
 		$this->load->model('main_mod','Main');
 		$this->load->model('cart_mod', 'Cart');
+
+
 	}
 
 		public function validate_cupon($c){
@@ -30,6 +32,11 @@ class Cupons_mod extends RR_Model {
 				if($cupon->quantity < $cupon->available){
 					throw new Exception("Debe ingresar un cupón válido",1);
 				}
+
+				if($this->_validateCuponInCart($cupon)){
+					throw new Exception("El cupon ingresado ya se encuentra aplicado o tiene un cupon aplicado a los productos",1);
+				}
+
 
 				#CALCULO EL % PARA EL DESCUENTO
 				$ratio = ($cupon->value/100);
@@ -57,31 +64,34 @@ class Cupons_mod extends RR_Model {
 						}
 
 						#SI EL DESCUENTO ES MAYOR AL PRECIO PROMOCIONAL - QUITO PRECIO PROMOCIONAL Y AGREGO EL REGULAR
-
-
-						if($this->Cart->add($ticket_cupon->sku, $ticket_cupon->nombre,$ticket_cupon->precio_regular, false)){
-							$description = 'Descuento '.$cupon->value.'% Tarifa Regular - '.$ticket_cupon->nombre;
-							if($this->Cart->addCupon($cupon->code,$discount,$description)){
-								$success     = true;
-								$responseType = 'function';
-								$function = 'reloadCart';
-								$html = $this->view('pagos/cart', array('param'=>'checkout'));
-								$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
-								return $data;
-							};
+						if($ticket_cupon->precio_regular > $cart['price']){
+							echo 'tengo que remover el producto y agregar el regular';
 						}
 
-						echo 'r - > '. $ratio;
-						echo 'd - > '.$discount;
-						echo 'np - > '.$new_price;
+						#AGREGO EL CUPON AL CART
+						$description = 'Descuento '.$cupon->value.'% Tarifa Regular - '.$ticket_cupon->nombre;
+						$addcupon = $this->Cart->addCupon($cupon->code, $discount, $description, $cart['qty'], $cupon->plan_id);
+
+						if(!$addcupon){
+							throw new Exception("Error al Procesar su cupón por favor inténtelo más tarde",1);
+						}
+
+						$success     = true;
+						$responseType = 'function';
+						$function = 'reloadCart';
+						$html = ['fullcart' => $this->view('cart/detail', ['delete'=>true]),
+								 'resume'	=> $this->view('cart/resume')
+								 ];
+						$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
 
 					}
 				}
 
+
 				if($not_apply){
 					throw new Exception("Debe ingresar un cupón válido - Productos inválidos",1);
 				}
-				ep($cupon);
+
 
 
 
@@ -99,15 +109,7 @@ class Cupons_mod extends RR_Model {
                 	 'class_type'=>'error']);
                 $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
 
-                /*
 
-
-				$success      = true;
-				$responseType = 'function';
-				$function     = 'showNotify';
-				$components   = ['position'=> 'bottom-full-width', 'type'=> 'error', 'message'=>$error->getMessage(), 'time'=>5000, 'close'=>true];
-				$data = array('success' =>$success,'responseType'=>$responseType, 'response'=>$components, 'value'=>$function);
-				*/
 			}
 
 
@@ -204,12 +206,58 @@ class Cupons_mod extends RR_Model {
 
 		}
 
+	private function _validateCuponInCart($c){
+		$exists = false;
+		foreach($this->cart->contents() as $product){
+			$discount = ( preg_match('/^code/', $product['id'], $matches) === 1) ? true : false;
+
+			if($discount){
+				if($c->code == $product['options']['code']){
+					$exists = true;
+				}
+
+				if($c->plan_id == $product['options']['plan_id']){
+					$exists = true;
+				}
+
+			}
+		}
+
+		return $exists;
+	}
+
+	private function _validateProductWithCupon($plan_id, $c){
+
+
+
+		foreach($this->cart->contents() as $product){
+			$discount = ( preg_match('/^code/', $product['id'], $matches) === 1) ? true : false;
+
+			if(!$discount){
+				if($plan_id == $product['options']['ticket_id'] && $c->plan_id == $product['options']['ticket_id']){
+					return true;
+
+				}
+			}
+		}
+
+
+		return false;
+
+	}
+
 	private function getCupon($c){
 		return $this->db->get_where('cupons', array('code'=>$c, 'evento_id'=>$this->evento->id))->row();
 	}
 
 
+	public function downCupons($cupon_code, $ticket_id){
+		$cupon = $this->db->get_where('cupons',['code'=>$cupon_code, 'plan_id' =>$ticket_id, 'evento_id'=>$this->evento->id])->row();
 
+		$this->db->where('id', $cupon->id);
+		$upd = $this->db->update('cupons',array('available'=>$cupon->available+1));
+		return $cupon;
+	}
 
 
 	/*
@@ -225,11 +273,7 @@ class Cupons_mod extends RR_Model {
 		}
 	}
 
-	public function countDownCupons($available, $c){
-		$this->db->where('code',$c);
-		$upd = $this->db->update('cupons',array('available'=>$available+1));
-		return $upd;
-	}
+
 
 
 	*/

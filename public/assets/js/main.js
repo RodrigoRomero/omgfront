@@ -8,13 +8,13 @@ $('.tleft.past-enabled').datepicker({
 	autoclose: true,
 
  	format: 'dd-mm-yyyy'
-/*});
+});
 
 if(config.page_handle != 'account'){
 	RR.keeper.save('comesfrom', config.page_handle);
 
 }
-*/
+
 });
 
 function validateCupon(){
@@ -42,11 +42,30 @@ function countdown(secs){
     },1000);
 }
 
+function paymentLink(datos){
 
+console.log(datos);
+
+    $MPC.openCheckout ({
+                url: datos.messages,
+                mode: "modal",
+                onreturn: checkoutReturn
+    });
+}
+
+function checkoutReturn (data) {
+	console.log(data);
+	/*
+   ajaxUrl = _base_url+'payments/close/id/'+data.external_reference+'/collection_id/'+data.collection_id+'/collection_status/'+data.collection_status+'/payment_type/'+data.payment_type+'/preference_id/'+data.preference_id;
+   frm_send('none', ajaxUrl,'checkout')
+   */
+
+}
 
 function validateForm(form) {
 
 	if(typeof form == "string") e = $('#'+form);
+
 
 	if($("select[id*=right]")){
 		$("select[id*=right]").each(function(n,el){
@@ -56,6 +75,8 @@ function validateForm(form) {
 			})
 		})
 	}
+
+
 
 	var validate = e.validate({
 		debug: true,

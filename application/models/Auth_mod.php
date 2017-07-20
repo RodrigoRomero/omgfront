@@ -29,7 +29,7 @@ class Auth_mod extends RR_Model {
 		$success = 'false';
 		$config = array();
 		$config[1] = array('field'=>'username', 'label'=>'Usuario', 'rules'=>'trim|required');
-		$config[2] = array('field'=>'password', 'label'=>'Contraseña', 'rules'=>'trim|required|md5');
+		$config[2] = array('field'=>'password', 'label'=>'Contrasena', 'rules'=>'trim|required|md5');
 
 		$this->form_validation->set_rules($config);
 

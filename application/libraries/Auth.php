@@ -29,7 +29,7 @@ class Auth {
 
 
 	private function _set_auth_prefs(){
-		$this->or_auth_prefs = $this->CI->config->item('or_auth_prefs','Auth');
+		$this->or_auth_prefs = $this->CI->config->item('rr_auth_prefs','Auth');
 	}
 
 

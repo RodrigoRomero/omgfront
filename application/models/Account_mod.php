@@ -190,32 +190,121 @@ class account_mod extends RR_Model {
 							    ->get()
 							    ->result();
 
-
 		foreach($order_event as $event){
+			$sql = 'SELECT o.id, o.total_price, o.discount_amount, o.total_discounted_price, o.status, p.status payment_status, ot.qty
+					  FROM orders o
+					  LEFT JOIN (SELECT SUM(quantity) qty, order_id FROM order_tickets GROUP BY order_id) ot ON ot.order_id = o.id
+					  LEFT JOIN pagos p ON p.order_id = o.id
+					  WHERE o.customer_id = ? and o.evento_id = ?
+					  ORDER BY o.id DESC';
 
-
-
-        $orders = $this->db->select('o.id, o.total_price, o.discount_amount, o.total_discounted_price, o.status, p.status payment_status', false)
-        				   ->join('pagos p', 'p.order_id = o.id','INNER')
-        				   ->where('o.customer_id',get_session('id', false))
-        				   ->where('o.evento_id', $event->id)
-        				   ->order_by('o.id','DESC')
-        				   ->from('orders o')
-        				   ->get()
-        				   ->result();
-
-
-   		$grouped_orders[$event->id]['name'] = $event->nombre;
-		$grouped_orders[$event->id]['orders'] = $orders;
-
-
-
-
-
+	        $orders = $this->db->query($sql, [get_session('id', false), $event->id])->result();
+	   		$grouped_orders[$event->id]['name'] = $event->nombre;
+			$grouped_orders[$event->id]['orders'] = $orders;
      	}
+
 
      	return $grouped_orders;
 
+	}
+
+	public function getTicketsByOrderId($id){
+		$tickets = $this->db->select('ot.*, t.nombre')
+						    ->from('order_tickets ot')
+						    ->where('ot.order_id', $id)
+						    ->join('tickets t', 't.id = ot.ticket_id','INNER')
+						    ->get()
+						    ->result();
+		return $tickets;
+	}
+
+	public function nominar(){
+		$success = 'false';
+		$config = array();
+		$config[1] = array('field'=>'email', 'label'=>'Email', 'rules'=>'trim|required|valid_email');
+		$config[2] = array('field'=>'nombre', 'label'=>'Nombre', 'rules'=>'trim|required');
+		$config[3] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
+
+
+		$this->form_validation->set_rules($config);
+
+		try {
+
+
+			if($this->form_validation->run()==FALSE){
+				$this->form_validation->set_error_delimiters('', '<br/>');
+				$errors = validation_errors();
+				throw new Exception($errors, 1);
+			}
+
+			$ot  = filter_input(INPUT_POST,'ot_id');
+			$row = filter_input(INPUT_POST,'row');
+
+			if(!$ot || !$row){
+				throw new Exception("Por favor intentelo mas tarde", 1);
+			}
+
+
+
+			#BUSCO SI ESTA NOMINADA Y LE ELIMINO
+			$invitado_temp = $this->db->get_where('acreditados',['order_ticket_id'=>$ot, 'row'=>$row])->row();
+
+			if(!empty($invitado_temp)){
+				$this->db->delete('acreditados', array('id' => $invitado_temp->id));
+			}
+
+			$ot = $this->db->get_where('order_tickets', ['id'=>$ot])->row();
+
+
+			$invitado = ['nombre'   	   => filter_input(INPUT_POST,'nombre'),
+						 'apellido' 	   => filter_input(INPUT_POST,'apellido'),
+						 'email'    	   => filter_input(INPUT_POST,'email'),
+						 'row'	    	   => filter_input(INPUT_POST,'row'),
+						 'order_id' 	   => $ot->order_id,
+						 'evento_id'       => $ot->evento_id,
+						 'order_ticket_id' => $ot->id,
+						 'customer_id'     => $ot->customer_id
+
+						];
+
+			$values  = array_merge($invitado, $this->i);
+			$insert = $this->db->insert('acreditados', $values);
+			$inserted_id = $this->db->insert_id();
+			$codeGenerated = getBarCode($inserted_id);
+			$this->barcode->save($codeGenerated['barcode'],$codeGenerated['numbers']);
+
+			$this->db->where('id', $inserted_id);
+			$this->db->update('acreditados', ['barcode'=>$codeGenerated['barcode']]);
+
+			if($insert){
+				$success = 'false';
+	            $responseType = 'function';
+	            $function     = 'appendFormMessagesModal';
+	            $messages     = $this->view('alerts/modal_alert',
+	            	['texto'=> "Nominación realizada exitosamente<br/>No olvide enviar la invitación correspondiente",
+	            	 'title'=>'Invitación',
+	            	 'class_type'=>'error']);
+	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+			}
+
+
+
+		} catch (Exception $error) {
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Cupones',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+		}
+
+		return $data;
 	}
 
 

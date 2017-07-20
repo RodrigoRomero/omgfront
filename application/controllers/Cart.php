@@ -19,7 +19,8 @@ class Cart extends RR_Controller {
 	}
 
 
-	public function index($security=null){
+	public function index(){
+
 		$this->layout = 'layout/multi_page';
 
 		if($this->cart->total_items() > 0) {
@@ -52,12 +53,12 @@ class Cart extends RR_Controller {
 		*/
 	}
 
-	public function checkout($security=null){
+	public function checkout(){
 		if(!$this->auth->loggedin()){
 			redirect(base_url('/account'));
 		}
-
 		$this->layout = 'layout/multi_page';
+
 		$module = $this->view('cart/checkout');
 		echo $this->show_main($module);
 	}
@@ -69,8 +70,44 @@ class Cart extends RR_Controller {
 
 	public function thanks(){
 		$this->layout = 'layout/multi_page';
+		$this->cart->destroy();
 		$module = $this->view('cart/thanks');
 		echo $this->show_main($module);
+	}
+
+
+	public function finish(){
+		$data = $this->Cart->finish();
+   		echo json_encode($data);
+	}
+
+	public function restore($salt){
+		$this->layout = 'layout/multi_page';
+		$this->cart->destroy();
+		$data = $this->Cart->abandonment($salt);
+
+		$module = $this->view('cart/abandonment');
+		echo $this->show_main($module);
+	}
+
+
+	public function process(){
+		$this->load->model('checkout_mod','Checkout');
+
+		if(get_session('cart_medio_pago',false) == 'mercado_pago'){
+			$order_id = get_Session('cart_id',false);
+			$total    = $this->cart->total();
+			$barcode  = getBarCode($order_id);
+
+			$values = ['id' => $order_id, 'total'=> $total, 'barcode'=>$barcode['barcode']];
+
+			$data  = $this->Checkout->getPreferences($values);
+			echo json_encode($data);
+		}
+
+
+
+
 	}
 	/*
 

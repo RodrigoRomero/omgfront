@@ -18,7 +18,7 @@
 				<?php $this->load->view('cart/resume');	?>
 			</div>
 			<h4>Tu Medio de Pago</h4>
-			<?php $this->load->view('cart/gateways', ['proceedToCheckout' => true, 'show_options' => false]); ?>
+			<?php $this->load->view('cart/gateways', ['proceedToCheckout' => true, 'show_options' => false, 'gateway_form' => ['action '=> base_url('/cart/finish'), 'btnTxt' => 'Confirmar']] ); ?>
 
 		</div>
 	</div>

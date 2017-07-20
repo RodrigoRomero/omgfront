@@ -15,17 +15,17 @@
 
 								<div class="col_full">
 									<label for="login-form-username">Email:</label>
-									<input type="text" id="login-username" name="username" value="" class="form-control required email" />
+									<input type="text" id="login-form-username" name="username" value="" class="form-control required email" />
 								</div>
 
 								<div class="col_full">
 									<label for="login-form-password">Password:</label>
-									<input type="password" id="login-password" name="password" value="" class="form-control required" />
+									<input type="password" id="login-form-password" name="password" value="" class="form-control required" />
 								</div>
 
 								<div class="col_full nobottommargin">
 
-									<button class="button button-3d" id="login-form-submit"  onclick="validateForm('<?php echo $form_name ?>')">Ingresar</button>
+									<button class="button button-3d" id="login-form-submit"  onclick="validateForm('login-form')">Ingresar</button>
 
 								</div>
 
@@ -95,5 +95,7 @@
 						<?php echo form_close() ?>
 
 					</div>
+
+
 
 				</div>
