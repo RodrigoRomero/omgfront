@@ -117,6 +117,7 @@ class MP {
         return $payment_info;
     }
     public function get_payment_info($id) {
+
         return $this->get_payment($id);
     }
 

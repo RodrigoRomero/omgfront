@@ -38,6 +38,7 @@ class cart_mod extends RR_Model {
 	    $this->load->model('account_mod','Account');
 	    $this->load->model('email_mod','Email');
 	    $this->load->model('cupons_mod','Cupons');
+	    $this->load->model('checkout_mod','Checkout');
 
 		$this->load->library('cart');
 
@@ -303,7 +304,9 @@ class cart_mod extends RR_Model {
           	}
 
           	#GUARDO LOS TICKETS Y LOS CUPONES
-          	$order_cupons  = $this->db->insert_batch('order_discounts', $c);
+          	if(!empty($c)) {
+          		$order_cupons  = $this->db->insert_batch('order_discounts', $c);
+          	}
           	$order_tickets = $this->db->insert_batch('order_tickets', $tickets);
 
       	 	#GENERO EL PAYMENT TRANSACTION -1 SIN REGISTRO
@@ -332,10 +335,17 @@ class cart_mod extends RR_Model {
 	        		$order = (object)$values;
                 	$body  = $this->view('email/transferencia_bancaria', array('user_info'=>$customer, 'evento'=>$this->evento, 'order_id'=>$order_id));
                 	$email = $this->Email->send('email_info', $customer->email, $subject, $body, array('cc'=>$customer->email));
-
+		      		$success = true;
+					$responseType = 'redirect';
+					$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('cart/thanks'));
 	        		break;
 
 	        	case 'mercado_pago':
+	        		$mp = ['total' => $this->cart->total(),
+	        				'id' => $order_id,
+	        				'barcode' =>$codeGenerated['barcode']  ];
+	        		$data = $this->Checkout->getPreferences($mp);
+
 	        		break;
 
 	        	case 'pago_mis_cuentas':
@@ -343,9 +353,6 @@ class cart_mod extends RR_Model {
 	        		break;
 	        }
 
-      		$success = true;
-			$responseType = 'redirect';
-			$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('cart/thanks'));
 
 		} catch (Exception $error) {
 			$error_code_id = $error->getCode();
@@ -381,16 +388,23 @@ class cart_mod extends RR_Model {
 	public function abandonment($salt){
 		try {
 
-			$order_cart = $this->db->get_where('orders', ['salt'=>$salt])->row();
+
+			$order_cart = $this->db->get_where('orders',['salt'=>$salt])->row();
+
+
 			if(empty($order_cart)){
 				throw new Exception("Security Code Inválido",1);
 			}
+
+
+
 
 			if($order_cart->evento_id != $this->evento->id){
 				throw new Exception("Evento no vigente",1);
 			}
 
-			$customer = $this->db->get_where('customers', ['id' =>$order_cart->id])->row();
+			$customer = $this->db->get_where('customers', ['id' =>$order_cart->customer_id])->row();
+
 
 			if(empty($customer)){
 				throw new Exception("No se pudo recuperar customer",1);

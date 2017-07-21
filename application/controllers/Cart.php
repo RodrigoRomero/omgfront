@@ -85,7 +85,6 @@ class Cart extends RR_Controller {
 		$this->layout = 'layout/multi_page';
 		$this->cart->destroy();
 		$data = $this->Cart->abandonment($salt);
-
 		$module = $this->view('cart/abandonment');
 		echo $this->show_main($module);
 	}

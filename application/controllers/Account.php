@@ -60,4 +60,9 @@ class Account extends RR_Controller {
 		$data = $this->Account->nominar();
 	 	echo json_encode($data);
 	}
+
+	public function invite(){
+		$data = $this->Account->sendInvite();
+	 	echo json_encode($data);
+	}
 }

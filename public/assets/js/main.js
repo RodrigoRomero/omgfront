@@ -27,6 +27,15 @@ function validateCupon(){
     }
 }
 
+function enableInvite(data){
+	$('td#tir-'+data.extras.row+' a').attr('data-acreditacion',data.extras.data).removeClass('hide');
+}
+
+function sendInvite(e){
+	$id = e.data('acreditacion');
+	ajaxUrl = config.shop_url+'/account/invite/'+$id
+ 	frm_send('none', ajaxUrl,'xxx')
+}
 
 function countdown(secs){
     var int = setInterval(function(){
@@ -55,10 +64,9 @@ console.log(datos);
 
 function checkoutReturn (data) {
 	console.log(data);
-	/*
-   ajaxUrl = _base_url+'payments/close/id/'+data.external_reference+'/collection_id/'+data.collection_id+'/collection_status/'+data.collection_status+'/payment_type/'+data.payment_type+'/preference_id/'+data.preference_id;
+   ajaxUrl = config.shop_url+'checkout/close/id/'+data.external_reference+'/collection_id/'+data.collection_id+'/collection_status/'+data.collection_status+'/payment_type/'+data.payment_type+'/preference_id/'+data.preference_id;
    frm_send('none', ajaxUrl,'checkout')
-   */
+
 
 }
 

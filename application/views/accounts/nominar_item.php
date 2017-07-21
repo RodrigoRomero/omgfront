@@ -9,9 +9,11 @@
 
 	$nominado = $this->db->get_where('acreditados', ['order_ticket_id' => $item->id, 'row'=>$row])->row();
 
+	$show_hide = ($nominado->email) ? '' : 'hide';
+	$row = 'tir-'.$item->ticket_id.$row;
 
 	?>
-	<td>
+	<td >
 
 	<input type="text" id="nominar-nombre" name="nombre" value="<?php echo ($nominado->nombre) ? $nominado->nombre : '' ?>" class="form-control required" />
 	</td>
@@ -21,8 +23,9 @@
 		<button class="button button-mini" id="<?php echo $form_name ?>"  onclick="validateForm('<?php echo $form_name ?>')"><i class="icon-edit"></i>Nominar</button>
 	</td>
 	<?php echo form_close() ?>
-	<td>
+	<td id="<?php echo $row ?>">
 
-		<a href="#" class="button button-mini"><i class="icon-envelope"></i>Invitar</a>
+		<a href="javascript:void(0)" onclick="sendInvite($(this))" class="button button-mini <?php echo $show_hide?>" data-acreditacion="<?php echo $nominado->id ?>"><i class="icon-envelope"></i>Invitar</a>
+
 	</td>
 </tr>

@@ -34,6 +34,7 @@ class account_mod extends RR_Model {
 
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('email_mod', 'Email');
 	}
 
 	public function create(){
@@ -279,12 +280,12 @@ class account_mod extends RR_Model {
 			if($insert){
 				$success = 'false';
 	            $responseType = 'function';
-	            $function     = 'appendFormMessagesModal';
+	            $function     = 'enableInvite';
 	            $messages     = $this->view('alerts/modal_alert',
 	            	['texto'=> "Nominación realizada exitosamente<br/>No olvide enviar la invitación correspondiente",
 	            	 'title'=>'Invitación',
 	            	 'class_type'=>'error']);
-	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function, 'extras'=>['data' => $inserted_id, 'row'=>$ot->ticket_id.$row]);
 			}
 
 
@@ -305,6 +306,50 @@ class account_mod extends RR_Model {
 		}
 
 		return $data;
+	}
+
+
+	public function sendInvite(){
+
+		try {
+			$id = $this->uri->segment(3);
+			if(!($id)){
+				throw new Exception("Por favor intentelo mas tarde", 1);
+			}
+
+
+			$acreditado = $this->db->get_where('acreditados', ['id'=>$id])->row();
+			if(!($acreditado)){
+				throw new Exception("Por favor intentelo mas tarde", 1);
+			}
+			#EVNITO LA INVITACION
+			$subject    = "Su Acreditación - ".$this->evento->nombre;
+            $body       = $this->view('email/invitaciones', array('user_info'=>$acreditado, 'evento'=>$this->evento));
+            $email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
+
+
+
+			ep($acreditado);
+
+
+		} catch (Exception $error) {
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Cupones',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+		}
+
+		return $data;
+
+
 	}
 
 

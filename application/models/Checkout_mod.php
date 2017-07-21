@@ -18,7 +18,9 @@ class Checkout_mod extends RR_Model {
         $mp_config = $this->config->item('mp');
 
         $this->load->library('mp', $mp_config);
-        $this->mp->sandbox_mode(true);
+        #$this->mp->sandbox_mode(TRUE);
+        $this->load->model('email_mod','Email');
+
 	}
 
 
@@ -53,11 +55,136 @@ class Checkout_mod extends RR_Model {
         $success      = true;
         $responseType = 'function';
         $function     = 'paymentLink';
-        $messages     = $preferenceResult['response']['sandbox_init_point'];
-        #$messages     = $preferenceResult['response']['init_point'];
+        #$messages     = $preferenceResult['response']['sandbox_init_point'];
+        $messages     = $preferenceResult['response']['init_point'];
         $data = array('success' => $success, 'responseType'=>$responseType, 'messages'=>$messages, 'value'=>$function);
         return $data;
     }
+
+
+	public function mp(){
+		#Status 1 - Pago Acreditado
+		#Status 2 - Pago Pendiente Acreditacion
+		#Status 3 - Pago Rechazado
+		#Status 0 - Pago NO Procesado
+		/*
+		#pending 	El usuario no completó el proceso de pago.
+		#approved 	El pago fue aprobado y acreditado.
+		#in_process 	El pago esta siendo revisado.
+		#rejected 	El pago fue rechazado. El usuario puede intentar nuevamente.
+		cancelled 	El pago fue cancelado por superar el tiempo necesario para realizar el pago o por una de las partes.
+		refunded 	El pago fue devuelto al usuario.
+		in_mediation 	Se inicio una disputa para el pago.
+		* http://demo.omgeventos.com.ar/evento/payments/close/
+		* id/41-0000000000413/
+		* collection_id/1458191868/
+		* collection_status/approved/
+		* payment_type/credit_card/
+		* preference_id/139398783-f15e9fed-d8d2-4895-b882-33b752144e86
+		*/
+
+		$id_barcode = explode("-", $this->params['id']);
+		$id         = $id_barcode[0];
+		$barcode    = $id_barcode[1];
+
+		$order_info    = $this->db->get_where('orders',array('id'=>$id))->row();
+		$customer_info = $this->db->get_where('customers',array('id'=>$order_info->customer_id))->row();
+
+		$success = false;
+		if($this->params['collection_id'] != 'null'){
+			$payment_info = $this->mp->get_payment_info($this->params['collection_id']);
+
+
+
+			$update  = array('collection_id'       => $payment_info['response']['collection']['id'],
+							 'collection_status'   => $payment_info['response']['collection']['status'],
+							'preference_id'       => $this->params['preference_id'],
+							'currency_id'         => $payment_info['response']['collection']['currency_id'],
+							'transaction_amount'  => $payment_info['response']['collection']['transaction_amount'],
+							'payment_type'        => $payment_info['response']['collection']['payment_type'],
+							'order_id'            => $payment_info['response']['collection']['order_id'],
+							'status'              => $payment_info['response']['collection']['status_detail']
+							);
+
+			$this->db->where('order_id',$order_info->id);
+			$query = $this->db->update('pagos',$update);
+
+			if(!$query){
+
+			} else {
+				switch($payment_info['response']['collection']['status']){
+					case 'approved':
+					case 'accredited':
+						$template =  'pago_ok';
+						$subject    = "Acreditacion ".$this->evento_name;
+						#ACTUALIZO PAGO STATUS
+						$this->db->where('order_id',$order_info->id);
+						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['collection']['status']));
+
+						$this->db->where('id',$order_info->id);
+						$this->db->update('orders', array('status'=>1));
+
+						$body    = $this->view('email/'.$template, array('user_info'=>$customer_info, 'datos'=>$payment_info,  'evento'=>$this->evento));
+					break;
+
+					default:
+						case 'in_process':
+						case 'pending':
+						case 'pending_contingency':
+						#ACTUALIZO PAGO STATUS
+						$this->db->where('order_id',$order_info->id);
+						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['collection']['status']));
+
+						$this->db->where('id',$order_info->id);
+						$this->db->update('orders', array('status'=>2));
+
+
+						$subject    = "PreAcreditacion ".$this->evento_name;
+						$template   = 'pago_pendiente';
+
+						$body    = $this->view('email/'.$template, array('user_info'=>$customer_info, 'datos'=>$payment_info,  'evento'=>$this->evento));
+					break;
+
+					case 'cancelled':
+					case 'rejected':
+					case 'cc_rejected_other_reason':
+						#ACTUALIZO PAGO STATUS
+						#ACTUALIZO PAGO STATUS
+						$this->db->where('order_id',$order_info->id);
+						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['collection']['status']));
+
+						$this->db->where('id',$order_info->id);
+						$this->db->update('orders', array('status'=>3));
+
+
+
+						$subject    = "Tarjeta Rechazada ".$this->evento_name;
+						$template   = 'pago_rechazado';
+
+						$body    = $this->view('email/'.$template, array('user_info'=>$customer_info, 'order_info'=>$order_info, 'datos'=>$payment_info,  'evento'=>$this->evento));
+					break;
+				}
+				$email  = $this->Email->send('email_info', $customer_info->email, $subject, $body, array());
+			}
+		} else {
+			$subject    = "Completar Pago ".$this->evento_name;
+			$template   = 'pago_no_procesado';
+
+			$body       = $this->view('email/'.$template, array('user_info'=>$customer_info, 'order_info'=>$order_info, 'evento'=>$this->evento));
+			$email   = $this->Email->send('email_info', $customer_info->email, $subject, $body, array());
+
+			$this->db->where('order_id',$order_info->id);
+			$query = $this->db->update('pagos', array('status'=>'pending', 'preference_id'=>$this->params['preference_id'], 'pago_status'=>2 ));
+
+		}
+
+		if($query) {
+			$success      = true;
+			$responseType = 'redirect';
+			$data         = array('success' =>$success, 'responseType'=>$responseType, 'value'=>base_url('cart/thanks'));
+		}
+		return $data;
+	}
 
 
 
