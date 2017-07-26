@@ -74,7 +74,7 @@ class cart_mod extends RR_Model {
 				throw new Exception("Se ha producido un error al agregar al carrito, por favor intentelo nuevamente mas tarde.",1);
 			}
 
-			//ep($ticket);
+
 			if($ticket->min_qty == 0  && $ticket->max_qty == 0 ){
 				$options['nominar'] = $qty;
 				$options['packs'] = 'N/A';;
@@ -90,7 +90,7 @@ class cart_mod extends RR_Model {
 			$options['extras']    = (!empty($ticket->descripcion)) ? $ticket->descripcion : '';
 			$options['ticket_id'] = (!empty($ticket->id)) ? $ticket->id : '';
 
-			$price = (int)$this->getPrice($ticket);
+			$price = (float)$this->getPrice($ticket);
 
 			$product = array(
 				   'id'      => $sku,
@@ -99,6 +99,8 @@ class cart_mod extends RR_Model {
 				   'name'    => $ticket->nombre,
 				   'options' => $options
 				);
+
+
 
 			$cart_product_id = $this->cart->insert($product);
 
@@ -341,7 +343,7 @@ class cart_mod extends RR_Model {
 	        		break;
 
 	        	case 'mercado_pago':
-	        		$mp = ['total' => $this->cart->total(),
+	        		$mp = ['total' => round($this->cart->total()),
 	        				'id' => $order_id,
 	        				'barcode' =>$codeGenerated['barcode']  ];
 	        		$data = $this->Checkout->getPreferences($mp);

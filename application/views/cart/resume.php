@@ -22,8 +22,9 @@ foreach($this->cart->contents() as $product){
 			<td class="cart-product-name">
 				<strong>Subtotal</strong>
 			</td>
+
 			<td class="cart-product-name">
-				<span class="amount">$ <?php echo number_format($total_price, 2,",",".") ?></span>
+				<span class="amount">$ <?php echo number_format(round($total_price), 2,",",".") ?></span>
 			</td>
 		</tr>
 		<?php if($discount_total < 0) {  ?>
@@ -33,7 +34,7 @@ foreach($this->cart->contents() as $product){
 			</td>
 
 			<td class="cart-product-name">
-				<span class="amount text-danger">($ <?php echo number_format($discount_total, 2,",",".") ?>)</span>
+				<span class="amount text-danger">($ <?php echo number_format(round($discount_total), 2,",",".") ?>)</span>
 			</td>
 		</tr>
 		<?php } ?>
@@ -42,7 +43,7 @@ foreach($this->cart->contents() as $product){
 				<strong>Total</strong>
 			</td>
 			<td class="cart-product-name">
-				<span class="amount color lead"><strong>$ <?php echo number_format($this->cart->total(), 2,",",".") ?></strong></span>
+				<span class="amount color lead"><strong>$ <?php echo number_format(round($this->cart->total()), 2,",",".") ?></strong></span>
 			</td>
 		</tr>
 	</tbody>

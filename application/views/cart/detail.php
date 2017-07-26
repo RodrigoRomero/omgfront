@@ -30,7 +30,7 @@
 			</td>
 
 
-			<td class="cart-product-subtotal">$ <?php echo number_format($row['subtotal'], 2,",",".") ?></td>
+			<td class="cart-product-subtotal">$ <?php echo number_format(round($row['subtotal']), 2,",",".") ?></td>
 		</tr>
 	<?php } ?>
 	</tbody>
