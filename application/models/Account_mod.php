@@ -67,7 +67,19 @@ class account_mod extends RR_Model {
 
 			$values  = array_merge($customer, $this->i);
 			$insert = $this->db->insert('customers', $values);
+
+
 			if($insert){
+				$inserted_id = $this->db->insert_id();
+
+				set_session("id", $inserted_id, false);
+				set_session("empresa", $customer['empresa'], false);
+				set_session("nombre", $customer['nombre'], false);
+				set_session("apellido", $customer['apellido'], false);
+				set_session("email", $customer['email'], false);
+
+
+
 				$success = 'true';
 	            $responseType = 'function';
 	            $function     = 'appendFormMessagesModal';
@@ -75,7 +87,7 @@ class account_mod extends RR_Model {
 	            	['texto'=> "Su cuenta ha sido creada exitosamente",
 	            	 'title'=>'Registro de Usuarios',
 	            	 'class_type'=>'error']);
-	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function, 'modal_redirect'=>base_url('/cart/checkout'));
 			}
 
 
@@ -327,9 +339,26 @@ class account_mod extends RR_Model {
             $body       = $this->view('email/invitaciones', array('user_info'=>$acreditado, 'evento'=>$this->evento));
             $email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 
+            if(!$email){
+            	throw new Exception("Por favor intentelo mas tarde", 1);
+            }
 
+            $this->db->where('id', $acreditado->id);
+            $upd = $this->db->update('acreditados', ['invitacion'=>1]);
 
-			ep($acreditado);
+            if(!$upd){
+            	throw new Exception("Por favor intentelo mas tarde", 1);
+            }
+
+            $success = 'true';
+        	$responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> "Su invitación para ".$acreditado->nombre.' '.$acreditado->apellido." ha sido enviada exitosamente",
+            	 'title'=>'Registro de Usuarios',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
 
 
 		} catch (Exception $error) {

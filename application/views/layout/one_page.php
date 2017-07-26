@@ -1,3 +1,13 @@
+
+<?php
+$place = explode(",", $this->evento->direccion);
+$fecha_inicio = explode(" ",$this->evento->fecha_inicio);
+$fecha_cierre = explode(" ",$this->evento->fecha_baja);
+$hora_inicio  = substr($fecha_inicio[1],0,-3);
+$hora_cierre  = substr($fecha_cierre[1],0,-3);
+$fecha_inicio_array = explode("-", $fecha_inicio[0]);
+$fecha_cierre_array = explode("-", $fecha_cierre[0]);
+?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
 <head>
@@ -69,10 +79,25 @@
 					<div class="swiper-wrapper">
 						<div class="swiper-slide dark" style="background-image: url('<?php echo up_file('slider/'.$this->evento->id.'_0.jpg')?>');">
 							<div class="container clearfix">
+							<?php //ep($this->evento) ?>
 								<div class="slider-caption slider-caption-center">
-									<h2 data-caption-animate="fadeInUp"><?php echo $this->evento->nombre ?></h2>
+									<h2 data-caption-animate="fadeInUp" style="margin-bottom: 0"><?php echo $this->evento->nombre ?></h2>
 									<p data-caption-animate="fadeInUp" data-caption-delay="200"><?php echo $this->evento->bajada ?></p>
-
+									<div class="col-md-6">
+									<p><?php echo $place[0] ?><br /><?php echo $this->evento->lugar ?></p>
+									</div>
+									<div class="col-md-6">
+									 <p>
+                                <?php if($fecha_inicio[0]==$fecha_cierre[0]) { ?>
+                                    <span class="day"><?php echo $fecha_inicio_array[2] ?></span>
+                                    <span class="month"><?php echo strtoupper(getMes($fecha_inicio_array[1])) ?></span>
+                                <?php } else { ?>
+                                    <?php echo $fecha_inicio[0] ?><br />
+                                    <?php echo $fecha_cierre[0] ?>
+                                <?php } ?>
+                                <br /><span><?php echo $hora_inicio.' a '.$hora_cierre.' hs.' ?></span>
+                                </p>
+                                </div>
 									<div data-caption-animate="fadeInUp" data-caption-delay="200" class="one-page-menu">
 										<a href="#"" data-href="#section-tickets"" class="button button-3d button-white button-light button-rounded button-xlarge">Comprar Tickets</a>
 

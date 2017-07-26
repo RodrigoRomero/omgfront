@@ -370,17 +370,17 @@ function appendFormMessagesModal(data){
 function open_modal(data){
     var dialog = $("#modal");
     if(!exists(('#modal'))) {
-        dialog = $('<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"></div>').appendTo('body');
+        dialog = $('<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal"></div>').appendTo('body');
     }
 
     dialog.html(data.html).modal();
 
-    if(data.modal_redirect){
+
+
+    if(data.modal_redirect && (RR.keeper.get('comesfrom')== 'cart')){
 
         $('#modal').on('hide.bs.modal', function () {
-
             window.location.href = data.modal_redirect
-
         })
 
     }

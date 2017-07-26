@@ -15,23 +15,23 @@ class RR_Model extends CI_Model
 	var $u;
 	var $params;
 	var $evento;
-	
+
 	public function __construct() {
 		parent::__construct();
 		$this->Clang  = config_item("language");
 		$this->today  = date('Y-m-d H:i:s');
-		$this->i      = array("fa"  => date('Y-m-d H:i:s'), "status"=>1);  
+		$this->i      = array("fa"  => date('Y-m-d H:i:s'), "status"=>1);
 		$this->u      = array("fum"  => date('Y-m-d H:i:s'));
 		$this->params = $this->uri->uri_to_assoc(1);
 		$this->evento = $this->_getEventoActivo();
 	}
-	
+
 	public function view($view, $vars = array(), $return = true){
 		$vars["Clang"] = $this->Clang;
 		return $this->load->view($view, $vars, $return) . "\n";
 	}
-	
-	
+
+
 	public function get($top_id=0) {
 		if (!empty($top_id))
 		{
@@ -39,30 +39,32 @@ class RR_Model extends CI_Model
 			if (!empty($parent))
 			{
 				$this->db->like('lineage', $parent['lineage'], 'after');
-			}               
-		}   
+			}
+		}
 
 		$query = $this->db->order_by('lineage')->get('atributos');
-		return $query;        
+		return $query;
 	}
 
 	public function get_one($id) {
 		$row = $this->db->where('id', $id)
 						->get('atributos')
 						->row_array();
-		return $row;                
+		return $row;
 	}
-	
-	public function get_children($parent_id){       
+
+	public function get_children($parent_id){
 		$query = $this->db->order_by('lineage')->where('parent_id', $parent_id)->get('atributos');
-		return $query; 
+		return $query;
 	}
-	
-	private function _getEventoActivo(){      
-		$result = $this->db->get_where('eventos',array('status'=>1))->row();
+
+	private function _getEventoActivo(){
+		$result = $this->db->select('eventos.id, eventos.status, eventos.nombre, eventos.bajada, eventos.descripcion, eventos.fecha_inicio, eventos.fecha_baja, eventos.telefono, eventos.capacidad, eventos.costo,
+								    eventos.newsletter, eventos.json_socials, eventos.payments_enabled, eventos.show_register, eventos.cupons_enabled, lugares.lugar, lugares.direccion, lugares.json_direccion')->join('lugares', 'lugares.evento_id = eventos.id')->get_where('eventos',array('eventos.status'=>1))->row();
 		return $result;
 	}
-	
+
+
 	public function get_atributos($table, $row=false, $id=NULL){
 		$this->db->select("*");
 		if(!empty($id) && $id!=NULL){
@@ -70,21 +72,21 @@ class RR_Model extends CI_Model
 		}
 		$query = $this->db->get_where($table,array('activo'=>1));
 		if($row){
-			$return = $query->row(); 
+			$return = $query->row();
 		} else {
 			$return = $query->result();
 		}
 		return $return;
 	}
-	
-	public function check_deletea(){        
+
+	public function check_deletea(){
 		if(isset($this->params['id']) && !empty($this->params['id'])){
 			$id = $this->params['id'];
 			$success      = 1;
 			$responseType = 'function';
 			$data = array('title'   => 'Eliminar Registo',
 						  'texto'   => 'Estas seguro que deseas eliminar este registro ?',
-						  'link'    => set_url(array($this->atributo=>'deletea', 'c'=>$this->params['c'], 'id'=>$id)),                 
+						  'link'    => set_url(array($this->atributo=>'deletea', 'c'=>$this->params['c'], 'id'=>$id)),
 					);
 			$html         = $this->view('alerts/modal_dialog', $data);
 			$function     = 'open_modal';
@@ -92,8 +94,8 @@ class RR_Model extends CI_Model
 		}
 		return $data;
 	}
-	
-	public function getTotalImages($id,$folder){        
+
+	public function getTotalImages($id,$folder){
 		$imgArr = get_filenames("uploads/$folder");
 		$i = 0;
 		foreach($imgArr as $images){
@@ -106,5 +108,5 @@ class RR_Model extends CI_Model
 		$totalImages = $i;
 		return $totalImages;
 	}
-   
+
 }
