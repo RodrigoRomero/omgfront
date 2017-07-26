@@ -14,7 +14,7 @@ class Auth_mod extends RR_Model {
 
 	public function __construct() {
  		parent::__construct();
-        $this->load->config('Auth', TRUE);
+        $this->load->config('auth', TRUE);
         $this->_set_auth_prefs();
         $this->_setLoginAttempts();
     }
@@ -69,7 +69,7 @@ class Auth_mod extends RR_Model {
        }
     }
     private function _set_auth_prefs(){
-        $this->or_auth_prefs = $this->config->item('rr_auth_prefs','Auth');
+        $this->or_auth_prefs = $this->config->item('rr_auth_prefs','auth');
     }
     private function _setLoginAttempts(){
         $tmp_max_login_attempts = $this->env->getEnv('login_attemps');

@@ -9,7 +9,7 @@ class rr_auth {
 
 	public function __construct(){
 		$this->CI =& get_instance();
-		$this->CI->load->config('Auth', TRUE);
+		$this->CI->load->config('auth', TRUE);
 		$this->_set_auth_prefs();
 	}
 
@@ -30,7 +30,7 @@ class rr_auth {
 
 	private function _set_auth_prefs(){
 
-		$this->or_auth_prefs = $this->CI->config->item('rr_auth_prefs','Auth');
+		$this->or_auth_prefs = $this->CI->config->item('rr_auth_prefs','auth');
 	}
 
 
