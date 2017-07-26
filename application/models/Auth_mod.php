@@ -11,7 +11,7 @@ class Auth_mod extends RR_Model {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->config('Auth', TRUE);
+		$this->load->config('auth', TRUE);
 		$this->_set_auth_prefs();
 		$this->_setLoginAttempts();
 	}
@@ -92,7 +92,7 @@ class Auth_mod extends RR_Model {
 
 
 	private function _set_auth_prefs(){
-		$this->zt_auth_prefs = $this->config->item('zt_auth_prefs','Auth');
+		$this->zt_auth_prefs = $this->config->item('zt_auth_prefs','auth');
 	}
 
 
