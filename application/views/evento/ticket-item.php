@@ -90,12 +90,12 @@ ksort($options);
 		   	<?php if($item->agotadas){ ?>
 		   		<div class="pricing-meta">Entradas Agotadas</div>
 		   		<div class="pricing-price">
-		   		<span class="price-unit"><del>$</del></span><del><?php echo $item->precio_oferta ?></del><span class="price-tenure"><del>$ <?php echo $item->precio_regular ?></del></span>
+		   		<span class="price-unit"><del>$</del></span><del><?php echo number_format($item->precio_oferta, 2, ",", ". ")?></del><span class="price-tenure"><del>$ <?php echo number_format($item->precio_regular, 2, ",", ". ") ?></del></span>
 		   		</div>
 		   	<?php } else { ?>
 		   	<div class="pricing-meta">Hasta: <?php echo $fecha_venta ?></div>
 		   		<div class="pricing-price">
-		   		<span class="price-unit">$</span><?php echo $item->precio_oferta ?><span class="price-tenure"><del>$ <?php echo $item->precio_regular ?></del></span>
+		   		<span class="price-unit">$</span><?php echo number_format($item->precio_oferta, 2, ",", ". ") ?><span class="price-tenure"><del>$ <?php echo number_format($item->precio_regular, 2, ",", ". ") ?></del></span>
 		   		</div>
 	        <?php } ?>
 
@@ -103,12 +103,12 @@ ksort($options);
 	        <?php if($item->agotadas){ ?>
 	        	<div class="pricing-meta">Entradas Agotadas</div>
 	           <div class="pricing-price">
-	           <span class="price-unit"><del>$</del></span><del><?php echo $item->precio_regular ?></del>
+	           <span class="price-unit"><del>$</del></span><del><?php echo number_format($item->precio_regular, 2, ",", ". ") ?></del>
 	           </div>
 	        <?php } else { ?>
 
 	        	<div class="pricing-price">
-	            <span class="price-unit">$</span><?php echo $item->precio_regular ?>
+	            <span class="price-unit">$</span><?php echo number_format($item->precio_regular, 2, ",", ". ") ?>
 	            </div>
 	       <?php } ?>
 
