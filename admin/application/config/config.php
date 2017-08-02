@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://omgeventos.app/admin/';
-$config['front_url'] = 'http://omgeventos.app';
+$config['base_url'] = 'http://beneficio.bisblick.org/admin/';
+$config['front_url'] = 'http://beneficio.bisblick.org/';
 /*
 |--------------------------------------------------------------------------
 | Index File

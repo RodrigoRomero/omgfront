@@ -35,14 +35,14 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 			Usted se ha pre-inscripto para participar del evento <?php echo $evento->nombre ?>. <br />
 			Confirmando su  registro mediante el pago, de la <b> Orden #<?php echo $order_id ?></b> podemos asegurar su inscripción.<br />
-			Si desea realizar una transferencia bancaria, estos son los datos de nuestra cuenta:
+			Usted seleccionó la opción de transferencia bancaria, estos son los datos de nuestra cuenta:
 			<br /><br />
-			Cta.Cte. Número: 0543/02000174/75<br />
-			Banco: ICBC - Florida 99 – Casa Central<br />
-			Titular: Asociación de Marketing Directo e Interactivo de Argentina<br />
-			CBU: 01505436-02000000174756<br />
-			CUIT: 33-63225747-9<br /><br />
-			Agradecemos enviar el comprobante de transferencia a Jessica Meccia <a href="mailto:soporte@amdia.org.ar">soporte@amdia.org.ar</a> para mayor certeza<br />
+			Cta.Cte. Número: 6594-0 335-6<br />
+			Banco: Galicia<br />
+			Titular: Fundación Bisblick- Compromiso Social<br />
+			CBU: 0070335020000006594066<br />
+			CUIT: 30-71494767-9<br /><br />
+			Agradecemos enviar el comprobante de transferencia a Noelia Villaca <a href="mailto:nvillaca@bisblick.org">nvillaca@bisblick.org</a> para mayor certeza<br />
 			Muchas gracias.</p>
 		</td>
 	</tr>

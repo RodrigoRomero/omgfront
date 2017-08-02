@@ -10038,12 +10038,13 @@ body:not(.device-touch) .team-overlay {
 /* Pricing Boxes - Price
 -----------------------------------------------------------------*/
 
+
 .pricing-price {
 	position: relative;
 	padding: 25px 0;
 	color: #333;
 	font-weight: 300;
-	font-size: 64px;
+	font-size: 48px;
 	line-height: 1;
 }
 
