@@ -17,44 +17,7 @@
 
 					<!-- Top Links
 					============================================= -->
-					<div class="top-links">
-						<ul>
-							<?php
-							if($this->auth->loggedin()) { ?>
-								<li><a href="javascript:void(0)">Bienvenido <?php echo get_session('nombre',false).' '.get_session('apellido',false) ?></a></li>
-								<li><a href="<?php echo base_url('/account/summary') ?>">Mi Cuenta</a></li>
-							<?php } else { ?>
-								<li><a href="<?php echo base_url('/account') ?>">Registrarme</a></li>
-								<li><a href="javascript:void(0)">Login</a>
-								<div class="top-link-section">
-									<?php
-									$form_name = 'login-header-form';
-									$data   = array ('id'=>$form_name);
-									$action =  base_url('/auth/login');
-									echo form_open($action,$data);
-									?>
-									<div class="col_full">
-									<label for="login-form-username">Email:</label>
-									<input type="text" id="login-username" name="username" value="" class="form-control required email" />
-								</div>
-
-								<div class="col_full">
-									<label for="login-form-password">Password:</label>
-									<input type="password" id="login-password" name="password" value="" class="form-control required" />
-								</div>
-
-								<div class="col_full nobottommargin">
-
-									<button class="button button-3d" id="login-form-submit"  onclick="validateForm('<?php echo $form_name ?>')">Ingresar</button>
-
-								</div>
-									<?php echo form_close() ?>
-								</div>
-							</li>
-							<?php } ?>
-							<li><a href="<?php echo base_url('/cart') ?>"><i class="icon-shopping-cart"></i></a></li>
-						</ul>
-					</div><!-- .top-links end -->
+					<?php echo $this->load->view('layout/toplinks', [], true) ?>
 
 				</div>
 
@@ -85,20 +48,8 @@
 
 					<!-- Primary Navigation
 					============================================= -->
-					<nav id="primary-menu">
+					<?php echo $this->load->view('layout/main_navigation',['layout'=> 'multi_page'],true); ?>
 
-						<ul class="one-page-menu" data-easing="easeInOutExpo" data-speed="1500">
-							<li><a href="#" data-href="#home"><div>Home</div></a></li>
-							<!--<li><a href="#" data-href="#section-agenda"><div>Agenda</div></a></li>-->
-							<!--<li><a href="#" data-href="#section-oradores"><div>Oradores</div></a></li>-->
-							<!--<li><a href="#" data-href="#section-sponsors"><div>Sponsors</div></a></li>-->
-							<li><a href="#" data-href="#section-lugar"><div>Lugar</div></a></li>
-							<li><a href="#" data-href="#section-tickets"><div>Tickets</div></a></li>
-						</ul>
-
-
-					</nav>
-					<!-- #primary-menu end -->
 
 
 				</div>

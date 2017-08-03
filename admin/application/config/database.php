@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'adblicka_rrWeb',
-	'password' => 'ev=X}[T^PSzh',
-	'database' => 'adblicka_beneficios_v21',
+	'username' => 'root',
+	'password' => '123',
+	'database' => 'omgevent_summit',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

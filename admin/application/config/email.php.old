@@ -14,10 +14,10 @@
 
 $config = Array(
   'protocol' => 'smtp',
-  'smtp_host' => 'smtp.mailtrap.io',
-  'smtp_port' => 2525,
-  'smtp_user' => '303f9b6c2d7d25',
-  'smtp_pass' => '47ff21661ed17e',
+  'smtp_host' => 'mail.bisblick.org',
+  'smtp_port' => 26,
+  'smtp_user' => 'noreplay@bisblick.org',
+  'smtp_pass' => '7klziM*ytcBRsa',
   'mailtype' => 'html',
   'crlf' => "\r\n",
   'newline' => "\r\n"

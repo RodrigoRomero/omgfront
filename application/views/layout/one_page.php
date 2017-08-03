@@ -25,47 +25,9 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 
 			<div class="container clearfix">
 				<div class="col_half col_last fright nobottommargin">
-
+				<?php echo $this->load->view('layout/toplinks', [], true) ?>
 					<!-- Top Links
 					============================================= -->
-					<div class="top-links">
-						<ul>
-							<?php
-							if($this->auth->loggedin()) { ?>
-								<li><a href="javascript:void(0)">Bienvenido <?php echo get_session('nombre',false).' '.get_session('apellido',false) ?></a></li>
-								<li><a href="<?php echo base_url('/account/summary') ?>">Mi Cuenta</a></li>
-							<?php } else { ?>
-								<li><a href="<?php echo base_url('/account') ?>">Registrarme</a></li>
-								<li><a href="javascript:void(0)">Login</a>
-								<div class="top-link-section">
-									<?php
-									$form_name = 'login-header-form';
-									$data   = array ('id'=>$form_name);
-									$action =  base_url('/auth/login');
-									echo form_open($action,$data);
-									?>
-									<div class="col_full">
-									<label for="login-form-username">Email:</label>
-									<input type="text" id="login-username" name="username" value="" class="form-control required email" />
-								</div>
-
-								<div class="col_full">
-									<label for="login-form-password">Password:</label>
-									<input type="password" id="login-password" name="password" value="" class="form-control required" />
-								</div>
-
-								<div class="col_full nobottommargin">
-
-									<button class="button button-3d" id="login-form-submit"  onclick="validateForm('<?php echo $form_name ?>')">Ingresar</button>
-
-								</div>
-									<?php echo form_close() ?>
-								</div>
-							</li>
-							<?php } ?>
-							<li><a href="<?php echo base_url('/cart') ?>"><i class="icon-shopping-cart"></i></a></li>
-						</ul>
-					</div><!-- .top-links end -->
 
 				</div>
 
@@ -82,12 +44,26 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 							<?php //ep($this->evento) ?>
 								<div class="slider-caption slider-caption-center">
 									<h2 data-caption-animate="fadeInUp" style="margin-bottom: 0"><?php echo $this->evento->nombre ?></h2>
-									<p data-caption-animate="fadeInUp" data-caption-delay="200"><?php echo $this->evento->bajada ?></p>
+
+									<div class="fancy-title title-double-border title-center" data-caption-animate="fadeInUp" data-caption-delay="200">
+						<h3 ><?php echo $this->evento->bajada ?></h3>
+					</div>
+
+
+
+<div class="row">
+
 									<div class="col-md-6">
-									<p><?php echo $place[0] ?><br /><?php echo $this->evento->lugar ?></p>
+
+									<div class="venue_place">
+                                <span class="icon-location"></span>
+                                <p><?php echo $place[0] ?><br /><?php echo $this->evento->lugar ?></p>
+                            </div>
 									</div>
 									<div class="col-md-6">
-									 <p>
+									 <div class="venue_date">
+                                <span class="icon-calendar"></span>
+                                <p>
                                 <?php if($fecha_inicio[0]==$fecha_cierre[0]) { ?>
                                     <span class="day"><?php echo $fecha_inicio_array[2] ?></span>
                                     <span class="month"><?php echo strtoupper(getMes($fecha_inicio_array[1])) ?></span>
@@ -97,11 +73,22 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
                                 <?php } ?>
                                 <br /><span><?php echo $hora_inicio.' a '.$hora_cierre.' hs.' ?></span>
                                 </p>
+                            </div>
                                 </div>
-									<div data-caption-animate="fadeInUp" data-caption-delay="200" class="one-page-menu">
+                                </div>
+                               <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
+
+						<a href="javascript:void(0)"  class="button button-desc button-inverse">Ver Video</a>
+
+						<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-desc button-white">Comprar Tickets</a>
+
+					</div>
+					<!--
+									<div  class="one-page-menu">
 										<a href="#"" data-href="#section-tickets"" class="button button-3d button-white button-light button-rounded button-xlarge">Comprar Tickets</a>
 
 									</div>
+									-->
 							</div>
 						</div>
 					</div>
@@ -136,22 +123,9 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 
 					<!-- Primary Navigation
 					============================================= -->
-					<nav id="primary-menu">
 
-						<ul class="one-page-menu" data-easing="easeInOutExpo" data-speed="1500">
-							<li><a href="#" data-href="#home"><div>Home</div></a></li>
-							<!--<li><a href="#" data-href="#section-agenda"><div>Agenda</div></a></li>-->
-							<!--<li><a href="#" data-href="#section-oradores"><div>Oradores</div></a></li>-->
-							<!--<li><a href="#" data-href="#section-sponsors"><div>Sponsors</div></a></li>-->
-							<li><a href="#" data-href="#section-lugar"><div>Lugar</div></a></li>
-							<li><a href="#" data-href="#section-tickets"><div>Tickets</div></a></li>
-						</ul>
-						<!-- Top Cart
-						============================================= -->
-						<div id="top-cart">
-							<a href="<?php echo base_url('/cart') ?>"><i class="icon-shopping-cart"></i></a>
-						</div><!-- #top-cart end -->
-					</nav><!-- #primary-menu end -->
+					<?php echo $this->load->view('layout/main_navigation',['layout'=> 'one_page'],true); ?>
+
 
 
 				</div>
@@ -166,7 +140,7 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 		============================================= -->
 		<section id="content">
 
-			<div class="content-wrap">
+			<div >
 				<?php echo $module ?>
 			</div>
 

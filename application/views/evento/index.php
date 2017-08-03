@@ -1,6 +1,6 @@
 
 <section>
-	<div class="section parallax" style="background-image: url('images/parallax/bkg_celebrando.jpg'); padding: 200px 0;" data-stellar-background-ratio="0.3">
+	<div class="parallax" style="background-image: url('images/parallax/bkg_celebrando.jpg'); padding: 200px 0;" data-stellar-background-ratio="0.3">
 		<div class="heading-block center nobottomborder nobottommargin">
 			<h2></h2>
 		</div>
@@ -57,7 +57,7 @@
 <?php echo $tickets; ?>
 <?php echo $lugar; ?>
 
-
+<?php echo $this->load->view('evento/gallery',[],true) ?>
 
 <?php //echo $agenda; ?>
 <?php // echo $oradores; ?>

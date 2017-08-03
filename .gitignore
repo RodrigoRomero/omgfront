@@ -1,0 +1,6 @@
+application/config/email.php
+application/config/config.php
+application/config/database.php
+admin/application/config/email.php
+admin/application/config/config.php
+admin/application/config/database.php
