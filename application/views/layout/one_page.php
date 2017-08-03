@@ -78,7 +78,7 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
                                 </div>
                                <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
 
-						<a href="javascript:void(0)"  class="button button-xlarge button-inverse">Ver Video</a>
+						<a href="http://vimeo.com/89396394"  data-lightbox="iframe"  class="button button-xlarge button-inverse">Ver Video</a>
 
 						<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white">Comprar Tickets</a>
 
