@@ -5,6 +5,33 @@
 				<div class="fancy-title title-double-border">
 					<h1><span>G</span>alería</h1>
 				</div>
+
+				<div id="page-menu" class="no-sticky">
+
+			<div id="page-menu-wrap">
+
+				<div class="container clearfix">
+
+
+
+					<nav>
+						<ul class="custom-filter" data-container="#portfolio" data-active-class="current">
+							<li class="current"><a href="#" data-filter="*"><div>Show All</div></a></li>
+							<li><a href="#" data-filter=".pf-icons"><div>Icons</div></a></li>
+							<li><a href="#" data-filter=".pf-illustrations"><div>Illustrations</div></a></li>
+							<li><a href="#" data-filter=".pf-uielements"><div>UI Elements</div></a></li>
+							<li><a href="#" data-filter=".pf-media"><div>Media</div></a></li>
+							<li><a href="#" data-filter=".pf-graphics"><div>Graphics</div></a></li>
+						</ul>
+					</nav>
+
+				<div id="page-submenu-trigger"><i class="icon-reorder"></i></div>
+
+				</div>
+
+			</div>
+
+		</div><!-- #page-menu end -->
 				<!-- Portfolio Items
 				============================================= -->
 				<div id="portfolio" class="portfolio grid-container portfolio-nomargin portfolio-full portfolio-masonry mixed-masonry grid-container clearfix">
