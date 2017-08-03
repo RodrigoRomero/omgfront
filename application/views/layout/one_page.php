@@ -45,9 +45,9 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 								<div class="slider-caption slider-caption-center">
 									<h2 data-caption-animate="fadeInUp" style="margin-bottom: 0"><?php echo $this->evento->nombre ?></h2>
 
-									<div class="fancy-title title-double-border title-center" data-caption-animate="fadeInUp" data-caption-delay="200">
+
 						<h3 ><?php echo $this->evento->bajada ?></h3>
-					</div>
+
 
 
 
@@ -78,9 +78,9 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
                                 </div>
                                <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
 
-						<a href="javascript:void(0)"  class="button button-desc button-inverse">Ver Video</a>
+						<a href="javascript:void(0)"  class="button button-xlarge button-inverse">Ver Video</a>
 
-						<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-desc button-white">Comprar Tickets</a>
+						<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white">Comprar Tickets</a>
 
 					</div>
 					<!--
