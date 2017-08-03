@@ -64,7 +64,7 @@ ksort($options);
 
 ?>
 
-<div class="pricing-box pricing-extended bottommargin clearfix" style="min-height: 350px">
+<div class="pricing-box pricing-extended bottommargin clearfix" style="min-height: 285px">
 
 	<div class="pricing-desc">
 		<div class="pricing-title">
