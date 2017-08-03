@@ -3074,9 +3074,14 @@ body:not(.stretched) .slider-parallax .slider-parallax-inner { left: auto; }
 	background: #38024f;
 }
 
+.slider-caption .venue_place span.icon-location,
+.slider-caption .venue_date span.icon-calendar {
+	font-size: 25px;
+
+}
 .slider-caption p {
 	margin-bottom: 10px;
-	font-size: 24px;
+	font-size: 20px;
 }
 
 .slider-caption.slider-caption-right {
