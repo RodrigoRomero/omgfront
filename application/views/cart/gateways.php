@@ -1,7 +1,7 @@
 <?php
 $gateways = ['transferencia_bancaria' => ['id'=>'transferencia_bancaria', 'type'=>'radio','name'=>'medio_pago', 'class'=>'required', 'value'=>'transferencia_bancaria', 'class'=>'required'],
               'mercado_pago' => ['id'=>'mercado_pago', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'mercado_pago'],
-              'pago_mis_cuentas' => ['id'=>'pago_mis_cuentas', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'pago_mis_cuentas']
+              //'pago_mis_cuentas' => ['id'=>'pago_mis_cuentas', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'pago_mis_cuentas']
             ];
 //$data   = array ('id'=>'gatewayForm', 'class'=>'');
 //$action = lang_url('cart/do-gateway');

@@ -1157,8 +1157,10 @@
 	.slider-caption .button,
 	.camera_caption,
 	.ei-title,
-	.slider-arrow-top-sm,
-	.slider-arrow-bottom-sm { display: none !important; }
+	.slider-arrow-top-sm,«
+	.slider-arrow-bottom-sm {}
+
+	.slider-caption p {font-size: 14px;}
 
 	.slider-caption h2 { margin-bottom: 0 !important; }
 
@@ -1172,6 +1174,10 @@
 		width: 80px !important;
 		height: 60px !important;
 	}
+
+	.slider-caption  .topmargin-lg {
+    margin-top: 20px !important;
+}
 
 	.postcontent,
 	.postcontent.bothsidebar,
@@ -1613,9 +1619,9 @@
 @media (max-width: 479px) {
 
 	.container,
-	#header.full-header .container,
-	.container-fullwidth { width: 310px !important; }
 
+	.container-fullwidth { }
+	#header.full-header .container {width: 100% !important}
 	.container.vertical-middle { width: 100% !important; }
 
 	.full-screen:not(.force-full-screen) .container.vertical-middle { width: 310px !important; }
@@ -1639,10 +1645,15 @@
 
 	.swiper_wrapper:not(.force-full-screen),
 	.swiper_wrapper:not(.force-full-screen):not(.canvas-slider-grid) .swiper-slide,
-	.ei-slider { height: 180px !important; }
-
-	.swiper_wrapper .slider-caption h2 { font-size: 28px; }
-
+	.ei-slider {}
+	.slider-caption {height: 380px !important}
+	.swiper_wrapper .slider-caption h2 { font-size: 20px; margin-top: 20px;}
+	.swiper_wrapper .slider-caption h3 { font-size: 16px; margin-bottom: 10px;}
+	.slider-caption .button.button-xlarge {padding: 0 24px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    height: 45px;
+    line-height: 45px;}
 	#header.transparent-header.floating-header .container {
 		width: 310px;
 		padding: 0 15px;

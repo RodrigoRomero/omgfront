@@ -11,3 +11,6 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	fbq('track', 'Purchase', {value: '0.00', currency:'USD'});
+</script>
