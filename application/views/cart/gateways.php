@@ -1,7 +1,6 @@
 <?php
 $gateways = ['transferencia_bancaria' => ['id'=>'transferencia_bancaria', 'type'=>'radio','name'=>'medio_pago', 'class'=>'required', 'value'=>'transferencia_bancaria', 'class'=>'required'],
-              'mercado_pago' => ['id'=>'mercado_pago', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'mercado_pago'],
-              //'pago_mis_cuentas' => ['id'=>'pago_mis_cuentas', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'pago_mis_cuentas']
+              'mercado_pago' => ['id'=>'mercado_pago', 'type'=>'radio','name'=>'medio_pago', 'class'=>'', 'value'=>'mercado_pago']
             ];
 //$data   = array ('id'=>'gatewayForm', 'class'=>'');
 //$action = lang_url('cart/do-gateway');
@@ -9,7 +8,7 @@ $gateways = ['transferencia_bancaria' => ['id'=>'transferencia_bancaria', 'type'
 ?>
 
 
-<div class="col_full">
+<div class="col_full jResumePayments" >
 
 
 <?php
@@ -22,7 +21,20 @@ echo form_open($action,$data);
 ?>
 
 <?php
+if($this->cart->total() == 0) { ?>
+
+<div>
+
+<input id="free" class="radio-style free" name="medio_pago" type="radio" value="foc" checked="true" />
+<label for="free" class="required radio-style-3-label">Sin cargo</label>
+</div>
+
+<?php } else {
+
+
 foreach($gateways as $k=>$gateway) {
+
+
 $name = ucwords(str_replace('_',' ',$k));
 if(get_session('cart_medio_pago',false)){
 	$gateway_selectd = get_session('cart_medio_pago',false);
@@ -30,6 +42,8 @@ if(get_session('cart_medio_pago',false)){
 
 $checked = ( $gateway['value'] == $gateway_selectd) ? 'checked' : '';
 ?>
+
+
 <div>
 
 <input id="<?php echo $gateway['id']?>" class="radio-style <?php echo $gateway['class']?>" name="<?php echo $gateway['name']?>" type="radio" value="<?php echo $gateway['value']?>" <?php echo $checked ?> r/>
@@ -37,7 +51,7 @@ $checked = ( $gateway['value'] == $gateway_selectd) ? 'checked' : '';
 </div>
 
 
-<?php } ?>
+<?php } } ?>
 
 
 
@@ -54,7 +68,7 @@ $checked = ( $gateway['value'] == $gateway_selectd) ? 'checked' : '';
 <?php echo form_close();
 } else {
 $name = ucwords(str_replace('_',' ',get_session('cart_medio_pago',false)));
-
+$name = ($name = 'foc') ? 'Sin Cargo' : $name;
 ?>
 <div>
 <input id="<?php echo get_session('cart_medio_pago',false) ?>" class="radio-style" name="<?php echo $name ?>" type="radio" value="<?php echo get_session('cart_medio_pago',false) ?>" checked>

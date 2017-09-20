@@ -170,7 +170,8 @@ class cart_mod extends RR_Model {
 			$responseType = 'function';
 			$function = 'reloadCart';
 			$html = ['fullcart' => $this->view('cart/detail', ['delete'=>true]),
-					 'resume'	=> $this->view('cart/resume')
+					 'resume'	=> $this->view('cart/resume'),
+					 'payments' => $this->view('cart/gateways',['proceedToCheckout' => true, 'show_options' => true])
 					 ];
 			$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
 
@@ -277,7 +278,7 @@ class cart_mod extends RR_Model {
 					 'total_price'  		  => $total_price,
             		 'discount_amount'  	  => $discount_amount,
         		 	 'total_discounted_price' => $this->cart->total(),
-					 'gateway'                => (get_session('cart_medio_pago', false)) ? get_session('cart_medio_pago', false) : 'FOC',
+					 'gateway'                => (get_session('cart_medio_pago', false)) ? get_session('cart_medio_pago', false) : 'foc',
 					 'full_cart'        	  => json_encode($this->cart->contents()),
 					 'status'				  => 1
 					 ];
@@ -317,8 +318,8 @@ class cart_mod extends RR_Model {
 	            'payment_type'        => get_session('cart_medio_pago', false),
 	            'transaction_amount'  => $this->cart->total(),
 	            'currency_id'         => 'ARS',
-	            'pago_status'         => ($values['gateway'] == 'FOC') ? 2 : '-1',
-	            'status'              => ($values['gateway'] == 'FOC') ? 'approved' : 'in_progress',
+	            'pago_status'         => ($values['gateway'] == 'foc') ? 2 : '-1',
+	            'status'              => ($values['gateway'] == 'foc') ? 'approved' : 'in_progress',
 	          );
 	        $order_payment = $this->db->insert('pagos',$payment);
 	        $this->db->trans_complete();
@@ -352,6 +353,16 @@ class cart_mod extends RR_Model {
 
 	        	case 'pago_mis_cuentas':
 	        		#TODO
+	        		break;
+        		case 'foc':
+	        		$subject    = "Acreditación ".$this->evento_name;
+	        		$customer   = $this->Account->getCustomerById();
+	        		$order = (object)$values;
+                	$body  = $this->view('email/pago_ok', array('user_info'=>$customer, 'evento'=>$this->evento, 'order_id'=>$order_id));
+                	$email = $this->Email->send('email_info', $customer->email, $subject, $body, array('cc'=>$customer->email));
+		      		$success = true;
+					$responseType = 'redirect';
+					$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('cart/thanks'));
 	        		break;
 	        }
 

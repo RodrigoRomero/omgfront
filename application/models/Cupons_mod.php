@@ -80,7 +80,8 @@ class Cupons_mod extends RR_Model {
 						$responseType = 'function';
 						$function = 'reloadCart';
 						$html = ['fullcart' => $this->view('cart/detail', ['delete'=>true]),
-								 'resume'	=> $this->view('cart/resume')
+								 'resume'	=> $this->view('cart/resume'),
+								 'payments' => $this->view('cart/gateways',['proceedToCheckout' => true, 'show_options' => true])
 								 ];
 						$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
 

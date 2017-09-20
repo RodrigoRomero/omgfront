@@ -397,4 +397,5 @@ function removeFromCart(e){
 function reloadCart(data){
     $(".jFullCart").empty().html(data.html.fullcart);
     $(".jResumeCart").empty().html(data.html.resume);
+    $(".jResumePayments").empty().html(data.html.payments);
 }
