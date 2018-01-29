@@ -18,6 +18,7 @@ $form_name = 'payments-form';
 $data   = array ('id'=>$form_name);
 $action =  base_url('/cart/payments');
 echo form_open($action,$data);
+
 ?>
 
 <?php
@@ -67,8 +68,11 @@ $checked = ( $gateway['value'] == $gateway_selectd) ? 'checked' : '';
 
 <?php echo form_close();
 } else {
+
+
 $name = ucwords(str_replace('_',' ',get_session('cart_medio_pago',false)));
-$name = ($name = 'foc') ? 'Sin Cargo' : $name;
+$name = ($name == 'foc') ? 'Sin Cargo' : $name;
+
 ?>
 <div>
 <input id="<?php echo get_session('cart_medio_pago',false) ?>" class="radio-style" name="<?php echo $name ?>" type="radio" value="<?php echo get_session('cart_medio_pago',false) ?>" checked>

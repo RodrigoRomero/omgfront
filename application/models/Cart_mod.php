@@ -100,18 +100,23 @@ class cart_mod extends RR_Model {
 				   'options' => $options
 				);
 
-
-
 			$cart_product_id = $this->cart->insert($product);
+			
+			//print_r($this->cart->total_items());
 
 
+			if($qty > 1){
+				$msg_modal = "Las $qty entradas $ticket->nombre se han agregado a su carrito.";
+			} else {
+				$msg_modal = "La entrada  $ticket->nombre se han agregado a su carrito.";
+			}
 			if($cart_product_id){
 				if($modal){
 					$success = 'true';
             		$responseType = 'function';
 		            $function     = 'appendFormMessagesModal';
 		            $messages     = $this->view('alerts/modal_alert',
-		            	['texto'	=> 'La(s) entrada(s) '. $ticket->nombre.' se ha(n) agregado a su carrito.',
+		            	['texto'	=> $msg_modal,
 		            	 'title'	=> $this->evento->nombre,
 		            	 'link' 	=> base_url('cart'),
 		            	 'class_type'=>'error']);
