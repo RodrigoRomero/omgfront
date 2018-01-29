@@ -5,7 +5,7 @@
 			<th class="cart-product-remove">&nbsp;</th>
 			<?php } ?>
 			<th class="cart-product-name">Entradas</th>
-			<th class="cart-product-quantity">Packs</th>
+			<!-- <th class="cart-product-quantity">Packs</th> -->
 			<th class="cart-product-quantity">Cantidad</th>
 			<th class="cart-product-price">Precio Unitario</th>
 			<th class="cart-product-subtotal">Total</th>
@@ -23,7 +23,7 @@
 			</td>
 			<?php } ?>
 			<td class="cart-product-name"><?php echo $row['name'] ?></td>
-			<td class="cart-product-quantity"><?php echo $row['options']['packs'] ?></td>
+			<!-- <td class="cart-product-quantity"><?php echo $row['options']['packs'] ?></td> -->
 			<td class="cart-product-quantity"><?php echo $row['qty'] ?></td>
 			<td class="cart-product-price">
 				<span class="amount">$ <?php echo number_format($row['price'], 2,",",".")  ?></span>
