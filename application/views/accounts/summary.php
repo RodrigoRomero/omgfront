@@ -34,8 +34,8 @@
 							<?php foreach($orders as $event) {
 
 							 ?>
-								<div class="toggle toggle-border">
-									<div class="togglet toggleta"><i class="toggle-closed icon-ok-circle"></i><i class="toggle-open icon-remove-circle"></i><?php echo $event['name']?></div>
+								<div class="toggle toggle-border" data-state="open">
+									<div class="togglet"><i class="toggle-closed icon-ok-circle"></i><i class="toggle-open icon-remove-circle"></i><?php echo $event['name']?></div>
 									<div class="togglec">
 										<table class="table">
 									  <thead>
