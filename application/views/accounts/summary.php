@@ -18,8 +18,9 @@
 						<div class="col-sm-9">
 
 							<div class="heading-block noborder">
-								<h3><?php echo $customer->empresa ?></h3>
-								<span><?php echo $customer->nombre.' '.$customer->apellido?></span>
+							<!--	<h3><?php echo $customer->empresa ?></h3> -->
+								<h3><?php echo $customer->nombre.' '.$customer->apellido?></h3>
+								<span>Por favor, nomine sus entradas con los datos correspondientes de los asistentes en el siguiente ícono <i class="i-plain icon-edit i-small" style=""></i> ubicado en el recuadro de abajo. Es importante que para que cada uno de los asistentes reciba su mail de confirmación con el código de acceso al evento, haga click en el botón de INVITAR en la página que sigue.</span>
 							</div>
 
 							<div class="clear"></div>
@@ -34,7 +35,7 @@
 
 							 ?>
 								<div class="toggle toggle-border">
-									<div class="togglet"><i class="toggle-closed icon-ok-circle"></i><i class="toggle-open icon-remove-circle"></i><?php echo $event['name']?></div>
+									<div class="togglet toggleta"><i class="toggle-closed icon-ok-circle"></i><i class="toggle-open icon-remove-circle"></i><?php echo $event['name']?></div>
 									<div class="togglec">
 										<table class="table">
 									  <thead>
