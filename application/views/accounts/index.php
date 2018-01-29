@@ -39,7 +39,7 @@
 					<div class="col_two_third col_last nobottommargin">
 
 
-						<h3>Si no tenes cuenta, registrate ahora.</h3>
+						<h3>Registrá tus datos.</h3>
 						<p>Una vez registrado podras realizar el seguimiento de tus tickets comprados e invitar a quién desees.</p>
 
 						<?php

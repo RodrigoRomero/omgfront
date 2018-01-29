@@ -1,6 +1,6 @@
 <div class="container clearfix">
 	<div class="fancy-title title-double-border">
-		<h1><span>C</span>heckout</h1>
+		<h1><span>R</span>esumen de compra</h1>
 	</div>
 	<div class="row clearfix">
 

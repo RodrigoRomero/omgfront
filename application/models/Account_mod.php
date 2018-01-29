@@ -84,7 +84,7 @@ class account_mod extends RR_Model {
 	            $responseType = 'function';
 	            $function     = 'appendFormMessagesModal';
 	            $messages     = $this->view('alerts/modal_alert',
-	            	['texto'=> "Su cuenta ha sido creada exitosamente",
+	            	['texto'=> "Sus datos han sido registrados exitosamente",
 	            	 'title'=>'Registro de Usuarios',
 	            	 'class_type'=>'error']);
 	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function, 'modal_redirect'=>base_url('/cart/checkout'));
