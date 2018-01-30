@@ -332,14 +332,35 @@ class orders_mod extends RR_Model {
 
     public function exporta(){
         $this->db->start_cache();
-        $this->db->select('o.id, o.customer_id, o.evento_id, o.ticket_id, o.item_price, o.quantity, o.total_price, o.discount_amount, o.total_discounted_price, o.discount_code, o.gateway,
-                           c.empresa, c.cargo, c.nombre, c.apellido, c.fecha_nacimiento, c.dni, c.email, c.telefono, c.conocio,
-                           t.nombre ticket_nombre,
-                           p.status status_pago', false);
+        $this->db->select('o.id,
+o.customer_id,
+o.evento_id,
+ot.ticket_id,
+ot.ticket_price,
+ot.quantity,
+o.total_price,
+o.discount_amount,
+o.total_discounted_price,
+od.discount_code,
+o.gateway,
+c.empresa,
+c.cargo,
+c.nombre,
+c.apellido,
+c.fecha_nacimiento,
+c.dni,
+c.email,
+c.telefono,
+c.conocio,
+t.nombre ticket_nombre,
+p.status status_pago', false);
         $this->db->where('o.evento_id',$this->evento_id);
         $this->db->join('pagos p', 'p.order_id = o.id','INNER');
         $this->db->join('tickets t', 't.id = o.ticket_id','INNER');
         $this->db->join('customers c', 'c.id = o.customer_id','INNER');
+        $this->db->join('order_tickets ot', 'ot.order_id = o.id','INNER');
+        $this->db->join('order_discounts od', 'od.order_id = o.id','INNER');
+
         if(isset($_POST['search']) && !empty($_POST['search'])) {
             $like_arr = array('c.nombre', 'c.apellido', 'c.email');
             foreach($like_arr as  $l){
