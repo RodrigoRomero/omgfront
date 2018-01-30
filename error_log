@@ -1,1 +1,0 @@
-[29-Jan-2018 12:54:47 America/Denver] PHP Fatal error:  Call to undefined method CI_Cart::content() in /home2/adblicka/public_html/argentinavision2020/2018/application/models/Cart_mod.php on line 105

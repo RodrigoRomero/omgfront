@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 if(config.page_handle == 'cart/thanks'){
-	countdown(4)
+	countdown(15)
 }
 
 $('.tleft.past-enabled').datepicker({
@@ -46,9 +46,9 @@ function countdown(secs){
       }
       else {
         clearInterval(int);
-         window.location.href = "/account/summary";
+         window.location.href = "/2018/account/summary";
       }
-    },1000);
+    },5000);
 }
 
 function paymentLink(datos){

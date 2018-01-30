@@ -48,7 +48,6 @@ if(!empty($row->descripcion)){
                     $this->load->view('panels/plan_detail', array('pos'=>0));
                 }
                 echo '</div>';
-                /*
                 echo '<div class="row-fluid">';
 
                     echo '<div class="span6">';
@@ -56,7 +55,6 @@ if(!empty($row->descripcion)){
                     echo control_group($data['placeholder'], form_input($data));
                     echo '</div>';
                 echo '</div>';
-                */
                  echo '<div class="row-fluid">';
                     echo '<div class="span6">';
                     $data = array('name'=>'min_qty','id'=>'min_qty','placeholder'=>'Cantidad Mínima', 'class'=>'number input-xlarge', 'value'=>$row->min_qty);
