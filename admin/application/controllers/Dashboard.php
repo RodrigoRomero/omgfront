@@ -24,9 +24,7 @@ class Dashboard extends RR_Controller {
                     'total_checkins_by_tipo'              => $this->Dashboard->getTotalCheckInByTipo(),
                     'ultimos_acreditados'                 => $this->Dashboard->lastAcreditados(),
                     'total_facturacion'                   => $this->Dashboard->getFacturacionTotalStatus(),
-
-
-
+                    'total_nominaciones'									=> $this->Dashboard->nominaciones(),
    									'smallStats'                          => $this->Dashboard->getSmallStats(),
                     );
        $module =	$this->view('dashboard/index', $data);

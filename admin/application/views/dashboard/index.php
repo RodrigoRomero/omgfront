@@ -75,7 +75,21 @@
     </div>
     </div>
 <div class="row-fluid">
-
+	    <div class="span3 box">
+        <div class="box-header">
+    	   <h2><i class="icon-pencil"></i>Nominaciones</h2>
+        </div>
+        <div class="box-content">
+            <table class="table table-striped">
+                <?php foreach($total_nominaciones as $k => $nominaciones){ ?>
+                    <tr>
+                        <td><?php echo ucwords(trim($k))?></td>
+                        <td><?php echo $nominaciones ?></td>
+                    </tr>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
 
 
     <div class="span3 box">

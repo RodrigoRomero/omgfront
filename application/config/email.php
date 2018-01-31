@@ -14,8 +14,8 @@
 
 $config = Array(
   'protocol' => 'smtp',
-  'smtp_host' => 'mail.argentinavision2020.com',
-  'smtp_port' => 26,
+  'smtp_host' => '192.168.10.10',
+  'smtp_port' => 1025,
   'smtp_user' => 'noreply@argentinavision2020.com',
   'smtp_pass' => 'rA<NGb6\ER_(e',
   'mailtype' => 'html',

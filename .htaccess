@@ -1,14 +1,14 @@
 <IfModule mod_rewrite.c>
 
 	RewriteEngine On
-	RewriteBase /2018
+	RewriteBase /
 
 	#Removes access to the system folder by users.
 	#Additionally this will allow you to create a System.php controller,
 	#previously this would not have been possible.
 	#'system' can be replaced if you have renamed your system folder.
-
 	RewriteCond %{REQUEST_URI} ^system.*
+	RewriteRule ^(admin|user)($|/) - [L]
 	RewriteRule ^(.*)$ /index.php?/$1 [L]
 
 	#Checks to see if the user is attempting to access a valid file,
@@ -18,4 +18,5 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ index.php?/$1 [L]
+
 </IfModule>

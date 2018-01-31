@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'adblicka_rrWeb',
-	'password' => 'ev=X}[T^PSzh',
-	'database' => 'adblicka_av20202018',
+	'username' => 'homestead',
+	'password' => 'secret',
+	'database' => 'omgeventos',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -94,3 +94,4 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+

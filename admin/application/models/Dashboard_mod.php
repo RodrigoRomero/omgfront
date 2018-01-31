@@ -138,6 +138,17 @@ class dashboard_mod extends RR_Model {
 	    }
     }
 
+    public function nominaciones(){
+    	$sql = "SELECT SUM(nominar) nominaciones FROM order_tickets WHERE evento_id = ?";
+        $total_nominar = $this->db->query($sql,[$this->evento_id])->row();
+
+        $sql = "SELECT COUnT(id) acreditados FROM acreditados WHERE evento_id = ?";
+        $total_nominados = $this->db->query($sql,[$this->evento_id])->row();
+
+        return ["Inscriptos"=>$total_nominar->nominaciones, "Nominados"=>$total_nominados->acreditados, "Pendientes"=>($total_nominar->nominaciones-$total_nominados->acreditados)];
+    }
+
+
      public function devuelveArrayFechasEntreOtrasDos($fechaInicio, $fechafin){
         /*$arrayFechas=array();
         $fechaMostrar = $fechaInicio;
