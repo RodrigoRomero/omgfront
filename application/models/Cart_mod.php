@@ -101,7 +101,7 @@ class cart_mod extends RR_Model {
 				);
 
 			$cart_product_id = $this->cart->insert($product);
-			
+
 			//print_r($this->cart->total_items());
 
 
@@ -264,6 +264,7 @@ class cart_mod extends RR_Model {
 			$nominar = 0;
 
 			$total_price = 0;
+			$total_places = 0;
 
 			foreach ($this->cart->contents() as $key => $row) {
 				if(preg_match('/^code/', $row['id'], $matches) === 1){
@@ -273,7 +274,8 @@ class cart_mod extends RR_Model {
 				}  else {
 
 				array_push($tickets, ['quantity' => $row['qty'], 'nominar' => $row['options']['nominar'], 'ticket_price'=>$row['price'], 'ticket_id' =>  $row['options']['ticket_id'], 'customer_id' => get_session('id', false), 'evento_id'=>$this->evento->id ]);
-				$total_price = $total_price + ($row['qty']*$row['price']);
+					$total_price = $total_price + ($row['qty']*$row['price']);
+					$total_places = $total_places+$row['options']['nominar'];
 
 				}
 			}
@@ -285,7 +287,8 @@ class cart_mod extends RR_Model {
         		 	 'total_discounted_price' => $this->cart->total(),
 					 'gateway'                => (get_session('cart_medio_pago', false)) ? get_session('cart_medio_pago', false) : 'foc',
 					 'full_cart'        	  => json_encode($this->cart->contents()),
-					 'status'				  => 1
+					 'status'				  => 1,
+					 'total_places'			=> $total_places
 					 ];
 
 
