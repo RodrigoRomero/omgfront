@@ -222,6 +222,13 @@ class orders_mod extends RR_Model {
 					case 'approved':
 						$email_template = 'pago_ok';
 						$pago_status['pago_status'] = 1;
+
+
+						if($order_info->total_places==1){
+						$this->load->model('Acreditados_mod','Acreditados');
+							$order_ticket_info = $this->db->get_where('order_tickets',array('order_id'=>$order_info->id))->result();
+							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$order_info->id,$order_info->evento_id,$order_ticket_info[0]->id,$customer_info->id);
+						}
 						break;
 
 					case 'rejected':

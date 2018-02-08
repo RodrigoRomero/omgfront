@@ -47,10 +47,10 @@ function up_asset($asset_name,  $attributes = array(), $exists=true){
 function up_file($name, $exists=true){
     $obj      =& get_instance();
     $relative = $obj->env->getEnv("site_level");
-	$file     = config_item('base_url').$relative."../uploads/".$name;
+	$file     = config_item('front_url').$relative."../uploads/".$name;
     $abs_file = BASEPATH.$relative."../../uploads/".$name;
     if(!file_exists($abs_file)){
-        $file = ($exists) ? config_item('base_url')."../".$relative."uploads/none.jpg" : "";
+        $file = ($exists) ? config_item('front_url')."../".$relative."uploads/none.jpg" : "";
     }
     return $file;
 }

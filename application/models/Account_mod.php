@@ -320,6 +320,39 @@ class account_mod extends RR_Model {
 		return $data;
 	}
 
+	public function nominarOnTheFly($nombre, $apellido, $email,$order_id,$evento_id,$order_ticket_id,$customer_id){
+
+		$invitado = ['nombre'   	   => $nombre,
+					 'apellido' 	   => $apellido,
+					 'email'    	   => $email,
+					 'row'	    	   => 1,
+					 'order_id' 	   => $order_id,
+					 'evento_id'       => $evento_id,
+					 'order_ticket_id' => $order_ticket_id,
+					 'customer_id'     => $customer_id,
+					 'invitacion'	   => 1
+					];
+
+		$values  = array_merge($invitado, $this->i);
+			$insert = $this->db->insert('acreditados', $values);
+			$inserted_id = $this->db->insert_id();
+			$codeGenerated = getBarCode($inserted_id);
+			$this->barcode->save($codeGenerated['barcode'],$codeGenerated['numbers']);
+
+			$this->db->where('id', $inserted_id);
+			$this->db->update('acreditados', ['barcode'=>$codeGenerated['barcode']]);
+
+			$acreditado = $this->db->get_where('acreditados', ['id'=>$inserted_id])->row();
+
+			if($insert){
+				$subject    = "Su Acreditación - ".$this->evento->nombre;
+            	$body       = $this->view('email/invitaciones', array('user_info'=>$acreditado, 'evento'=>$this->evento));
+            	$email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
+
+			}
+
+	}
+
 
 	public function sendInvite(){
 

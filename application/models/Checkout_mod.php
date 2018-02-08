@@ -125,6 +125,20 @@ class Checkout_mod extends RR_Model {
 						$this->db->update('orders', array('status'=>1));
 
 						$body    = $this->view('email/'.$template, array('user_info'=>$customer_info, 'datos'=>$payment_info,  'evento'=>$this->evento));
+
+						if($order_info->total_places == 1){
+							//ACA TENDRÍA QUE NOMINAR Y ENVIAR EL EMAIL
+							$this->load->model('account_mod','Account');
+
+
+							$order_info    = $this->db->get_where('orders',array('id'=>$order_info->id))->row();
+							$order_ticket_info = $this->db->get_where('order_tickets',array('order_id'=>$order_info->id))->result();
+
+
+							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$order_info->id,$order_info->evento_id,$order_ticket_info[0]->id,$customer_info->id);
+						}
+
+
 					break;
 
 					default:
@@ -143,6 +157,16 @@ class Checkout_mod extends RR_Model {
 						$template   = 'pago_pendiente';
 
 						$body    = $this->view('email/'.$template, array('user_info'=>$customer_info, 'datos'=>$payment_info,  'evento'=>$this->evento));
+
+
+
+
+
+
+
+
+
+
 					break;
 
 					case 'cancelled':
