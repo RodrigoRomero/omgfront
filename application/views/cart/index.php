@@ -1,7 +1,11 @@
 <div class="container clearfix">
+
+	<?php $this->load->view('evento/almuerzo', ['almuerzos'=> $almuerzos]) ?>
 	<div class="fancy-title title-double-border">
 		<h1><span>Tus</span> Entradas</h1>
 	</div>
+
+
 
 	<div class="table-responsive bottommargin jFullCart">
 		<?php $this->load->view('cart/detail', ['delete'=>true]);	?>

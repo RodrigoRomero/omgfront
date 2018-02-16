@@ -83,6 +83,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
                                <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
 
 						<a href="http://vimeo.com/89396394"  data-lightbox="iframe"  class="button button-xlarge button-inverse">Ver Video</a>
+						<a href="images/portfolio/full/1.jpg"  data-lightbox="image"  class="button button-xlarge button-inverse">Conozca el Lugar</a>
 
 						<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white">Comprar Tickets</a>
 

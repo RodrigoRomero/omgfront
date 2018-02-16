@@ -134,7 +134,10 @@ class orders_mod extends RR_Model {
 			$data_panel['customer_info'] = $this->db->get_where('customers',array('id'=>$data_panel['order_info']->customer_id))->row();
 			$data_panel['ticket_info'] = $this->db->get_where('tickets',array('id'=>$data_panel['order_info']->ticket_id))->row();
 			$data_panel['pago_info'] = $this->db->get_where('pagos',array('order_id'=>$this->id))->row();
-			$data_panel['acreditados_info'] = $this->db->get_where('acreditados',array('order_id'=>$this->id))->result();
+			$sql1 = "SELECT a.*, ot1.nombre ticket_name FROM acreditados a LEFT JOIN (SELECT ot.id, t.tipo, t.nombre FROM order_tickets ot LEFT JOIN tickets t ON t.id = ot.`ticket_id`) ot1 ON ot1.id = a.`order_ticket_id` WHERE ot1.tipo = ? AND a.`order_id` = ?";
+			$data_panel['acreditados_info'] = $this->db->query($sql1, [1, $this->id])->result();
+
+			$data_panel['lunch_info'] = $this->db->query($sql1, [2, $this->id])->result();;
 		} else {
 			$this->breadcrumb->addCrumb('Nueva','','current');
 		}
@@ -183,7 +186,8 @@ class orders_mod extends RR_Model {
 			$update_pago = false;
 			$update_order = false;
 			$update_gateway = false;
-
+			$autonominar_ticket = false;
+			$autonominar_lunch = false;
 
 			$order_info     = $this->db->get_where($this->table,array('id'=>$this->id))->row();
 			$pago_info      = $this->db->get_where('pagos',array('order_id'=>$this->id))->row();
@@ -212,6 +216,33 @@ class orders_mod extends RR_Model {
 				}
 			};
 
+			$sql1 = "SELECT ot.*, t.tipo FROM order_tickets ot LEFT JOIN tickets t ON ot.`ticket_id` = t.`id` WHERE ot.order_id = ? AND t.tipo = ?";
+			$find_tickets = $this->db->query($sql1,[$this->id, 1]);
+			$total_rows = $find_tickets->num_rows();
+
+			if(count($total_rows == 1)){
+				$tid = $find_tickets->row();
+
+				$is_nominated = $this->db->get_where('acreditados', ['order_ticket_id'=>$tid->id])->num_rows();
+
+				if($tid->quantity == 1 && $is_nominated == 0){
+					$autonominar_ticket = true;
+				}
+
+			}
+
+			$find_tickets = $this->db->query($sql1,[$this->id, 2]);
+			$total_rows = $find_tickets->num_rows();
+
+			if(count($total_rows == 1)){
+				$lid = $find_tickets->row();
+				$is_nominated = $this->db->get_where('acreditados', ['order_ticket_id'=>$lid->id])->num_rows();
+				if($lid->quantity == 1 && $is_nominated == 0){
+					$autonominar_lunch = true;
+				}
+
+			}
+
 
 			if($payment_status != $pago_info->status)  {
 				$send_mail_status_pago = true;
@@ -224,10 +255,14 @@ class orders_mod extends RR_Model {
 						$pago_status['pago_status'] = 1;
 
 
-						if($order_info->total_places==1){
-						$this->load->model('Acreditados_mod','Acreditados');
-							$order_ticket_info = $this->db->get_where('order_tickets',array('order_id'=>$order_info->id))->result();
-							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$order_info->id,$order_info->evento_id,$order_ticket_info[0]->id,$customer_info->id);
+						if($autonominar_ticket == true){
+							$this->load->model('Acreditados_mod','Acreditados');
+							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id);
+						}
+
+						if($autonominar_lunch ==true){
+							$this->load->model('Acreditados_mod','Acreditados');
+							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$lid->order_id,$lid->evento_id,$lid->id,$customer_info->id);
 						}
 						break;
 

@@ -3,8 +3,6 @@
 		<h1><span>R</span>esumen de compra</h1>
 	</div>
 	<div class="row clearfix">
-
-
 		<div class="clear bottommargin"></div>
 		<div class="col-md-6">
 			<div class="table-responsive clearfix">

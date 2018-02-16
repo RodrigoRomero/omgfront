@@ -126,18 +126,44 @@ class Checkout_mod extends RR_Model {
 
 						$body    = $this->view('email/'.$template, array('user_info'=>$customer_info, 'datos'=>$payment_info,  'evento'=>$this->evento));
 
-						if($order_info->total_places == 1){
-							//ACA TENDRÍA QUE NOMINAR Y ENVIAR EL EMAIL
-							$this->load->model('account_mod','Account');
+						$autonominar_ticket = false;
+						$autonominar_lunch = false;
 
+						$sql1 = "SELECT ot.*, t.tipo FROM order_tickets ot LEFT JOIN tickets t ON ot.`ticket_id` = t.`id` WHERE ot.order_id = ? AND t.tipo = ?";
+						$find_tickets = $this->db->query($sql1,[$order_info->id, 1]);
+						$total_rows = $find_tickets->num_rows();
 
-							$order_info    = $this->db->get_where('orders',array('id'=>$order_info->id))->row();
-							$order_ticket_info = $this->db->get_where('order_tickets',array('order_id'=>$order_info->id))->result();
+						if(count($total_rows == 1)){
+							$tid = $find_tickets->row();
+							$is_nominated = $this->db->get_where('acreditados', ['order_ticket_id'=>$tid->id])->num_rows();
+							if($tid->quantity == 1 && $is_nominated == 0){
+								$autonominar_ticket = true;
+							}
 
-
-							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$order_info->id,$order_info->evento_id,$order_ticket_info[0]->id,$customer_info->id);
 						}
 
+						$find_tickets = $this->db->query($sql1,[$order_info->id, 2]);
+						$total_rows = $find_tickets->num_rows();
+
+						if(count($total_rows == 1)){
+							$lid = $find_tickets->row();
+							$is_nominated = $this->db->get_where('acreditados', ['order_ticket_id'=>$lid->id])->num_rows();
+							if($lid->quantity == 1 && $is_nominated == 0){
+								$autonominar_lunch = true;
+							}
+
+						}
+
+						if($autonominar_ticket == true){
+							//ACA TENDRÍA QUE NOMINAR Y ENVIAR EL EMAIL
+							$this->load->model('account_mod','Account');
+							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id);
+						}
+
+						if($autonominar_lunch ==true){
+							$this->load->model('account_mod','Account');
+							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$lid->order_id,$lid->evento_id,$lid->id,$customer_info->id);
+						}
 
 					break;
 
@@ -199,6 +225,13 @@ class Checkout_mod extends RR_Model {
 
 			$this->db->where('order_id',$order_info->id);
 			$query = $this->db->update('pagos', array('status'=>'pending', 'preference_id'=>$this->params['preference_id'], 'pago_status'=>2 ));
+
+
+
+
+
+
+
 
 		}
 

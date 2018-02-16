@@ -4,6 +4,7 @@ class Cart extends RR_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('cart_mod','Cart');
+
 		//$this->load->model('eventos_mod','Evento');
 		$this->load->library('cart');
 	}
@@ -24,7 +25,10 @@ class Cart extends RR_Controller {
 		$this->layout = 'layout/multi_page';
 
 		if($this->cart->total_items() > 0) {
-			$module = $this->view('cart/index');
+			$almuerzos = $this->Main->getTicketLunch();
+
+
+			$module = $this->view('cart/index', ['almuerzos'=>$almuerzos]);
 		} else {
 			$module = $this->view('cart/empty');
 		}
@@ -108,6 +112,12 @@ class Cart extends RR_Controller {
 
 
 	}
+
+	public function addExtras(){
+		$data = $this->Cart->addExtras();
+		echo json_encode($data);
+	}
+
 	/*
 
 	public function index(){
@@ -118,10 +128,7 @@ class Cart extends RR_Controller {
 	}
 
 
-	public function addExtras(){
-		$data = $this->Cart->addExtras();
-		echo json_encode($data);
-	}
+
 
 	public function checkout($security=null){
 		$this->layout = 'multi_page';

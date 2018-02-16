@@ -15,11 +15,13 @@ class acreditados_mod extends RR_Model {
 	private $check_pass = "tsdReports";
 	var $id;
 	var $evento;
+	var $tipo_ticket;
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('email_mod','Email');
 		$this->load->model('eventos_mod','Evento');
 		$this->id   = !empty($this->params['id']) ? $this->params['id'] : '';
+		$this->tipo_ticket = !empty($this->params['t']) ? $this->params['t'] : 1;
 	}
 
 	public function listado(){
@@ -43,6 +45,9 @@ class acreditados_mod extends RR_Model {
 		$this->db->select('a.id, a.nombre, a.apellido, a.email, a.status', false);
 		$this->db->where('a.status >=',0);
 		$this->db->where('a.evento_id',$this->evento_id);
+		$this->db->where('t.tipo',$this->tipo_ticket);
+		$this->db->join('order_tickets ot', 'ot.id = a.order_ticket_id','LEFT');
+		$this->db->join('tickets t', 't.id = ot.ticket_id','LEFT');
 		if(isset($_POST['search']) && !empty($_POST['search'])) {
 			$like_arr = array('a.nombre', 'a.apellido', 'a.email', 'a.status');
 			foreach($like_arr as  $l){
@@ -310,6 +315,9 @@ class acreditados_mod extends RR_Model {
 						   c.empresa', false);
 		$this->db->where('a.evento_id',$this->evento_id);
 		$this->db->join('customers c', 'c.id = a.customer_id','LEFT');
+		$this->db->where('t.tipo',$this->tipo_ticket);
+		$this->db->join('order_tickets ot', 'ot.id = a.order_ticket_id','LEFT');
+		$this->db->join('tickets t', 't.id = ot.ticket_id','LEFT');
 		if(isset($_POST['search']) && !empty($_POST['search'])) {
 			$like_arr = array('a.nombre', 'a.apellido', 'a.email');
 			foreach($like_arr as  $l){
@@ -324,7 +332,11 @@ class acreditados_mod extends RR_Model {
 		 $this->db->flush_cache();
 		unset($_POST);
 		$_POST = array();
-		$file_name = 'acreditados_omg';
+		$file_name = 'acreditados_evento_omg';
+		if($tipo_ticket == 2){
+			$file_name = 'acreditados_almuerzo_omg';
+		}
+
 		$alphas = array('A');
 		$current = 'A';
 		while ($current != 'ZZZ') {
@@ -351,7 +363,7 @@ class acreditados_mod extends RR_Model {
 		$this->phpexcel->getActiveSheet()->mergeCells('A1:'.$alphas[$nro_cols].'1');
 		$this->phpexcel->getActiveSheet()->mergeCells('A2:'.$alphas[$nro_cols].'2');
 		$this->phpexcel->getActiveSheet()->setCellValue("A2", "");
-		$this->phpexcel->getActiveSheet()->setCellValue("A1", "Suscriptos al ".date('d-M-Y'));
+		$this->phpexcel->getActiveSheet()->setCellValue("A1", "Nominados al ".date('d-M-Y'));
 		$this->phpexcel->getActiveSheet()->getStyle("A1:".$alphas[$nro_cols].'1')->applyFromArray(
 																			array('fill' => array(
 																								  'type'	=> PHPExcel_Style_Fill::FILL_SOLID,
@@ -456,7 +468,7 @@ class acreditados_mod extends RR_Model {
 					 'invitacion'	   => 1
 					];
 
-		$values  = array_merge($invitado, $this->i);
+			$values  = array_merge($invitado, $this->i);
 			$insert = $this->db->insert('acreditados', $values);
 			$inserted_id = $this->db->insert_id();
 			$codeGenerated = getBarCode($inserted_id);
@@ -470,7 +482,7 @@ class acreditados_mod extends RR_Model {
 			$this->evento = $this->db->select('eventos.id, eventos.status, eventos.nombre, eventos.bajada, eventos.descripcion, eventos.fecha_inicio, eventos.fecha_baja, eventos.telefono, eventos.capacidad, eventos.costo, eventos.newsletter, eventos.json_socials, eventos.payments_enabled, eventos.show_register, eventos.cupons_enabled, lugares.lugar, lugares.direccion, lugares.json_direccion')->join('lugares', 'lugares.evento_id = eventos.id')->get_where('eventos',array('eventos.id'=>$acreditado->evento_id))->row();
 			if($insert){
 				$subject    = "Su Acreditación - ".$this->evento->nombre;
-            	$body       = $this->view('email/invitaciones', array('user_info'=>$acreditado, 'evento'=>$this->evento));
+            	$body       = $this->view('email/almuerzo', array('user_info'=>$acreditado, 'evento'=>$this->evento));
             	$email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 
 			}

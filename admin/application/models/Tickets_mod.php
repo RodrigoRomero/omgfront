@@ -31,6 +31,8 @@ class tickets_mod extends RR_Model {
         $this->db->select('t.id, t.nombre, t.precio_regular, t.precio_oferta, t.status', false);
         $this->db->where('t.evento_id =',$this->eid);
         $this->db->where('t.status',1);
+        $this->db->where('t.tipo',1);
+
         if(isset($_POST['search']) && !empty($_POST['search'])) {
             $like_arr = array('t.nombre');
             foreach($like_arr as  $l){

@@ -13,7 +13,7 @@
 					<div class="container clearfix">
 
 						<div class="emphasis-title center">
-							<h2 style="font-size: 52px;">Section with Dark Parallax Background</h2>
+							<h2 style="font-size: 52px;">Section with Dark Parallax Background ESETE</h2>
 						</div>
 
 						<div class="row">

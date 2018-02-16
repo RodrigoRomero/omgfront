@@ -5,7 +5,8 @@
 			<li><a href="<?php echo base_url()?>"><i class="icon-home"></i><span class="hidden-tablet"> Home</span></a></li>
             <li><a href="<?php echo base_url('module/load/m/eventos/a/listado')?>"><i class="icon-bookmark"></i><span class="hidden-tablet"> Eventos</span></a></li>
             <li><a href="<?php echo base_url('module/load/m/orders/a/listado')?>"><i class="icon-usd"></i><span class="hidden-tablet"> Ordenes</span></a></li>
-            <li><a href="<?php echo base_url('module/load/m/acreditados/a/listado')?>"><i class="icon-user"></i><span class="hidden-tablet"> Acreditaciones</span></a></li>
+            <li><a href="<?php echo base_url('module/load/m/acreditados/a/listado/t/1')?>"><i class="icon-user"></i><span class="hidden-tablet"> Acreditaciones Evento</span></a></li>
+            <li><a href="<?php echo base_url('module/load/m/acreditados/a/listado/t/2')?>"><i class="icon-user"></i><span class="hidden-tablet"> Acreditaciones Almuerzo</span></a></li>
 
 
 

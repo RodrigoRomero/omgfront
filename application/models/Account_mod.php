@@ -333,7 +333,7 @@ class account_mod extends RR_Model {
 					 'invitacion'	   => 1
 					];
 
-		$values  = array_merge($invitado, $this->i);
+			$values  = array_merge($invitado, $this->i);
 			$insert = $this->db->insert('acreditados', $values);
 			$inserted_id = $this->db->insert_id();
 			$codeGenerated = getBarCode($inserted_id);
@@ -346,7 +346,7 @@ class account_mod extends RR_Model {
 
 			if($insert){
 				$subject    = "Su Acreditación - ".$this->evento->nombre;
-            	$body       = $this->view('email/invitaciones', array('user_info'=>$acreditado, 'evento'=>$this->evento));
+            	$body       = $this->view('email/almuerzo', array('user_info'=>$acreditado, 'evento'=>$this->evento));
             	$email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 
 			}

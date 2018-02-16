@@ -76,13 +76,15 @@ class eventos_mod extends RR_Model {
         $lnk_agenda    = set_url(array('m' =>'agenda', 'a'=>'listado', 'eid'=>'{%id%}'));
         $lnk_tickets   = set_url(array('m' =>'tickets', 'a'=>'listado', 'eid'=>'{%id%}'));
         $lnk_cupons    = set_url(array('m' =>'cupons', 'a'=>'listado', 'eid'=>'{%id%}'));
+        $lnk_lunch     = set_url(array('m' =>'lunchs', 'a'=>'listado', 'eid'=>'{%id%}'));
         $html  = "<a class='ax-modal tip-top icon-trash' href='".$lnk_del."' data-original-title='Eliminar' style='margin-right:10px'></a>";
         $html .= "<a class='tip-top' href='".$upd_del."' data-original-title='Editar'><span class='icon-pencil'></span></a>";
         $html_secciones  = "<a class='tip-top icon-bullhorn' href='".$lnk_oradores."' data-original-title='Alta Oradores' style='margin-right:10px'></a>";
         $html_secciones .= "<a class='tip-top icon-globe' href='".$lnk_sponsors."' data-original-title='Alta Sponsors' style='margin-right:10px'></a>";
         $html_secciones .= "<a class='tip-top icon-calendar' href='".$lnk_agenda."' data-original-title='Alta Agenda' style='margin-right:10px'></a>";
-        $html_secciones .= "<a class='tip-top icon-ticket' href='".$lnk_tickets."' data-original-title='Alta Tickets'></a>";
-        $html_secciones .= "<a class='tip-top icon-usd' href='".$lnk_cupons."' data-original-title='Alta Cupones'></a>";
+        $html_secciones .= "<a class='tip-top icon-ticket' href='".$lnk_tickets."' data-original-title='Alta Tickets' style='margin-right:10px'></a>";
+        $html_secciones .= "<a class='tip-top icon-usd' href='".$lnk_cupons."' data-original-title='Alta Cupones' style='margin-right:10px'></a>";
+        $html_secciones .= "<a class='tip-top icon-food' href='".$lnk_lunch."' data-original-title='Alta Almuerzo'></a>";
         $extra[] = array("html" => $html, "pos" => 0);
         $extra[] = array("html" => $html_secciones, "pos" => 3);
         $datagrid["rows"]      = $this->datagrid->query_to_rows($query->result(), $datagrid["columns"], $extra);

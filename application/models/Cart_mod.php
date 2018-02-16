@@ -42,6 +42,10 @@ class cart_mod extends RR_Model {
 
 		$this->load->library('cart');
 
+		/*echo '<pre>';
+		print_r($this->cart->contents());
+		echo '</pre>';
+*/
 	}
 
 
@@ -462,9 +466,148 @@ class cart_mod extends RR_Model {
 
 		}
 
+	}
+
+	public function addExtras($sku='',$name='',$price='',$qty='', $modal=true) {
+		//$this->cart->destroy();
+		$options = [];
+
+		$name  = ($name) ? $name : filter_input(INPUT_POST,'ticket_name');
+		$price = ($price) ? $price : filter_input(INPUT_POST,'ticket_ammount');
 
 
 
+		try{
+			$qty   =  ($qty) ? $qty : filter_input(INPUT_POST,'quantity');
+			if(empty($qty) || $qty == 0 ){
+				throw new Exception("Por favor seleccione la cantidad de almuerzos deseados.",1);
+			};
+
+			$sku   = ($sku) ? $sku : filter_input(INPUT_POST,'sku');
+			if(empty($sku)){
+				throw new Exception("Se ha producido un error al agregar al carrito, por favor intentelo nuevamente mas tarde.",1);
+			};
+
+			$ticket = $this->validateSKU($sku);
+			if($ticket == null){
+				throw new Exception("Se ha producido un error al agregar al carrito, por favor intentelo nuevamente mas tarde.",1);
+			};
+
+			if($ticket->agotadas){
+				throw new Exception("Se ha producido un error al agregar al carrito, por favor intentelo nuevamente mas tarde.",1);
+			}
+
+
+			if($ticket->min_qty == 0  && $ticket->max_qty == 0 ){
+				$options['nominar'] = $qty;
+				$options['packs'] = 'N/A';;
+			} elseif($ticket->min_qty>0 && $ticket->max_qty == 0 ) {
+				$options['nominar'] = $qty;
+				$options['packs'] = $qty/$ticket->min_qty;
+
+			} elseif($ticket->min_qty>0 && $ticket->max_qty > 0 ) {
+				  $options['nominar'] = $qty;
+				  $options['packs'] = 'N/A';
+			}
+
+			$options['extras']    = (!empty($ticket->descripcion)) ? $ticket->descripcion : '';
+			$options['ticket_id'] = (!empty($ticket->id)) ? $ticket->id : '';
+
+			$price = (float)$this->getPrice($ticket);
+
+			$product = array(
+				   'id'      => $sku,
+				   'qty'     => $qty,
+				   'price'   => $price,
+				   'name'    => $ticket->nombre,
+				   'options' => $options
+				);
+			$update = false;
+			foreach ($this->cart->contents() as $key => $value) {
+
+				if($value['id'] == $product['id']){
+					$update = true;
+					$data = array(
+					'rowid' => $value['rowid'],
+					'qty'   => $product['qty'],
+					);
+				}
+
+			}
+
+			if($update == true){
+				$cart_product_id = $this->cart->update($data);
+			} else {
+				$cart_product_id = $this->cart->insert($product);
+			};
+			//print_r($this->cart->total_items());
+
+
+			if($qty > 1){
+				$msg_modal = "Se han agregado $qty almuerzos a su carrito.";
+			} else {
+				$msg_modal = "Se ha agregado $qty almuerzo a su carrito.";
+			}
+			if($cart_product_id){
+				$success     = true;
+			$responseType = 'function';
+			$function = 'reloadCart';
+			$html = ['fullcart' => $this->view('cart/detail', ['delete'=>true]),
+					 'resume'	=> $this->view('cart/resume'),
+					 'payments' => $this->view('cart/gateways',['proceedToCheckout' => true, 'show_options' => true])
+					 ];
+			$data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$html,  'value'=>$function);
+				/*
+				if($modal){
+					$success = 'true';
+            		$responseType = 'function';
+		            $function     = 'appendFormMessagesModal';
+		            $messages     = $this->view('alerts/modal_alert',
+		            	['texto'	=> $msg_modal,
+		            	 'title'	=> $this->evento->nombre,
+		            	 'link' 	=> base_url('cart'),
+		            	 'class_type'=>'error']);
+		            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+				} else {
+					return $cart_product_id;
+				}
+				*/
+			} else {
+				throw new Exception("Se ha producido un error al agregar al carrito, por favor intentelo nuevamente mas tarde.",1);
+			}
+
+		}
+		catch(Exception $error)
+		{
+
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=> $this->evento->nombre,
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+
+			#TODO LOG
+			/*
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+			$success      = true;
+			$responseType = 'function';
+			$function     = 'showNotify';
+			$components   = ['position'=> 'bottom-full-width', 'type'=> 'error', 'message'=>$error->getMessage(), 'time'=>5000, 'close'=>true];
+			$data = array('success' =>$success,'responseType'=>$responseType, 'response'=>$components, 'value'=>$function);
+			*/
+
+		}
+
+		return $data;
 
 
 	}
@@ -539,7 +682,7 @@ class cart_mod extends RR_Model {
 
 
 
-	public function addExtras(){
+	public function (){
 		$almuerzo_sku    = filter_input(INPUT_POST,'ticket_sku');
 		$almuerzo_nombre = filter_input(INPUT_POST,'ticket_name');
 		$almuerzo_price  = filter_input(INPUT_POST,'ticket_ammount');

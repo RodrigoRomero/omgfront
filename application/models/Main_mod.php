@@ -79,7 +79,15 @@ class main_mod extends RR_Model {
 	public function getTickets(){
 		$planes = $this->db->select('p.id, p.nombre, p.bajada, p.precio_regular, p.precio_oferta, p.fecha_baja, p.descripcion, p.agotadas, p.background, p.sku, p.min_qty, p.max_qty', FALSE)
 						   ->from('tickets p')
-						   ->where( array('p.status'=>1, 'p.evento_id'=>$this->evento->id))
+						   ->where( array('p.status'=>1, 'p.evento_id'=>$this->evento->id, 'tipo'=>1))
+						   ->get()->result();
+		return $planes;
+	}
+
+	public function getTicketLunch(){
+		$planes = $this->db->select('p.id, p.nombre, p.bajada, p.precio_regular, p.precio_oferta, p.fecha_baja, p.descripcion, p.agotadas, p.background, p.sku, p.min_qty, p.max_qty', FALSE)
+						   ->from('tickets p')
+						   ->where( array('p.status'=>1, 'p.evento_id'=>$this->evento->id, 'tipo'=>2))
 						   ->get()->result();
 		return $planes;
 	}
