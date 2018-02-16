@@ -7,7 +7,7 @@
 				</div>
 
 				<div id="page-menu" class="no-sticky">
-
+					<!--
 			<div id="page-menu-wrap">
 
 				<div class="container clearfix">
@@ -30,7 +30,7 @@
 				</div>
 
 			</div>
-
+			-->
 		</div><!-- #page-menu end -->
 				<!-- Portfolio Items
 				============================================= -->
@@ -39,10 +39,10 @@
 					<article class="portfolio-item pf-media pf-icons">
 							<div class="portfolio-image">
 								<a href="portfolio-single.html">
-									<img src="images/portfolio/3/1.jpg" alt="Open Imagination">
+									<img src="uploads/gallery/thumbs/10.jpg" alt="Open Imagination">
 								</a>
 								<div class="portfolio-overlay">
-									<a href="images/portfolio/full/1.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+									<a href="uploads/gallery/original/10.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
 								</div>
 							</div>
 							<div class="portfolio-desc">

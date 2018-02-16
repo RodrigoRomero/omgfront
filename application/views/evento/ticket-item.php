@@ -64,7 +64,7 @@ ksort($options);
 
 ?>
 
-<div class="pricing-box pricing-extended bottommargin clearfix" style=" <?php echo !empty($item->background) ? 'background: #'.$item->background : ''; ?>; min-height: 285px;">
+<div class="pricing-box pricing-extended bottommargin clearfix" style=" <?php echo !empty($item->background) ? 'background: #'.$item->background : ''; ?>; min-height: 320px;">
 
 	<div class="pricing-desc">
 		<div class="pricing-title">
