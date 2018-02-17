@@ -320,7 +320,7 @@ class account_mod extends RR_Model {
 		return $data;
 	}
 
-	public function nominarOnTheFly($nombre, $apellido, $email,$order_id,$evento_id,$order_ticket_id,$customer_id){
+	public function nominarOnTheFly($nombre, $apellido, $email,$order_id,$evento_id,$order_ticket_id,$customer_id, $template_email){
 
 		$invitado = ['nombre'   	   => $nombre,
 					 'apellido' 	   => $apellido,
@@ -346,7 +346,7 @@ class account_mod extends RR_Model {
 
 			if($insert){
 				$subject    = "Su Acreditación - ".$this->evento->nombre;
-            	$body       = $this->view('email/almuerzo', array('user_info'=>$acreditado, 'evento'=>$this->evento));
+            	$body       = $this->view('email/'.$template_email, array('user_info'=>$acreditado, 'evento'=>$this->evento));
             	$email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 
 			}

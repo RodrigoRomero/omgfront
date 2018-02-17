@@ -257,12 +257,12 @@ class orders_mod extends RR_Model {
 
 						if($autonominar_ticket == true){
 							$this->load->model('Acreditados_mod','Acreditados');
-							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id);
+							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id, 'invitaciones');
 						}
 
 						if($autonominar_lunch ==true){
 							$this->load->model('Acreditados_mod','Acreditados');
-							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$lid->order_id,$lid->evento_id,$lid->id,$customer_info->id);
+							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$lid->order_id,$lid->evento_id,$lid->id,$customer_info->id, 'almuerzo');
 						}
 						break;
 

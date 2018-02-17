@@ -455,7 +455,7 @@ class acreditados_mod extends RR_Model {
 	   return true;
 	}
 
-	public function nominarOnTheFly($nombre, $apellido, $email,$order_id,$evento_id,$order_ticket_id,$customer_id){
+	public function nominarOnTheFly($nombre, $apellido, $email,$order_id,$evento_id,$order_ticket_id,$customer_id, $template_email){
 
 		$invitado = ['nombre'   	   => $nombre,
 					 'apellido' 	   => $apellido,
@@ -482,7 +482,7 @@ class acreditados_mod extends RR_Model {
 			$this->evento = $this->db->select('eventos.id, eventos.status, eventos.nombre, eventos.bajada, eventos.descripcion, eventos.fecha_inicio, eventos.fecha_baja, eventos.telefono, eventos.capacidad, eventos.costo, eventos.newsletter, eventos.json_socials, eventos.payments_enabled, eventos.show_register, eventos.cupons_enabled, lugares.lugar, lugares.direccion, lugares.json_direccion')->join('lugares', 'lugares.evento_id = eventos.id')->get_where('eventos',array('eventos.id'=>$acreditado->evento_id))->row();
 			if($insert){
 				$subject    = "Su Acreditación - ".$this->evento->nombre;
-            	$body       = $this->view('email/almuerzo', array('user_info'=>$acreditado, 'evento'=>$this->evento));
+            	$body       = $this->view('email/'.$template_email, array('user_info'=>$acreditado, 'evento'=>$this->evento));
             	$email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 
 			}

@@ -157,12 +157,12 @@ class Checkout_mod extends RR_Model {
 						if($autonominar_ticket == true){
 							//ACA TENDRÍA QUE NOMINAR Y ENVIAR EL EMAIL
 							$this->load->model('account_mod','Account');
-							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id);
+							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id, 'invitaciones');
 						}
 
 						if($autonominar_lunch ==true){
 							$this->load->model('account_mod','Account');
-							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$lid->order_id,$lid->evento_id,$lid->id,$customer_info->id);
+							$this->Account->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$lid->order_id,$lid->evento_id,$lid->id,$customer_info->id, 'almuerzo');
 						}
 
 					break;
