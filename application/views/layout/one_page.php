@@ -57,14 +57,14 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 <div class="row">
 
-									<div class="col-md-3 col-md-offset-3">
+									<div class="col-md-3 col-md-offset-3 col-xs-6">
 
 									<div class="venue_place">
                                 <span class="icon-location"></span>
                                 <p><?php echo $place[0] ?><br /><?php echo $this->evento->lugar ?></p>
                             </div>
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-3 col-xs-6">
 									 <div class="venue_date">
                                 <span class="icon-calendar"></span>
                                 <p>

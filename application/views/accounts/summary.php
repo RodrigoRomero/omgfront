@@ -42,9 +42,9 @@
 										<tr>
 										  <th>#</th>
 										  <th>Cantidad</th>
-										  <th>Total</th>
-										  <th>Descuentos</th>
-										  <th>Final</th>
+										  <th class="hidden-xs">Total</th>
+										  <th class="hidden-xs">Descuentos</th>
+										  <th class="hidden-xs">Final</th>
 
 										  <th>Status</th>
 										  <th>Nominar</th>
@@ -91,9 +91,9 @@
 									  	<tr class="<?php echo $row_color ?>">
 										  <td><?php echo $order->id ?></td>
 										  <td><?php echo $order->qty ?></td>
-										  <td>$ <?php echo number_format($order->total_price, 2,",",".") ?></td>
-										  <td>$ <?php echo number_format($order->discount_amount, 2,",",".") ?></td>
-										  <td>$ <?php echo number_format($order->total_discounted_price, 2,",",".")  ?></td>
+										  <td class="hidden-xs">$ <?php echo number_format($order->total_price, 2,",",".") ?></td>
+										  <td class="hidden-xs">$ <?php echo number_format($order->discount_amount, 2,",",".") ?></td>
+										  <td class="hidden-xs">$ <?php echo number_format($order->total_discounted_price, 2,",",".")  ?></td>
 
 										  <td><?php echo $status ?></td>
 										  <td>
