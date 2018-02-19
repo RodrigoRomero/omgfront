@@ -1,4 +1,3 @@
-
 <section>
 	<div class="parallax" style="background-image: url('images/parallax/bkg_celebrando.jpg'); padding: 200px 0;" data-stellar-background-ratio="0.3">
 		<div class="heading-block center nobottomborder nobottommargin">
@@ -53,14 +52,3 @@
 					</div>
 	</div>
 </section>
-<?php echo $agenda ?>
-<?php echo $this->load->view('evento/corte_a',[],true) ?>
-<?php echo $tickets; ?>
-<?php echo $lugar; ?>
-
-<?php echo $this->load->view('evento/gallery',[],true) ?>
-
-<?php //echo $agenda; ?>
-<?php // echo $oradores; ?>
-<?php //echo $sponsors; ?>
-

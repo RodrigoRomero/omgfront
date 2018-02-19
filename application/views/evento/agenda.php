@@ -9,7 +9,7 @@ $fecha_inicio_array = explode("-", $fecha_inicio[0]);
 $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 
 ?>
-<section id="section-agenda" class="page-section">
+<section id="section-agenda" class="page-section topmargin-lg">
 
 	<div class="">
 
