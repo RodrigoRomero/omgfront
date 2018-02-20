@@ -1,23 +1,17 @@
-<div class="entry clearfix">
-<div class="entry-timeline">
-	<div class="timeline-divider"></div>
+<div class="fancy-title title-bottom-border">
+	<h4><span><?php echo substr($item->hora, 0, -3).' Hs.'; ?></span> - <?php echo $item->title ?></h4>
 </div>
-
-<div class="entry-title">
-	<h2><?php echo $item->title ?></h2>
-</div>
-<ul class="entry-meta clearfix">
-	<li><i class="icon-calendar3"></i><?php echo substr($item->hora, 0, -3).' Hs.'; ?></li>
-</ul>
 <?php
 if(isset($item->brief) && !empty($item->brief)) { ?>
-<div class="entry-content">
-	<p><?php echo $item->brief ?></p>
-	<?php if($item->orador_id>0){ ?>
-       <p><?php echo $item->nombre ?></p>
-    <?php } ?>
+<div class="promo promo-border bottommargin">
+	<div class="col-md-8"><span><?php echo nl2br($item->brief) ?></span></div>
+	<div class="col-md-4">
+		<span>
+			<?php if($item->orador_id>0){ ?>
+       		<b>Orador:</b> <br/><?php echo $item->nombre ?>
+    <?php } ?></span>
+	</div>
+	<div class="clearfix"></div>
 
 </div>
 <?php } ?>
-
-</div>

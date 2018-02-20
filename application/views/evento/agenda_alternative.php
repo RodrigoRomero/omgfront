@@ -19,17 +19,21 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 	</div>
 	<!-- Posts
 	============================================= -->
+	<div id="posts" class="post-grid grid-container post-masonry post-timeline grid-2 clearfix">
+
+		<div class="timeline-border"></div>
 
 
 
-
-
+		<div class="entry entry-date-section notopmargin"><span><?php echo $fecha_inicio_array[2].' '.strtoupper(getMes($fecha_inicio_array[1])).' '.$hora_inicio.' Hs.' ?></span></div>
 
 		<?php
 			foreach($agenda as $k => $item){
 				$this->load->view('evento/agenda-item', ['position'=>$k, 'item' => $item]);
 			}
 		?>
+
+	</div><!-- #posts end -->
 
 	</div>
 
