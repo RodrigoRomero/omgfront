@@ -38,16 +38,16 @@ $config = array(
 											'rules' => 'trim|required|valid_email'
 										 ),
 									array(
+											'field' => 'valid_password',
+											'label' => 'Repetir Passsword',
+											'rules' => 'trim|required|md5|min_length[7]'
+										 ),
+									array(
 											'field' => 'password',
 											'label' => 'Passsword',
 											'rules' => 'trim|required|matches[valid_password]|md5|min_length[7]'
 										 ),
 
-									array(
-											'field' => 'valid_password',
-											'label' => 'Repetir Passsword',
-											'rules' => 'trim|required|md5|min_length[7]'
-										 ),
 
 									),
 				'Atributos' => array(

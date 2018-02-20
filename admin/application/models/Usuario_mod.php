@@ -153,6 +153,9 @@ class Usuario_mod extends RR_Model {
     }
 
     public function savea(){
+
+    	//print_r($_POST);
+    	//die;
         #VALIDO FORM POR PHP
          $success = 'false';
          if($this->form_validation->run('Usuarios')==FALSE){

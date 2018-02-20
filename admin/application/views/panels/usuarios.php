@@ -1,5 +1,5 @@
 <div class="box span12">
-<?php echo $this->view('layout/panels/box_header', array('title'=>'Usuarios', 'icon'=>'icon-pencil')) ?>
+<?php  $this->view('layout/panels/box_header', array('title'=>'Usuarios', 'icon'=>'icon-pencil')) ?>
 <div class="box-content">
 <?php $this->view('alerts/error') ?>
 <?php
@@ -30,7 +30,7 @@ $buttons .= '<span class="">';
 $data = array('type'=>'submit', 'value'=>'Guardar', 'class'=>'btn btn-primary', 'onclick'=>"validateForm('usuariosForm')", 'style' =>'margin-right: 10px');
 $buttons .= form_input($data);
 $buttons .= anchor($back,'Cancelar',array('class'=>'btn btn-inverse'));
-$buttons .= '</span>'; 
+$buttons .= '</span>';
 echo form_action($buttons);
 
 echo form_close();
