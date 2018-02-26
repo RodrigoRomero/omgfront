@@ -179,7 +179,7 @@ class Checkout_mod extends RR_Model {
 						$this->db->update('orders', array('status'=>2));
 
 
-						$subject    = "PreAcreditacion ".$this->evento_name;
+						$subject    = "PreAcreditación ".$this->evento_name;
 						$template   = 'pago_pendiente';
 
 						$body    = $this->view('email/'.$template, array('user_info'=>$customer_info, 'datos'=>$payment_info,  'evento'=>$this->evento));

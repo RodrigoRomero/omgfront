@@ -345,7 +345,7 @@ class cart_mod extends RR_Model {
 
 	        switch($values['gateway']){
 	        	case 'transferencia_bancaria':
-	        		$subject    = "PreAcreditación ".$this->evento_name;
+	        		$subject    = "PreAcreditación ".$this->evento->nombre;
 	        		$customer   = $this->Account->getCustomerById();
 	        		$order = (object)$values;
                 	$body  = $this->view('email/transferencia_bancaria', array('user_info'=>$customer, 'evento'=>$this->evento, 'order_id'=>$order_id));
@@ -367,7 +367,7 @@ class cart_mod extends RR_Model {
 	        		#TODO
 	        		break;
         		case 'foc':
-	        		$subject    = "Acreditación ".$this->evento_name;
+	        		$subject    = "Acreditación ".$this->evento->nombre;
 	        		$customer   = $this->Account->getCustomerById();
 	        		$order = (object)$values;
                 	$body  = $this->view('email/pago_ok', array('user_info'=>$customer, 'evento'=>$this->evento, 'order_id'=>$order_id));
