@@ -5,11 +5,11 @@
 </head>
 
 <body class="stretched">
-	<noscript>
+	<!-- <noscript>
  <img height="1" width="1"
 src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 &noscript=1"/>
-</noscript>
+</noscript> -->
 	<!-- Document Wrapper
 	============================================= -->
 	<div id="wrapper" class="clearfix">
@@ -72,7 +72,10 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 			<div class="content-wrap">
 				<?php echo $module ?>
+				<?php
+				ep($this->session->all_userdata());
 
+				?>
 
 			</div>
 

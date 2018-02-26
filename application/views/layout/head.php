@@ -10,13 +10,23 @@ $metas = array(
 echo meta($metas);
 
 
+ep($this->evento);
 ?>
+
+
+
+<meta property="og:url"                content="<?php echo base_url()?>" />
+<meta property="og:type"               content="website" />
+<meta property="og:title"              content="<?php echo $this->evento->nombre ?>" />
+<meta property="og:description"        content="<?php echo $this->evento->bajada?>" />
+<meta property="og:image"              content="<?php echo image_asset_url('logo.png', '','') ?>" />
+
 <script>
 _base_url = "<?php echo config_item('base_url')?>"
 
 	var config = {
 		shop_url : "<?php echo config_item('base_url')?>",
-		page_handle: "<?php echo uri_string() ?>",
+		page_handle: "<?php echo (get_session('comesfrom',false))  ? get_session('comesfrom',false) : uri_string() ?>",
 		customer : {
 			first_name: "<?php echo (get_session('nombre', false)) ?  get_session('nombre', false) : '' ?>",
 			last_name: "<?php echo (get_session('apellido', false)) ? get_session('apellido', false) : '' ?>",
@@ -42,7 +52,7 @@ echo css_asset($css.'.css');
 
 <!-- Facebook Pixel Code -->
 <script>
-!function(f,b,e,v,n,t,s)
+/*!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -51,18 +61,17 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1748104025451888');
-fbq('track', 'PageView');
+fbq('track', 'PageView');*/
 
 </script>
 <!-- End Facebook Pixel Code -->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-50805014-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-104142848-1', 'auto');
-  ga('send', 'pageview');
-
+  gtag('config', 'UA-50805014-1');
 </script>

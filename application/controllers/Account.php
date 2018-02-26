@@ -15,7 +15,11 @@ class Account extends RR_Controller {
 
 	public function summary(){
 
+
+
+
 		if(!$this->auth->loggedin()){
+			set_session("comesFrom", 'account/summary', false);
 			redirect(base_url('/account'));
 		}
 

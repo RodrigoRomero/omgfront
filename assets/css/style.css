@@ -10063,7 +10063,7 @@ body:not(.device-touch) .team-overlay {
 	padding: 25px 0;
 	color: #333;
 	font-weight: 300;
-	font-size: 48px;
+	font-size: 34px;
 	line-height: 1;
 }
 
@@ -10199,7 +10199,7 @@ body:not(.device-touch) .team-overlay {
 	padding: 6px 0;
 	font-size: 15px;
 	width: 50%;
-	float: left;
+	/*float: left;*/
 }
 
 .pricing-box.pricing-extended .pricing-features ul li i {

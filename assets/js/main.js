@@ -12,7 +12,6 @@ $('.tleft.past-enabled').datepicker({
 
 if(config.page_handle != 'account'){
 	RR.keeper.save('comesfrom', config.page_handle);
-
 }
 
 });
