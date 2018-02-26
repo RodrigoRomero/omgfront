@@ -72,10 +72,6 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 			<div class="content-wrap">
 				<?php echo $module ?>
-				<?php
-				ep($this->session->all_userdata());
-
-				?>
 
 			</div>
 
