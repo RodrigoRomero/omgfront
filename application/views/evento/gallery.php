@@ -53,6 +53,20 @@
 
 
 
+						<article class="portfolio-item pf-graphics pf-uielements">
+							<div class="portfolio-image">
+								<a href="#">
+									<img src="images/portfolio/4/3.jpg" alt="Mac Sunglasses">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="http://vimeo.com/89396394" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+								</div>
+							</div>
+							<div class="portfolio-desc">
+								<h3><a href="portfolio-single-video.html">Mac Sunglasses</a></h3>
+								<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
+							</div>
+						</article>
 
 				</div><!-- #portfolio end -->
 

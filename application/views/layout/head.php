@@ -9,8 +9,6 @@ $metas = array(
 
 echo meta($metas);
 
-
-ep($this->evento);
 ?>
 
 
