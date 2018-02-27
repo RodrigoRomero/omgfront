@@ -60,7 +60,7 @@
 
 <?php echo $this->load->view('evento/gallery',[],true) ?>
 
-<?php echo $agenda; ?>
+<?php //echo $agenda; ?>
 <?php echo $oradores; ?>
 <?php echo $sponsors; ?>
 
