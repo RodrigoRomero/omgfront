@@ -4,9 +4,15 @@
 			<h1><span>O</span>radores</h1>
 		</div>
 	<?php
-
 	foreach($oradores as $k => $item) {
-		$this->load->view('evento/orador-item', ['position'=>$k, 'item' => $item]);
+		if(!empty($item['oradores'])) {
+			$this->load->view('evento/orador-headline', ['position'=>$k, 'categoria'=>$item['categoria']]);
+			foreach ($item['oradores'] as $key => $value) {
+				$this->load->view('evento/orador-item', ['position'=>$key, 'item' => $value]);
+			}
+		}
+
+
 	}
 	?>
 	<div class="clear"></div>
