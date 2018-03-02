@@ -459,45 +459,17 @@ class oradores_mod extends RR_Model {
 
             if (isset($_POST['status'])) $status = 1;
 
-
-
-
-
-            $json_socials = array('twitter'=>$this->input->post('twitter',true), 'faceboook'=>$this->input->post('facebook',true), 'linkedin'=>$this->input->post('facebook',true)
-                );
-
-
+            $json_socials = array('twitter'=>$this->input->post('twitter',true), 'faceboook'=>$this->input->post('facebook',true), 'linkedin'=>$this->input->post('linkedin',true));
             $json_socials = json_encode($json_socials);
 
 
-
-
-
             $values = array('evento_id'     => $this->eid,
-
-
                             'nombre'        => $this->input->post('nombre',true),
-
-
                             'brief'         => $this->input->post('brief', true),
-
-
                             'cargo'          => $this->input->post('cargo',true),
-
-
                             'json_socials'  => $json_socials,
-
-
                             'status'        => $status,
-
-
                            );
-
-
-
-
-
-
 
 
             switch($this->params['iu']) {
