@@ -12,9 +12,9 @@
 			}
 		}
 
-
+		echo '<div class="clear"></div>';
 	}
 	?>
-	<div class="clear"></div>
+
 	</div>
 </section>
