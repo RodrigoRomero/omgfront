@@ -11151,7 +11151,7 @@ input[type=checkbox]:not(:checked) + label.error { display: block !important; }
 	background-color: #38024f;
 }
 
-.title-block.av2020 h2 span{
+.title-block.av2020 h2 span, .title-block.av2020 h1, .title-block.av2020 h2, .title-block.av2020 h3, .title-block.av2020 h4{
 	color: #ffffff;
 }
 .title-block-right {

@@ -10,6 +10,7 @@
 
 			$last_group = ($total_items == $k+1) ? true : false;
 			$this->load->view('evento/sponsor-category', ['position'=>$k, 'item' => $item['categoria'], 'sponsors' => $item['sponsors'], 'last_group'=>$last_group]);
+
 		}
 
 	//foreach($oradores as $k => $item) {

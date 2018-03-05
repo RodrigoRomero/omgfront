@@ -1,4 +1,4 @@
-<div class="title-block">
+<div class="title-block av2020">
 
 	<?php
 	if($position >= 3){
@@ -10,10 +10,13 @@
 	echo heading($item->nombre, ($position))
 	?>
 
-	<div class="masonry-thumbs col-6"  data-lightbox="gallery">
+</div>
+	<div class=""  data-lightbox="gallery">
 		<?php foreach ($sponsors as $sponsor){
 			$this->load->view('evento/sponsor-items', ['item'=>$sponsor]);
+
 		}
 		?>
+
 	</div>
-</div>
+	<div class="clear"></div>
