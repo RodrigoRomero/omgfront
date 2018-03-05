@@ -14,6 +14,7 @@
 				<a class="dropmenu" href="#"><i class="icon-wrench"></i><span> Configuraciones</span></a>
 				<ul>
                     <li><a class="submenu" href="<?php echo base_url('module/load/m/categoriasponsor/a/listado')?>"><i class="icon-user"></i><span> Categorias Sponsor</span></a></li>
+					<li><a class="submenu" href="<?php echo base_url('module/load/m/gruposoradores/a/listado')?>"><i class="icon-user"></i><span> Grupos Oradores</span></a></li>
 					<li><a class="submenu" href="<?php echo base_url('module/load/m/gateways/a/listado')?>"><i class="icon-user"></i><span> Medios Pago</span></a></li>
                     <li><a class="submenu" href="<?php echo base_url('module/load/m/asistentes/a/listado')?>"><i class="icon-user"></i><span> Asistentes</span></a></li>
     			 	<!-- </a><li><a class="submenu" href="<?php echo base_url('module/load/m/configuraciones/a/listado')?>"><i class="icon-cog"></i><span> Configuraciones</span></a></li> -->

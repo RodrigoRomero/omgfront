@@ -41,6 +41,7 @@ class oradores_mod extends RR_Model {
         $datagrid["columns"][] = array("title" => "Cargo", "field" => "cargo", 'sort'=>'o.cargo');
         $datagrid["columns"][] = array("title" => "Nombre", "field" => "nombre", 'sort'=>'o.nombre');
         $datagrid["columns"][] = array("title" => "Status", "field" => "status", 'format'=>'icon-activo');
+        $datagrid['columns'][] = array("title" => 'Ordenar',"field" => "", "width" => "46", "class"=>"hide");
 
 
         #CONDICIONES & CACHE DE CONDICIONES
@@ -53,7 +54,7 @@ class oradores_mod extends RR_Model {
         if(isset($_POST['search']) && !empty($_POST['search'])) {
 
 
-            $like_arr = array('o.nombre');
+            $like_arr = array('o.order');
 
 
             foreach($like_arr as  $l){
@@ -89,7 +90,7 @@ class oradores_mod extends RR_Model {
         } else {
 
 
-            $this->db->order_by('o.nombre','ASC');
+            $this->db->order_by('o.order','ASC');
 
 
         }
@@ -201,27 +202,15 @@ class oradores_mod extends RR_Model {
 
 
         $lnk_del = set_url(array('a'=>'chk_deletea'));
-
-
         $html  = "<a class='ax-modal tip-top icon-trash' href='".$lnk_del."/id/{%id%}' data-original-title='Eliminar' style='margin-right:10px'></a>";
-
-
-
-
-
         $upd_del = set_url(array('a' =>'newa', 'iu'=>'update'));
 
-
 		$html .= "<a class='tip-top' href='".$upd_del."/id/{%id%}' data-original-title='Editar'><span class='icon-pencil'></span></a>";
-
-
-
-
-
         $extra[] = array("html" => $html, "pos" => 0);
 
 
-
+        $html2 = "<a class='tip-top' href=javascript:void(0)' data-original-title='Ordenar'><span class='icon-resize-vertical'></span></a>";
+		$extra[1] = array("html" => $html2, "pos" => 4);
 
 
 
@@ -237,11 +226,8 @@ class oradores_mod extends RR_Model {
 
 
         $filter_data = array('nombre' => $this->input->post('nombre',true),
-
-
-                             'limit'  => $this->limit
-
-
+                             'limit'  => $this->limit,
+                             'order' => set_url(array('a'=>'update_order'))
                             );
 
 
@@ -316,28 +302,15 @@ class oradores_mod extends RR_Model {
 
     public function newa(){
 
-
         $data_panel['action']      = set_url(array('a'=>'savea'));
-
-
         $data_panel['back']        = base_url('module/load/m/'.$this->module.'/a/listado/eid/'.$this->eid);
-
-
         $data_panel['title']       = $this->module_title;
 
-
-
-
-
         $this->breadcrumb->addCrumb($this->module_title,base_url('module/load/m/'.$this->module.'/a/listado/eid/'.$this->eid));
-
+        $data_panel['categorias'] = $this->db->get_where('oradores_grupo', array('status'=>1))->result();
 
         if(!empty($this->id)) {
-
-
             $this->breadcrumb->addCrumb('Editar','','current');
-
-
             $data_panel['row'] = $this->db->get_where($this->table, array('id'=>$this->id))->row();
 
 
@@ -469,6 +442,8 @@ class oradores_mod extends RR_Model {
                             'cargo'          => $this->input->post('cargo',true),
                             'json_socials'  => $json_socials,
                             'status'        => $status,
+                            'orador_grupo_id' => $this->input->post('orador_grupo_id',true),
+
                            );
 
 
@@ -902,6 +877,30 @@ class oradores_mod extends RR_Model {
 
 
     }
+
+    public function update_order(){
+			$update = [];
+
+			foreach($this->input->post() as $row => $position){
+				$id = explode("-",$row);
+
+				$update[] = [
+					'id' => end($id),
+					'order' => $position
+				];
+
+			}
+
+			$query = $this->db->update_batch($this->table,$update,'id');
+			if($query){
+					$this->session->set_flashdata('insert_success', 'Orden Actualizado Exitosamente');
+					$success = true;
+					$responseType = 'redirect';
+					$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('module/load/m/'.$this->module.'/a/listado/eid/'.$this->eid));
+			}
+
+			return $data;
+		}
 
 
 }

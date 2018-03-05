@@ -74,6 +74,7 @@ class main_mod extends RR_Model {
 			$sponsors = $this->db->select('s.nombre, s.id', FALSE)
 								 ->from('sponsors s')
 								 ->where( array('s.status'=>1, 's.evento_id'=>$this->evento->id, 's.categoria_id'=>$categoria->id))
+								 ->order_by('order', 'ASC')
 								 ->get()->result();
 
 			if(count($sponsors)>0){

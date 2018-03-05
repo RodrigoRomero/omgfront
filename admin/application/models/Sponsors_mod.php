@@ -33,6 +33,7 @@ class sponsors_mod extends RR_Model {
         $datagrid["columns"][] = array("title" => "Categoría", "field" => "categoria");
         $datagrid["columns"][] = array("title" => "Nombre", "field" => "nombre");
         $datagrid["columns"][] = array("title" => "Status", "field" => "status", 'format'=>'icon-activo');
+        $datagrid['columns'][] = array("title" => 'Ordenar',"field" => "", "width" => "46", "class"=>"hide");
         #CONDICIONES & CACHE DE CONDICIONES
         $this->db->start_cache();
         $this->db->select('s.id, s.nombre, s.status, cs.nombre categoria', false);
@@ -51,7 +52,7 @@ class sponsors_mod extends RR_Model {
             $order = explode("-",$this->input->post('order',true));
             $this->db->order_by($datagrid['columns'][$order[1]]['sort'],$order[0]);
         } else {
-            $this->db->order_by('s.nombre','ASC');
+            $this->db->order_by('s.order','ASC');
         }
         $this->db->from($this->table.' s');
         $this->db->stop_cache();
@@ -84,10 +85,15 @@ class sponsors_mod extends RR_Model {
         $upd_del = set_url(array('a' =>'newa', 'iu'=>'update'));
 		$html .= "<a class='tip-top' href='".$upd_del."/id/{%id%}' data-original-title='Editar'><span class='icon-pencil'></span></a>";
         $extra[] = array("html" => $html, "pos" => 0);
+
+        $html2 = "<a class='tip-top' href=javascript:void(0)' data-original-title='Ordenar'><span class='icon-resize-vertical'></span></a>";
+		$extra[1] = array("html" => $html2, "pos" => 4);
+
         $datagrid["rows"]      = $this->datagrid->query_to_rows($query->result(), $datagrid["columns"], $extra);
         //echo $this->input->post('nombre');
         $filter_data = array('nombre' => $this->input->post('nombre',true),
-                             'limit'  => $this->limit
+                             'limit'  => $this->limit,
+                             'order' => set_url(array('a'=>'update_order'))
                             );
         $action_links['new'] =  array('action' => set_url(array('a'=>'newa', 'iu'=>'new')), 'title' => 'Nuevo '.$this->module);
         //$action_links['exporta'] =  array('action' => set_url(array('a' =>'exporta')), 'title' => 'Exportar');
@@ -285,10 +291,35 @@ class sponsors_mod extends RR_Model {
        $data = array('success' => $success, 'responseType'=>$responseType, 'messages'=>$messages, 'value'=>$function, 'extraUrl'=>$extraUrl);
        return $data;
     }
-    function download_file(){
+
+    public function download_file(){
        $this->load->helper('download');
        $data = file_get_contents('../uploads/data/'.$this->params['f'].'.xlsx');
        force_download($this->params['f'].'.xlsx',$data);
        return true;
     }
+
+    public function update_order(){
+			$update = [];
+
+			foreach($this->input->post() as $row => $position){
+				$id = explode("-",$row);
+
+				$update[] = [
+					'id' => end($id),
+					'order' => $position
+				];
+
+			}
+
+			$query = $this->db->update_batch($this->table,$update,'id');
+			if($query){
+					$this->session->set_flashdata('insert_success', 'Orden Actualizado Exitosamente');
+					$success = true;
+					$responseType = 'redirect';
+					$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('module/load/m/'.$this->module.'/a/listado/eid/'.$this->eid));
+			}
+
+			return $data;
+		}
 }

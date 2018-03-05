@@ -10,7 +10,7 @@ echo form_open($action,$data);
         <div class="box-content">
             <div class="form_container">
                 <?php
-                $data = array('name'=>'nombre','id'=>'nombre','placeholder'=>'Nombre', 'class'=>'required input-xlarge', 'value'=>$row->nombre);
+                $data = array('name'=>'name','id'=>'nombre','placeholder'=>'Nombre', 'class'=>'required input-xlarge', 'value'=>$row->name);
                 echo control_group($data['placeholder'], form_input($data),$attr = array('append'=>'<a class="icon-question ax-modal tip-right" data-original-title="Ver ayuda" href="'.base_url('helps/general/1').'"></a>'));
 
                 $checked = ($row->status==1) ? array('checked'=>true) : array();
@@ -30,3 +30,4 @@ echo form_open($action,$data);
         </div>
     </div>
 </div>
+

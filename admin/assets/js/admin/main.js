@@ -4,10 +4,9 @@ $(document).ready(function () {
     google.charts.load('current', {packages: ['corechart']});
 
     init();
-     $( ".table tbody" ).sortable();
-    $( ".table tbody" ).disableSelection();
-    if(exists(('#chart_lines'))) {
 
+
+    if(exists(('#chart_lines'))) {
         google.charts.setOnLoadCallback(setBarTickets);
     }
     /*google.charts.setOnLoadCallback(setPiePlanes);
@@ -472,6 +471,67 @@ function init_links(){
             })
         })
     }
+
+    if (exists($("#j-enable-order"))) {
+       var ord = $("#j-enable-order");
+       var url = ord.attr('data-module');
+
+        ord.unbind("click");
+
+        ord.click(function () {
+
+        	stateOrder = ord.attr('data-state')
+
+        	if(stateOrder == 0){
+	        	$('.table  td.hide, .table  th.hide').each(function(e,i){
+	        		$(i).addClass('show').removeClass('hide');
+	        	})
+	        	ord.attr('data-state',1)
+	        	ord.text('Guardar Orden');
+
+        		$( ".table tbody" ).sortable({
+        			axis: "y"
+        		});
+	        	/*
+	        	$( ".table tbody" ).on( "sortstop", function( event, ui ) {
+
+			    			    	});
+			    			    	*/
+	        	//ACA Ejecutar el save del orden
+        	}
+
+
+
+        	if(stateOrder == 1){
+        		$('.table  td.show, .table  th.show').each(function(e,i){
+	        		$(i).addClass('hide').removeClass('show');
+	        	})
+        		ord.attr('data-state',0)
+	        	ord.text('Ordenar');
+
+	        	$( ".table tbody" ).sortable( "destroy" );
+
+
+	        	var arr = [];
+	        //	en = [];
+				$('.table > tbody  > tr').each(function(e,i){
+	    			var a =  $(i).attr('id')
+	    			arr.push(a+'='+e)
+	    		})
+
+
+	    		frm_send('none',url,'abc',arr);
+
+	    		console.log('se ordeno');
+	        	//ACA ejecutar el disabled del orden y el save
+        	}
+
+
+		    //$( ".table tbody" ).disableSelection();
+
+        })
+    }
+
 }
 
 function pg_setExporta(b) {
@@ -654,6 +714,15 @@ function validateForm(form) {
 }
 var _frm_progress = false;
 function frm_send(form, ajaxUrl, ajaxId, extraData) {
+
+
+/*
+console.log(extraData)
+$.each(extraData, function(e,a){
+	//console.log(e,a)
+}) */
+
+
     if(form=="none"){
         if(ajaxUrl==undefined || ajaxId==undefined)  { alert('102 frm_send'); return false;}
         var form = $("<form/>", {"id" : "frm"+ajaxId, "action":ajaxUrl});
@@ -670,10 +739,12 @@ function frm_send(form, ajaxUrl, ajaxId, extraData) {
     }
     if (extraData.length > 0)
         extraData = "&" + extraData.join("&")
+ //   extraData = "&" + extraData.join("&")
     _frm_progress = true
     if(_frm_progress){
         page_block(true);
     }
+
     $.ajax({
         type : 'POST',
         url  : form.attr('action'),
