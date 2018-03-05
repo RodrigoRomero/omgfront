@@ -11147,6 +11147,13 @@ input[type=checkbox]:not(:checked) + label.error { display: block !important; }
 	margin-bottom: 30px;
 }
 
+.title-block.av2020{
+	background-color: #38024f;
+}
+
+.title-block.av2020 h2 span{
+	color: #ffffff;
+}
 .title-block-right {
 	padding: 2px 20px 3px 0;
 	border-left: 0;
