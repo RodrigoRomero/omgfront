@@ -28,15 +28,15 @@ class gruposoradores_mod extends RR_Model {
 				$this->breadcrumb->addCrumb($this->module_title,'');
 				$this->breadcrumb->addCrumb('Listado','','current');
 				$datagrid["columns"][] = array("title" => "", "field" => "", "width" => "46");
-				$datagrid["columns"][] = array("title" => "Nombre", "field" => "name", 'sort'=>'o.name');
+				$datagrid["columns"][] = array("title" => "Nombre", "field" => "nombre", 'sort'=>'o.nombre');
 				$datagrid["columns"][] = array("title" => "Status", "field" => "status", 'format'=>'icon-activo');
 				$datagrid['columns'][] = array("title" => 'Ordenar',"field" => "", "width" => "46", "class"=>"hide");
 				#CONDICIONES & CACHE DE CONDICIONES
 				$this->db->start_cache();
-				$this->db->select('o.id, o.name, o.status', false);
+				$this->db->select('o.id, o.nombre, o.status', false);
 				$this->db->where('o.status >=',0);
 				if(isset($_POST['search']) && !empty($_POST['search'])) {
-						$like_arr = array('o.name', 'o.apellido', 'o.email');
+						$like_arr = array('o.nombre', 'o.apellido', 'o.email');
 						foreach($like_arr as  $l){
 								$like_str .= $l." LIKE '%".$this->input->post('search',true)."%' OR ";
 						}
