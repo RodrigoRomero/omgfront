@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 if(config.page_handle == 'cart/thanks'){
-	countdown(15)
+	countdown(5)
 }
 
 $('.tleft.past-enabled').datepicker({
