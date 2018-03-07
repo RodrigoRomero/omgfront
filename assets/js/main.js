@@ -45,7 +45,7 @@ function countdown(secs){
       }
       else {
         clearInterval(int);
-         window.location.href = "/";
+         window.location.href = "/2018";
       }
     },5000);
 }
