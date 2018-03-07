@@ -45,7 +45,7 @@ function countdown(secs){
       }
       else {
         clearInterval(int);
-         window.location.href = "/2018/account/summary";
+         window.location.href = "/";
       }
     },5000);
 }
