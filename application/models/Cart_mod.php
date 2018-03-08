@@ -93,6 +93,7 @@ class cart_mod extends RR_Model {
 
 			$options['extras']    = (!empty($ticket->descripcion)) ? $ticket->descripcion : '';
 			$options['ticket_id'] = (!empty($ticket->id)) ? $ticket->id : '';
+			$options['tipo']      = (!empty($ticket->tipo)) ? $ticket->tipo : 1;
 
 			$price = (float)$this->getPrice($ticket);
 
@@ -277,12 +278,15 @@ class cart_mod extends RR_Model {
 
 				}  else {
 
-				array_push($tickets, ['quantity' => $row['qty'], 'nominar' => $row['options']['nominar'], 'ticket_price'=>$row['price'], 'ticket_id' =>  $row['options']['ticket_id'], 'customer_id' => get_session('id', false), 'evento_id'=>$this->evento->id ]);
+
+
+				array_push($tickets, ['quantity' => $row['qty'], 'tipo' => $row['options']['tipo'], 'nominar' => $row['options']['nominar'], 'ticket_price'=>$row['price'], 'ticket_id' =>  $row['options']['ticket_id'], 'customer_id' => get_session('id', false), 'evento_id'=>$this->evento->id]);
 					$total_price = $total_price + ($row['qty']*$row['price']);
 					$total_places = $total_places+$row['options']['nominar'];
 
 				}
 			}
+
 
 			$values = ['customer_id' 			  => get_session('id', false),
 					  'evento_id' 			  => $this->evento->id,
@@ -512,6 +516,7 @@ class cart_mod extends RR_Model {
 
 			$options['extras']    = (!empty($ticket->descripcion)) ? $ticket->descripcion : '';
 			$options['ticket_id'] = (!empty($ticket->id)) ? $ticket->id : '';
+			$options['tipo']      = (!empty($ticket->tipo)) ? $ticket->tipo : 1;
 
 			$price = (float)$this->getPrice($ticket);
 
