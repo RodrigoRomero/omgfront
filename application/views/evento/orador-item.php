@@ -13,7 +13,7 @@
 
 			<!-- <p><?php echo $orador->brief ?></p> -->
 			<?php if($this->evento->show_full_bio == 0) { ?>
-			<div class="">
+			<div class="center">
 			<?php if(!empty($social_arr->faceboook)) { ?>
 			<a href="http://www.facebook.com/<?php echo $social_arr->faceboook ?>" class="social-icon si-borderless si-text-color si-facebook">
 			<i class="icon-facebook"></i>
