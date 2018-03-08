@@ -83,6 +83,20 @@ $social = json_decode($row_evento->json_socials);
         </div>
         <div class="row-fluid">
             <div class="box span12">
+                <?php $this->load->view('layout/panels/box_header', array('title'=>'Configurar Oradores', 'icon'=>'icon-bullhorn', 'subaction'=>false)) ?>
+                <div class="box-content">
+                    <div class="form_container">
+                        <?php
+                     		$checked = ($row_evento->show_full_bio==1) ? array('checked'=>true) : array();
+                			$data = array('name'=>'evento[show_full_bio]','id'=>'registro_enabled', 'class'=>'', 'type'=>'checkbox');
+                			echo control_group('Mostrar Bio', form_input($data+$checked),$attr = array());
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="box span12">
                 <?php $this->load->view('layout/panels/box_header', array('title'=>'Social Links', 'icon'=>'icon-thumbs-up', 'subaction'=>false)) ?>
                 <div class="box-content">
                     <div class="form_container">

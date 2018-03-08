@@ -4,6 +4,9 @@
 			<h1><span>O</span>radores</h1>
 		</div>
 	<?php
+
+
+
 	foreach($oradores as $k => $item) {
 		if(!empty($item['oradores'])) {
 			$this->load->view('evento/orador-headline', ['position'=>$k, 'categoria'=>$item['categoria']]);

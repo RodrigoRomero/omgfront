@@ -193,6 +193,10 @@ class eventos_mod extends RR_Model {
             if (isset($data_evento['payments_enabled'])) $payments_enabled = 1;
             $cupons_enabled = 0;
             if (isset($data_evento['cupons'])) $cupons_enabled = 1;
+
+            $show_full_bio = 0;
+            if (isset($data_evento['show_full_bio'])) $show_full_bio = 1;
+
             $json_socials  = array('twitter'=>$data_evento['twitter'], 'faceboook'=>$data_evento['facebook']);
             $values_evento = array ('nombre'            => $data_evento['nombre'],
                                     'bajada'            => $data_evento['bajada'],
@@ -211,7 +215,8 @@ class eventos_mod extends RR_Model {
                                     'reminder_two'      => (!empty($data_evento['reminder_two'])) ? getFechasSQL($data_evento['reminder_two']) : '',
                                     'show_register'     => $show_register,
                                     'payments_enabled'  => $payments_enabled,
-                                    'cupons_enabled'    => $cupons_enabled
+                                    'cupons_enabled'    => $cupons_enabled,
+                                    'show_full_bio'		=> $show_full_bio
                                     );
             $values_lugar = array('lugar'           => $data_lugar['place'],
                                   'direccion'       => $data_lugar['address'],
