@@ -1,11 +1,11 @@
 <?php
 /* VERSION: 1.1.0
- * 
- * 
+ *
+ *
  */
- 
-class Module extends RR_Controller {    
-	
+
+class Module extends RR_Controller {
+
     function Module(){
 		parent::__construct();
         $this->layout = 'base';
@@ -18,27 +18,27 @@ class Module extends RR_Controller {
                                    'cleditor' => array('js'=>array('jquery.cleditor.min'), 'css'=>array('jquery.cleditor')),
                                    );
 	}
-	
-	function index(){  
+
+	function index(){
 	}
-    
-    function load(){        
+
+    function load(){
         $module = $this->params["m"];
         $model  = $module."_mod";
         $action = $this->params["a"];
-        
+
         $this->load->model($model);
-        $html =  $this->$model->$action();        
-        
+        $html =  $this->$model->$action();
+
         if($this->input->is_ajax_request() && !isset($this->params['f'])){
            echo json_encode($html);
         } else {
             $this->_show($html);
         }
         /*
-        $args   = $this->uri->uri_to_assoc(3);   
-        
-        
+        $args   = $this->uri->uri_to_assoc(3);
+
+
         $hash   = "";
         foreach($args as $k=>$v){
             if($k=="%7Cnewa" || !empty($hash)){
@@ -49,14 +49,14 @@ class Module extends RR_Controller {
         $hash = (!empty($hash)) ? substr($hash, 0, -1) :  $hash;
 
         $this->load->Model("sections/".$model);
-        
+
         $html =  $this->$model->$action($params);
-        
-        
+
+
         $data = array("content" =>$html,
                       "module"  =>$module );
-        
-		
+
+
         if(isset($args["ax"]) && $args["ax"]==1){
             echo json_encode($data);
 		}else if(isset($args["empty"])){
@@ -65,18 +65,22 @@ class Module extends RR_Controller {
         }
         */
 
-    } 
-    
+    }
+
     public function add_line(){
         $this->load->model('tickets_mod');
         $rules = $this->tickets_mod->getDescriptionLine();
         echo json_encode($rules);
     }
-    
-    private function _show($module){        
+
+    public function order(){
+
+
+    }
+    private function _show($module){
         echo $this->show_main($module);
-    }  
-    
-    
+    }
+
+
 }
 ?>

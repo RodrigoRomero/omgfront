@@ -334,7 +334,7 @@ class cart_mod extends RR_Model {
 	            'payment_type'        => get_session('cart_medio_pago', false),
 	            'transaction_amount'  => $this->cart->total(),
 	            'currency_id'         => 'ARS',
-	            'pago_status'         => ($values['gateway'] == 'foc') ? 2 : '-1',
+	            'pago_status'         => ($values['gateway'] == 'foc') ? 1 : 2,
 	            'status'              => ($values['gateway'] == 'foc') ? 'approved' : 'in_progress',
 	          );
 	        $order_payment = $this->db->insert('pagos',$payment);

@@ -12,21 +12,43 @@ class dashboard_mod extends RR_Model {
 		parent::__construct();
 	}
 
-	public function lastAcreditados(){
 
-		$this->db->select('a.nombre, a.apellido, c.empresa', false);
-		$this->db->where('a.status >=',0);
-		$this->db->where('a.evento_id',$this->evento_id);
-		$this->db->join('customers c', 'c.id = a.customer_id','LEFT');
-	 #   $this->db->join('pagos p', 'p.acreditado_id = a.id','LEFT');
-		$this->db->from('acreditados a');
-		$this->db->limit(10);
-		$this->db->order_by('a.id','DESC');
-		$query = $this->db->get();
-		$result = $query->result();
+	public function getTotal($tipo_ticket){
+		$sql = "SELECT SUM(nominar) total
+  				FROM order_tickets
+				LEFT JOIN orders ON order_tickets.`order_id` = orders.`id`
+  				WHERE orders.`evento_id` = ?
+  				AND orders.`status` = 1
+  				AND tipo = ?";
+		$total = $this->db->query($sql, [$this->evento_id,$tipo_ticket])->row();
 
+		return $total;
+	}
 
-		$box_header = $this->load->view('layout/panels/box_header', array('title'=>'Últimos 10 Acreditados', 'icon'=>'icon-user', 'box_icon'=>true), true);
+	public function getTotalActive($tipo_ticket){
+		$sql = "SELECT COUNT(acreditados.`id`) total
+				FROM   acreditados
+				LEFT JOIN order_tickets ON acreditados.`order_ticket_id` = order_tickets.`id`
+				WHERE acreditados.`evento_id` = ?
+				AND order_tickets.`tipo` = ?";
+		$total = $this->db->query($sql,[$this->evento_id,$tipo_ticket])->row();
+
+		return $total;
+	}
+
+	public function lastNominados($tipo_ticket,$limit){
+		$sql = "SELECT acreditados.`nombre`, acreditados.`apellido`, customers.`empresa`
+				FROM acreditados
+				LEFT JOIN customers ON customers.`id` = acreditados.`customer_id`
+				LEFT JOIN order_tickets ON order_tickets.`id` = acreditados.`order_ticket_id`
+				WHERE acreditados.`status` >= 0
+				AND acreditados.`evento_id` = ?
+				AND order_tickets.`tipo` = ?
+				ORDER BY acreditados.`id` DESC
+				LIMIT ?";
+		$result = $this->db->query($sql, [$this->evento_id,$tipo_ticket,$limit])->result();
+
+		$box_header = $this->load->view('layout/panels/box_header', array('title'=>'Últimas 10 Nominaciones', 'icon'=>'icon-user', 'box_icon'=>true), true);
 		$box_content = '<ul class="unstyled">';
 		foreach($result as $usuario){
 			$box_content .= '<li><b>'.$usuario->empresa.'</b> - '.$usuario->nombre.' '.$usuario->apellido.'</li>';
@@ -34,8 +56,95 @@ class dashboard_mod extends RR_Model {
 		$box_content .= '</ul>';
 		$box = $this->load->view('layout/panels/box', array('box_header'=>$box_header,'box_content'=>$box_content), true);
 		return $box;
-
 	}
+
+
+	public function getTotalByTicket(){
+		$sql ="SELECT SUM(order_tickets.`nominar`) total, tickets.`nombre`
+			   FROM order_tickets
+			   LEFT JOIN tickets ON tickets.`id` = order_tickets.`ticket_id`
+			   WHERE order_tickets.`evento_id` = ?
+			   GROUP BY order_tickets.`ticket_id`";
+
+		$total_tickets = $this->db->query($sql, [$this->evento_id])->result();
+
+		return $total_tickets;
+	}
+
+	public function getTotalByMedioPago(){
+		$sql ="SELECT COUNT(id) total, gateway
+		       FROM orders
+		       WHERE STATUS >= 0
+		       AND evento_id = ?
+		       GROUP BY gateway";
+		$total_medio_pago = $this->db->query($sql, [$this->evento_id])->result();
+		return $total_medio_pago;
+	}
+
+	public function getInscriptosPlanesPie(){
+		$evento = $this->db->get_where('eventos',array('status'=>1, 'id'=>$this->evento_id))->row();
+		$header = array(array('Tipo','Value'));
+
+		if(count($evento)>0){
+			$sql = "SELECT t.`nombre`, ot.`totals`, t.`id`
+					FROM tickets t
+					LEFT JOIN (SELECT COUNT(id) totals, ticket_id FROM order_tickets  GROUP BY ticket_id) ot ON ot.`ticket_id` = t.`id`
+					WHERE t.`evento_id` = ?  AND t.`id` = ot.`ticket_id`";
+
+			$acreditados = $this->db->query($sql,[$this->evento_id])->result();
+			$values = array();
+			foreach($acreditados as $acreditado){
+				$values[] = array($acreditado->nombre, (int)$acreditado->totals);
+			}
+		$success      = true;
+		$responseType = 'function';
+		$function     = 'intiPiePlanes';
+		$messages     = array_merge($header,$values);
+		$data = array('success' => $success, 'responseType'=>$responseType, 'messages'=>$messages, 'value'=>$function);
+		return $data;
+		} else {
+			return false;
+		}
+	}
+
+	public function getTotalOrders(){
+		$sql = "SELECT COUNT(id) total
+  				FROM orders
+  				WHERE orders.`evento_id` = ?";
+		$total = $this->db->query($sql, [$this->evento_id])->row();
+
+		return $total;
+	}
+
+	public function getOrderByStatus(){
+		$sql ="SELECT COUNT(orders.`id`) total,
+				CASE orders.`status`
+					WHEN 1 THEN 'Activas'
+					WHEN 2 THEN 'Archivadas'
+					WHEN -1 THEN 'Canceladas'
+				END estado
+				FROM orders
+				WHERE orders.`evento_id` = ?
+				GROUP BY orders.`status`";
+
+		$total = $this->db->query($sql, [$this->evento_id])->result();
+		return $total;
+	}
+
+
+	public function cuponsStats(){
+
+		$sql = "SELECT CONCAT(d.quantity,'/',d.available) quantity_used, d.code nombre
+				FROM cupons d
+				WHERE d.evento_id= ?
+				ORDER BY d.available DESC";
+
+		$result = $this->db->query($sql,[$this->evento_id])->result();
+		return $result;
+	}
+
+
+
 	//SELECT COUNT(id) total_by_date, DATE_FORMAT(fa, '%Y/%m/%d') fa FROM acreditados GROUP BY DATE_FORMAT(fa, '%Y/%m/%d')
 	public function getSmallStats(){
 	   // $recaudado    = $this->getSmall('recaudado');
@@ -44,23 +153,7 @@ class dashboard_mod extends RR_Model {
 		return $smallStats;*/
 	}
 
-	public function getTotal(){
-		$sql = "SELECT SUM(nominar) total
-				FROM orders o
-				LEFT JOIN order_tickets ot ON o.id = ot.order_id
-				LEFT JOIN tickets t on t.id = ot.ticket_id
-				WHERE o.evento_id = ? AND o.status = 1 AND t.tipo = ?";
-		$total = $this->db->query($sql, [$this->evento_id,1])->row();
 
-
-		return $total;
-	}
-
-	public function getTotalActive(){
-		$sql = "SELECT COUNT(acreditados.id) total FROM acreditados LEFT JOIN order_tickets ON acreditados.`order_ticket_id` = order_tickets.id LEFT JOIN tickets ON tickets.`id` = order_tickets.ticket_id WHERE acreditados.evento_id = ? AND tickets.`tipo` = ?";
-		$total = $this->db->query($sql,[$this->evento_id,1])->row();
-		return $total;
-	}
 
 	public function getTotalActiveCheckins(){
 		$sql = "SELECT COUNT(id) total FROM acreditados WHERE status = 1 AND acreditado = 1 AND evento_id = ?";
@@ -181,37 +274,13 @@ class dashboard_mod extends RR_Model {
 		return $total;
 	}
 
-	public function cuponsStats(){
-
-		$sql = "SELECT CONCAT(d.quantity,'/',d.available) quantity_used, d.code nombre
-				FROM cupons d
-				WHERE d.evento_id= ?
-				ORDER BY d.available DESC";
-
-		$result = $this->db->query($sql,[$this->evento_id])->result();
-		return $result;
-	}
 
 
 
-	public function getTotalByMedioPago(){
-		$sql ="SELECT COUNT(id) total, gateway FROM orders WHERE STATUS >= 0  AND evento_id = ? GROUP BY gateway";
-		$total_medio_pago = $this->db->query($sql, [$this->evento_id])->result();
-		return $total_medio_pago;
-	}
 
 
-	public function getTotalByTicket(){
-		$sql ="SELECT SUM(order_tickets.nominar) total, tickets.nombre
-			   FROM order_tickets
-			   LEFT JOIN tickets ON tickets.id = order_tickets.ticket_id
-			   WHERE order_tickets.evento_id = ?
-			   AND tickets.tipo != ?
-			   GROUP BY order_tickets.ticket_id";
 
-		$total_tickets = $this->db->query($sql, [$this->evento_id,2])->result();
-		return $total_tickets;
-	}
+
 	public function getBarsByTicket(){
 		$sql ="SELECT ot.evento_id, COUNT(ot.id) total, t.nombre, t.background
 			   FROM order_tickets ot
@@ -270,31 +339,7 @@ class dashboard_mod extends RR_Model {
 	}
 
 
-	public function getInscriptosPlanesPie(){
-		$evento = $this->db->get_where('eventos',array('status'=>1, 'id'=>$this->evento_id))->row();
-		$header = array(array('Tipo','Value'));
 
-		if(count($evento)>0){
-			$sql = "SELECT t.nombre, ot.totals, t.id
-					FROM tickets t
-					LEFT JOIN (SELECT COUNT(id) totals, ticket_id FROM order_tickets  GROUP BY ticket_id) ot ON ot.ticket_id = t.id
-					WHERE t.evento_id = ?  AND t.id = ot.ticket_id AND t.tipo != ?";
-
-			$acreditados = $this->db->query($sql,[$this->evento_id,2])->result();
-			$values = array();
-			foreach($acreditados as $acreditado){
-				$values[] = array($acreditado->nombre, (int)$acreditado->totals);
-			}
-		$success      = true;
-		$responseType = 'function';
-		$function     = 'intiPiePlanes';
-		$messages     = array_merge($header,$values);
-		$data = array('success' => $success, 'responseType'=>$responseType, 'messages'=>$messages, 'value'=>$function);
-		return $data;
-		} else {
-			return false;
-		}
-	}
 
 	public function getInscriptosPagosPie(){
 		$this->db->from('orders');
