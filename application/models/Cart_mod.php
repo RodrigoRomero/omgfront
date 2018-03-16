@@ -170,10 +170,32 @@ class cart_mod extends RR_Model {
 	}
 
 	public function update($rowId, $value){
+		//ep($this->cart->contents());
+
+		//VERIFICO SI ESE TKT TIENE UN CUPON VINCULADO
+		foreach ($this->cart->contents() as $key => $row) {
+			if(preg_match('/^code/', $row['id'], $matches) === 1){
+				$item = $this->cart->product_options($rowId);
+
+				if($row['options']['plan_id'] == $item['ticket_id']){
+					$this->cart->remove($row['rowid']);
+				}
+
+
+
+			}
+
+		}
+
+		//die;
+
 		$data = array(
 				'rowid' => $rowId,
 				'qty'   => $value,
 			);
+
+
+
 
 		if($this->cart->update($data) && count($this->cart->contents())>0){
 			$success     = true;
