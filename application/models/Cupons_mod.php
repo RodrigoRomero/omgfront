@@ -65,7 +65,15 @@ class Cupons_mod extends RR_Model {
 
 						#SI EL DESCUENTO ES MAYOR AL PRECIO PROMOCIONAL - QUITO PRECIO PROMOCIONAL Y AGREGO EL REGULAR
 						if($ticket_cupon->precio_regular > $cart['price']){
-							echo 'tengo que remover el producto y agregar el regular';
+
+							$data = array(
+									'rowid' => $cart['rowid'],
+									'price'   => $ticket_cupon->precio_regular
+									);
+
+							$this->cart->update($data);
+
+							/*echo 'tengo que remover el producto y agregar el regular';*/
 						}
 
 						#AGREGO EL CUPON AL CART
