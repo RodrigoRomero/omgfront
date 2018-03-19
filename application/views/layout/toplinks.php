@@ -1,5 +1,11 @@
 <div class="top-links">
 						<ul>
+							<?php if($layout == 'one_page') { ?>
+							<li class="one-page-menu animated" data-caption-animate="fadeInUp" data-caption-delay="200"><a href="javascript:void(0)" data-href="#section-tickets"">Comprar</a></li>
+							<?php } else if($layout == 'multi_page') { ?>
+							<li><a href="<?php echo base_url('/#section-tickets') ?>">Comprar</a></li>
+							<?php } ?>
+
 							<?php
 							if($this->auth->loggedin()) { ?>
 								<li><a href="javascript:void(0)">Bienvenido <?php echo get_session('nombre',false).' '.get_session('apellido',false) ?></a></li>

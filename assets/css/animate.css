@@ -7,7 +7,7 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 Copyright (c) 2014 Daniel Eden
 */
 
-.not-animated { opacity: 0; }
+.not-animated { opacity: 1; }
 
 .animated {
 	opacity: 1;

@@ -21,7 +21,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 					<!-- Top Links
 					============================================= -->
-					<?php echo $this->load->view('layout/toplinks', [], true) ?>
+					<?php echo $this->load->view('layout/toplinks', ['layout'=> 'multi_page'], true) ?>
 
 				</div>
 

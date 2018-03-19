@@ -29,7 +29,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 			<div class="container clearfix">
 				<div class="col_half col_last fright nobottommargin">
-				<?php echo $this->load->view('layout/toplinks', [], true) ?>
+				<?php echo $this->load->view('layout/toplinks', ['layout'=> 'one_page'], true) ?>
 					<!-- Top Links
 					============================================= -->
 
