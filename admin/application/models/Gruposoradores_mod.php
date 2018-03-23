@@ -166,7 +166,7 @@ class gruposoradores_mod extends RR_Model {
 						if (isset($_POST['status'])) $status = 1;
 						$json_socials = array('twitter'=>$this->input->post('twitter',true), 'faceboook'=>$this->input->post('facebook',true));
 						$json_socials = json_encode($json_socials);
-						$values = array('name'        => $this->input->post('name',true),
+						$values = array('nombre'        => $this->input->post('name',true),
 														'status'        => $status,
 													 );
 						switch($this->params['iu']) {
