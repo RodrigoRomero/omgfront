@@ -1,5 +1,5 @@
 <div class="col-md-4 bottommargin">
-	<div class="team team-list clearfix" style="height: 550px;">
+	<div class="team team-list clearfix" style="height: 480px;">
 		<?php
 
 		$file_name = 'oradores/'.$item->id.'_0.jpg';
