@@ -19,9 +19,9 @@ class PHPMailer_mod extends RR_Model {
 		$this->email->SMTPDebug = 2;
 		$this->email->Host = $this->prefs['smtp_host'];
 		$this->email->Port = $this->prefs['smtp_port'];
-		//$this->email->SMTPAuth = $this->prefs['smtp_auth'];
-		//$this->email->Username = $this->prefs['smtp_user']; //'noreply@argentinavision2020.com';
-		//$this->email->Password = $this->prefs['smtp_pass']; //'\-":kSOW;(@Tq5';
+		$this->email->SMTPAuth = $this->prefs['smtp_auth'];
+		$this->email->Username = $this->prefs['smtp_user']; //'noreply@argentinavision2020.com';
+		$this->email->Password = $this->prefs['smtp_pass']; //'\-":kSOW;(@Tq5';
 
 	}
 

@@ -12,7 +12,7 @@
 | */
 
 
-$config = Array(
+/*$config = Array(
   'protocol' => 'smtp',
   'smtp_host' => 'mail.argentinavision2020.com',
   'smtp_port' => 26,
@@ -23,19 +23,19 @@ $config = Array(
   'crlf' => "\r\n",
   'newline' => "\r\n"
 );
+*/
 
-
-/*$config = Array(
+$config = Array(
   'protocol' => 'smtp',
-  'smtp_host' => 'smtp.mailtrap.io',
-  'smtp_port' => 2525,
-  'smtp_user' => '303f9b6c2d7d25',
-  'smtp_pass' => '47ff21661ed17e',
+  'smtp_host' => 'smtp.sendgrid.net',
+  'smtp_port' => 25,
+  'smtp_user' => 'orsonia',
+  'smtp_pass' => 'orsonia2018',
   'smtp_auth' => true,
   'mailtype' => 'html',
   'crlf' => "\r\n",
   'newline' => "\r\n"
-);*/
+);
 
 /* End of file email.php */
 /* Location: ./system/application/config/email.php vnstudios2017!*/
