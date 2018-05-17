@@ -6,5 +6,12 @@ admin/application/config/config.php
 admin/application/config/database.php
 .htaccess
 admin/.htaccess
+uploads/
 uploads/barcodes/
+uploads/data/
+uploads/gallery/
+uploads/oradores/
+uploads/slider/
+uploads/sponsors/
 vendor
+
