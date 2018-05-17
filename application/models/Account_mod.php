@@ -191,6 +191,15 @@ class account_mod extends RR_Model {
 	}
 
 
+	public function restore(){
+
+		$subject    = "Su Acreditación - ".$this->evento->nombre;
+        $body       = $this->view('email/restore');
+        $email      = $this->Email->send('email_info', 'rodrigo.romero@vnstudios.com', $subject, $body);
+        echo $email;
+
+	}
+
 	public function getOrdersByCustomerById(){
 		$grouped_orders = [];
 

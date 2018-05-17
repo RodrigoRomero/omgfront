@@ -13,6 +13,9 @@ class Account extends RR_Controller {
 		echo $this->show_main($module);
 	}
 
+
+
+
 	public function summary(){
 
 
@@ -47,6 +50,54 @@ class Account extends RR_Controller {
 	 	echo json_encode($data);
 	}
 
+	public function restore(){
+		$this->load->model('PHPMailer_mod','PHPMailer');
+
+		$html     = $this->view("email/restore");
+		$mailtest = $this->PHPMailer->send('rodrigo.thepulg@gmail.com', 'rodrigo.thepulg@gmail.com', 'TEST', $html);
+
+
+		echo '<pre>';
+		print_r($mailtest);
+		echo '</pre>';
+
+		die;
+
+/*
+		$email = new \PHPMailer\PHPMailer\PHPMailer();
+
+
+
+		//Set who the message is to be sent from
+		$email->setFrom('rodrigo.romero@vnstudios.com', 'First Last');
+		//Set an alternative reply-to address
+		$email->addReplyTo('replyto@example.com', 'First Last');
+		//Set who the message is to be sent to
+		$email->addAddress('webmaster@orsonia.com.ar', 'John Doe');
+		//Set the subject line
+		$email->Subject = 'PHPMailer sendmail test';
+		//Read an HTML message body from an external file, convert referenced images to embedded,
+		//convert HTML into a basic plain-text alternative body
+		$html      = $this->view("email/template", array("body"=>$body, "extra"=>$extra));
+		$email->msgHTML($html);
+		//Replace the plain text body with one created manually
+		$email->AltBody = 'This is a plain-text message body';
+		//Attach an image file
+		//$mail->addAttachment('images/phpmailer_mini.png');
+		//send the message, check for errors
+		if (!$email->send()) {
+		    echo "Mailer Error: " . $email->ErrorInfo;
+		} else {
+		    echo "Message sent!";
+		}
+
+
+
+		print_r($email);
+		die;
+	*/	//$data = $this->Account->restore();
+
+	}
 	public function update($id){
 		$data = $this->Account->update($id);
 	 	echo json_encode($data);

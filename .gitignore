@@ -7,3 +7,4 @@ admin/application/config/database.php
 .htaccess
 admin/.htaccess
 uploads/barcodes/
+vendor
