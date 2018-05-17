@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $fecha_inicio = explode(" ",$evento->fecha_inicio);
 $fecha_cierre = explode(" ",$evento->fecha_baja);
 $hora_inicio  = substr($fecha_inicio[1],0,-3);
@@ -42,7 +42,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 			Titular: Fundación Bisblick- Compromiso Social<br />
 			CBU: 0070335020000006594066<br />
 			CUIT: 30-71494767-9<br /><br />
-			Por favor enviar el comprobante para confirmar su inscripción a Noelia Villaca <a href="mailto:nvillaza@bisblick.org">nvillaza@bisblick.org</a>.
+			Por favor enviar el comprobante para confirmar su inscripción a Noelia Villaca <a href="mailto:nvillaca@bisblick.org">nvillaca@bisblick.org</a>.
 			Muchas gracias.</p>
 		</td>
 	</tr>
