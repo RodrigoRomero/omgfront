@@ -54,7 +54,7 @@ class Account extends RR_Controller {
 		$this->load->model('PHPMailer_mod','PHPMailer');
 
 		$html     = $this->view("email/restore");
-		$mailtest = $this->PHPMailer->send('rodrigo.thepulg@gmail.com', 'rodrigo.thepulg@gmail.com', 'TEST', $html);
+		$mailtest = $this->PHPMailer->send('email_info', 'rodrigo.thepulg@gmail.com', 'TEST', $html);
 
 
 		echo '<pre>';
