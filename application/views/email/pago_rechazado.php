@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $fecha_inicio = explode(" ",$evento->fecha_inicio);
 $fecha_cierre = explode(" ",$evento->fecha_baja);
 $hora_inicio  = substr($fecha_inicio[1],0,-3);
@@ -38,7 +38,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 			Usted se ha pre-inscripto para participar del evento <?php echo $evento->nombre ?>.<br />
 			Lamentablemente Mercado Pago ha rechazado su tarjeta por motivos que desconocemos. Le solicitamos por favor comunicarse con:<br />
-			Jessica Meccia<a href="mailto:soporte@amdia.org.ar">soporte@amdia.org.ar</a>, si desea puede intentar con una nueva tarjeta o bien realizar una transferencia bancaria, ingresando aquí</p>
+			Noelia Villaca <a href="mailto:nvillaca@bisblick.org">nvillaca@bisblick.org</a>, si desea puede intentar con una nueva tarjeta o bien realizar una transferencia bancaria, ingresando aquí</p>
 			<a href="<?php echo base_url('cart/restore/'.$order_info->salt) ?>" style="<?php echo $btn ?>">Realizar Pago</a>
 			<p>Le agradecemos mucho su colaboración y le pedimos disculpas por las molestias causadas.<br />
 			Saludos,</p>

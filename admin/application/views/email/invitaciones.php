@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $fecha_inicio = explode(" ",$evento->fecha_inicio);
 $fecha_cierre = explode(" ",$evento->fecha_baja);
 $hora_inicio  = substr($fecha_inicio[1],0,-3);
@@ -43,7 +43,11 @@ $codeGenerated = getBarCode($user_info->id);
 	</tr>
 	<tr>
 		<td colspan="3">
-			<?php echo up_asset('barcodes/'.$codeGenerated['numbers'].'.png', array('style'=>'display: block; margin: 0 auto;')) ?>
+			<?php echo up_file('barcodes/'.$codeGenerated['numbers'].'.png'); ?>
+			<img src="<?php echo up_file('barcodes/'.$codeGenerated['numbers'].'.png'); ?>" style="display:block; margin: 0 auto;" alt="codigo de acceso al evento" title="codigo de acceso al evento"/>
+	<br/>
+<br/>			
+<?php echo up_asset('barcodes/'.$codeGenerated['numbers'].'.png', array('style'=>'display: block; margin: 0 auto;')) ?>
 		</td>
 	</tr>
 	<tr>

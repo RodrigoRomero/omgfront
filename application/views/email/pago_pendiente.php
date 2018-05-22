@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $fecha_inicio = explode(" ",$evento->fecha_inicio);
 $fecha_cierre = explode(" ",$evento->fecha_baja);
 $hora_inicio  = substr($fecha_inicio[1],0,-3);
@@ -40,7 +40,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 
 
 			El pago realizado se encuentra pendiente de revisión por Mercado Pago. Si en los próximos 5 días no recibe un nuevo mail confirmando que su pago fue acreditado correctamente, le solicitamos por favor ponerse en contacto con:<br />
-			Jessica Meccia<a href="mailto:soporte@amdia.org.ar">soporte@amdia.org.ar</a> <br />
+			Noelia Villaca <a href="mailto:nvillaca@bisblick.org">nvillaca@bisblick.org</a> <br />
 			Le agradecemos mucho su colaboración y le pedimos disculpas por las molestias que podría causarle.<br />
 			Saludos,</p>
 		</td>

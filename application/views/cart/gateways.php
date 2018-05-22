@@ -37,6 +37,8 @@ foreach($gateways as $k=>$gateway) {
 
 
 $name = ucwords(str_replace('_',' ',$k));
+
+
 if(get_session('cart_medio_pago',false)){
 	$gateway_selectd = get_session('cart_medio_pago',false);
 }
@@ -71,7 +73,8 @@ $checked = ( $gateway['value'] == $gateway_selectd) ? 'checked' : '';
 
 
 $name = ucwords(str_replace('_',' ',get_session('cart_medio_pago',false)));
-$name = ($name == 'foc') ? 'Sin Cargo' : $name;
+
+$name = ($name == 'Foc') ? 'Sin Cargo' : $name;
 
 ?>
 <div>

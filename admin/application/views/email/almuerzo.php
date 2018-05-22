@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $fecha_inicio = explode(" ",$evento->fecha_inicio);
 $fecha_cierre = explode(" ",$evento->fecha_baja);
 $hora_inicio  = substr($fecha_inicio[1],0,-3);
@@ -35,12 +35,8 @@ $codeGenerated = getBarCode($user_info->id);
 	<tr>
 		<td  colspan="3">
 			<p style="<?php echo $p ?>">Sr. <?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
-				<br /><br /><br /><br /><br /><br /><br />
-				<h1>EMAIL ALMUERZO</h1>
-				<br /><br /><br /><br /><br /><br /><br />
-
-			Su inscripción al evento <?php echo $evento->nombre ?> fue confirmada.<br />
-			<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />
+				Su inscripción al Almuerzo de networking fue confirmada.<br />
+			<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>Se realizará a partir de las 13:15 hs, al finalizar la jornada. <?php echo $evento->lugar ?></strong><br />
 			<br />
 			No olvide llevar el código de barras, impreso o digital<p>
 		   </td>

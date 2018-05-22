@@ -34,7 +34,7 @@ class email_mod extends RR_Model {
 		if(!isset($extra['bcc_no'])) {
 			$this->email->bcc($from);
 		}
-
+		
 		if(isset($extra["cc"]))  $this->email->cc($extra["cc"]);
 		$this->email->set_mailtype('html');
 		$this->email->subject($subject);

@@ -50,7 +50,7 @@ function up_asset($asset_name,  $attributes = array(), $exists=true){
 
 function up_file($name, $exists=true){
 	$obj      =& get_instance();
-	$file     = config_item('base_url')."uploads/".$name;
+	$file     = config_item('base_url')."uploads/".$name."?t=".time();
 	$abs_file = BASEPATH."../uploads/".$name;
 
 	if(!file_exists($abs_file)){

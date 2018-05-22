@@ -7,12 +7,12 @@ class Dashboard extends RR_Controller {
 				$this->load->model("dashboard_mod", "Dashboard");
 				$this->widget_view = array('charts' => array('js'=>array('Chart.min'))
 																	 );
-
+	
 				//$this->output->enable_profiler(TRUE);
 		}
 
 	public function index(){
-
+		echo up_asset('barcodes/000000000315.png');
 		 $data = array ('total_registros_tickets'              => $this->Dashboard->getTotal(1),
 										'total_registros_almuerzos'            => $this->Dashboard->getTotal(2),
 										'total_registros_nominados_tickets'    => $this->Dashboard->getTotalActive(1),

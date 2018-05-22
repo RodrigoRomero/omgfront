@@ -1,4 +1,4 @@
-
+﻿
 <!--<section>
 	<div class="parallax" style="background-image: url('images/parallax/bkg_celebrando.jpg'); padding: 200px 0;" data-stellar-background-ratio="0.3">
 		<div class="heading-block center nobottomborder nobottommargin">
@@ -24,12 +24,21 @@
 				<div class="topmargin-sm">
 					<h3 class="center">Organizan:</h3>
 					<ul class="clients-grid grid-4 nobottommargin clearfix">
+
+						<li><img src="uploads/organizadores/ministerio.png" class="fadeInDown animated" alt="Ministerio de Producción" data-animate="fadeInDown"> </a></li>
+						<li><img src="uploads/organizadores/adblick.png" class="fadeInDown animated" alt="ADBlick Agro"></a></li>
+						<li><img src="uploads/organizadores/austral.png" class="fadeInDown animated" alt="Universidad Austral"></a></li>
+						<li><img src="uploads/organizadores/bb.png" class="fadeInDown animated" alt="BisBlick Talento Joven"></a></li>
+					</ul>
+<!-- 					<h3 class="center">	<a href="http://argentinavision2020.com/2017/uploads/galeria/polo_tecnologico.jpg"  data-lightbox="image"  class=" button button-xlarge ">Conozca el Lugar</a></h3>
+
 						<li><img src="uploads/organizadores/adblick.png" class="fadeInDown animated" alt="ADBlick Agro"></a></li>
 						<li><img src="uploads/organizadores/austral_nuevo.png" class="fadeInDown animated" alt="Universidad Austral"></a></li>
 						<li><img src="uploads/organizadores/ministerio.png" class="fadeInDown animated" alt="Ministerio de Producción" data-animate="fadeInDown"> </a></li>
 						<li><img src="uploads/organizadores/bb.png" class="fadeInDown animated" alt="BisBlick Talento Joven"></a></li>
 					</ul>
 					
+ -->
 
 
 				</div>
@@ -127,7 +136,7 @@
 
 <section>	
 					<div class="container clearfix">
-						<h3 class="center">En breve próximo oradores</h3>
+						<h3 class="center">En breve próximos oradores</h3>
 					</div>
 </section>
 <?php echo $tickets; ?>

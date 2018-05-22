@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -373,17 +373,28 @@ class account_mod extends RR_Model {
 
 
 			$acreditado = $this->db->get_where('acreditados', ['id'=>$id])->row();
+			
+			
 			if(!($acreditado)){
 				throw new Exception("Por favor intentelo mas tarde", 1);
 			}
 			#EVNITO LA INVITACION
 			$subject    = "Su Acreditación - ".$this->evento->nombre;
-            $body       = $this->view('email/invitaciones', array('user_info'=>$acreditado, 'evento'=>$this->evento));
-            $email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 
-            if(!$email){
-            	throw new Exception("Por favor intentelo mas tarde", 1);
-            }
+			
+			$ticket_tipo = $this->db->get_where('order_tickets', ['id'=>$acreditado->order_ticket_id])->row();
+			if ($ticket_tipo->tipo == 2) {
+				$template = 'almuerzo';
+			} else {
+				$template = 'invitaciones';
+			};
+			
+            		$body       = $this->view('email/'.$template, array('user_info'=>$acreditado, 'evento'=>$this->evento));
+		        $email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
+
+	            	if(!$email){
+        	    		throw new Exception("Por favor intentelo mas tarde", 1);
+            		}
 
             $this->db->where('id', $acreditado->id);
             $upd = $this->db->update('acreditados', ['invitacion'=>1]);

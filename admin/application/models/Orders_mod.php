@@ -434,7 +434,7 @@ IFNULL(a.nominados,0) nominados', false);
 		while ($current != 'ZZZ') {
 			$alphas[] = ++$current;
 		}
-		$this->load->library('PHPExcel');
+		$this->load->library('phpexcel');
 		$this->phpexcel->getProperties()->setCreator("Orsonia Digital")
 										->setLastModifiedBy("Orsonia Digital")
 										->setTitle("Orsonia Digital")

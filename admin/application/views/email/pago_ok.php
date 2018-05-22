@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $fecha_inicio = explode(" ",$evento->fecha_inicio);
 $fecha_cierre = explode(" ",$evento->fecha_baja);
 $hora_inicio  = substr($fecha_inicio[1],0,-3);
@@ -43,8 +43,16 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
             <p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 
            Este email confirma que el pago realizado para el evento <?php echo $evento->nombre ?> a llevarse a cabo el día <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>. fue aprobado.<br/>
-Muchas gracias por su compra.
 
+
+    </p>
+ <p style="<?php echo $p ?>">
+            En caso de que haya comprado más de 1 ticket para el evento, para confirmar la inscripción de las entradas, deberá  ingresar los datos de cada uno de los asistentes siguiendo estos pasos: <br>
+	            1. Haga click <a href="http://argentinavision2020.com/2018/account/summary"> AQUI </a> y complete los datos de su cuenta con su email y la password que utilizó para registrarse <br/>
+	            2. Presione el botón que dice <b>"NOMINAR"</b> y por último <b>"INVITAR"</b> <br/>
+	            
+	            Si usted adquirió sólo 1 ticket no deberá hacer nada más.<br/>
+          Muchas gracias.
     </p>
         </td>
 

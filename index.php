@@ -1,4 +1,7 @@
 <?php
+
+echo 'DELEGADO';
+die;
 /**
  * CodeIgniter
  *
