@@ -182,7 +182,7 @@ abstract class RR_Controller extends CI_Controller {
                            ->row();
 
         if($result->valor==0) {
-           show_error('Estamos trabajando en el mantenimiento del sitio en breve estará nuevamente en línea',503,'Sitio en Mantenimiento');
+           show_error('Estamos trabajando en el mantenimiento del sitio en breve estarÃ¡ nuevamente en lÃ­nea',503,'Sitio en Mantenimiento');
         }
     }
 

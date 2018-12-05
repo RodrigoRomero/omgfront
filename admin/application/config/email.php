@@ -26,10 +26,10 @@ $config = Array(
 
 $config = Array(
   'protocol' => 'smtp',
-  'smtp_host' => 'smtp.sendgrid.net',
+  'smtp_host' => 'mail.argntinavision2020.com',
   'smtp_port' => 25,
-  'smtp_user' => 'orsonia',
-  'smtp_pass' => 'orsonia2018',
+  'smtp_user' => 'noreply@argentinavision2020.com',
+  'smtp_pass' => 'X0d6xGbW',
   'mailtype' => 'html',
   'crlf' => "\r\n",
   'newline' => "\r\n"

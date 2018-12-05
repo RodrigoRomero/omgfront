@@ -1,4 +1,5 @@
-﻿<?php
+<?php
+
 /**
 * Image Asset Helper
 * Helps generate CSS asset locations.
@@ -8,10 +9,12 @@
 * @param		string    optional, module name
 * @return		string    full url to image asset
 */
+
 function image_asset_url($asset_name, $module_name = NULL)
 {
 	return _other_asset_url($asset_name, $module_name, 'img');
 }
+
 /**
 * Image Asset HTML Helper
 * Helps generate image HTML.
@@ -22,6 +25,7 @@ function image_asset_url($asset_name, $module_name = NULL)
 * @param		string    optional, extra attributes
 * @return		string    HTML code for image asset
 */
+
 function image_asset($asset_name, $module_name = '', $attributes = array())
 {
 	$attribute_str = _parse_asset_html($attributes);
@@ -29,11 +33,11 @@ function image_asset($asset_name, $module_name = '', $attributes = array())
 }
 
 function up_asset($asset_name,  $attributes = array(), $exists=true){
-    $obj                 =& get_instance();
+	$obj                 =& get_instance();
 	$file                = up_file($asset_name, $exists);
-    if(empty($file)) return "";
-    $attributes["alt"]   = ($attributes["alt"]) ? $attributes["alt"] : "";
-    $attributes["title"] = ($attributes["title"]) ? $attributes["title"] : $attributes["alt"];
+	if(empty($file)) return "";
+	$attributes["alt"]   = ($attributes["alt"]) ? $attributes["alt"] : "";
+	$attributes["title"] = ($attributes["title"]) ? $attributes["title"] : $attributes["alt"];
 	$attribute_str       = _parse_asset_html($attributes);
 	return '<img src="'.$file.'"'.$attribute_str.' />';
 }
@@ -47,13 +51,14 @@ function up_asset($asset_name,  $attributes = array(), $exists=true){
 function up_file($name, $exists=true){
     $obj      =& get_instance();
     $relative = $obj->env->getEnv("site_level");
-	$file     = config_item('front_url')."uploads/".$name;
-    $abs_file = BASEPATH.$relative."../../uploads/".$name."?t".time();
+    $file     = config_item('front_url')."uploads/".$name;
+    $abs_file = BASEPATH."../../uploads/".$name;
     if(!file_exists($abs_file)){
         $file = ($exists) ? config_item('front_url')."../".$relative."uploads/none.jpg" : "";
     }
     return $file;
 }
+
 function upload_manager($title="", $array){
     $pos                 = $array["pos"];
     $resize              = (isset($array["resize"]) && !empty($array["resize"])) ?  explode(",", str_replace(" ","", $array["resize"])) : "";

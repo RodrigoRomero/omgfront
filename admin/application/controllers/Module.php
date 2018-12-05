@@ -1,8 +1,4 @@
 <?php
-/* VERSION: 1.1.0
- *
- *
- */
 
 class Module extends RR_Controller {
 
@@ -83,4 +79,3 @@ class Module extends RR_Controller {
 
 
 }
-?>

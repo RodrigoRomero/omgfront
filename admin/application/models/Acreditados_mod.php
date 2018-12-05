@@ -312,10 +312,12 @@ class acreditados_mod extends RR_Model {
 						   a.status,
 						   a.fa,
 						   a.acreditado,
-						   c.empresa', false);
+						   c.empresa,
+						   t.nombre ticket_name', false);
 		$this->db->where('a.evento_id',$this->evento_id);
 		$this->db->join('customers c', 'c.id = a.customer_id','LEFT');
 		$this->db->where('t.tipo',$this->tipo_ticket);
+		$this->db->where('a.status >=',0);
 		$this->db->join('order_tickets ot', 'ot.id = a.order_ticket_id','LEFT');
 		$this->db->join('tickets t', 't.id = ot.ticket_id','LEFT');
 		if(isset($_POST['search']) && !empty($_POST['search'])) {
@@ -342,7 +344,7 @@ class acreditados_mod extends RR_Model {
 		while ($current != 'ZZZ') {
 			$alphas[] = ++$current;
 		}
-		$this->load->library('PHPExcel');
+		$this->load->library('phpexcel');
 		$this->phpexcel->getProperties()->setCreator("Orsonia Digital")
 										->setLastModifiedBy("Orsonia Digital")
 										->setTitle("Orsonia Digital")
@@ -356,9 +358,11 @@ class acreditados_mod extends RR_Model {
 		$columns[] = array("title" => "Apellido");
 		$columns[] = array("title" => "Email");
 		$columns[] = array("title" => "Código de Barras");
+		$columns[] = array("title" => "Ticket");
 		$columns[] = array("title" => "Status");
 		$columns[] = array("title" => "Fecha Registro");
 		$columns[] = array("title" => "Asistió");
+		$columns[] = array("title" => "Barcode Image");
 		$nro_cols = (count($columns)-1);
 		$this->phpexcel->getActiveSheet()->mergeCells('A1:'.$alphas[$nro_cols].'1');
 		$this->phpexcel->getActiveSheet()->mergeCells('A2:'.$alphas[$nro_cols].'2');
@@ -425,15 +429,21 @@ class acreditados_mod extends RR_Model {
 			$this->phpexcel->getActiveSheet()->setCellValue("F".$i, $row->barcode);
 			$this->phpexcel->getActiveSheet()->getStyle("F".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("F")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("G".$i, $row->status);
+			$this->phpexcel->getActiveSheet()->setCellValue("G".$i, $row->ticket_name);
 			$this->phpexcel->getActiveSheet()->getStyle("G".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("G")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("H".$i, $row->fa);
+			$this->phpexcel->getActiveSheet()->setCellValue("H".$i, $row->status);
 			$this->phpexcel->getActiveSheet()->getStyle("H".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("H")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("I".$i, $row->acreditado);
+			$this->phpexcel->getActiveSheet()->setCellValue("I".$i, $row->fa);
 			$this->phpexcel->getActiveSheet()->getStyle("I".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("I")->setAutoSize(true);
+			$this->phpexcel->getActiveSheet()->setCellValue("J".$i, $row->acreditado);
+			$this->phpexcel->getActiveSheet()->getStyle("J".$i)->getAlignment()->setWrapText(true);
+			$this->phpexcel->getActiveSheet()->getColumnDimension("J")->setAutoSize(true);
+			$this->phpexcel->getActiveSheet()->setCellValue("K".$i, $row->barcode.'.png');
+			$this->phpexcel->getActiveSheet()->getStyle("K".$i)->getAlignment()->setWrapText(true);
+			$this->phpexcel->getActiveSheet()->getColumnDimension("K")->setAutoSize(true);
 			$i++;
 		}
 	   $this->phpexcel->getActiveSheet()->setTitle('Acreditados Evento');

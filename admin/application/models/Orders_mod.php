@@ -374,60 +374,50 @@ class orders_mod extends RR_Model {
 
 	public function exporta(){
 		$this->db->start_cache();
-	   $this->db->select('o.id,
-o.customer_id,
-o.evento_id,
-ot.ticket_id,
-ot.ticket_price,
-ot.quantity,
-o.total_price,
-o.discount_amount,
-o.total_discounted_price,
-od.discount_code,
-o.gateway,
-c.empresa,
-c.cargo,
-c.nombre,
-c.apellido,
-c.fecha_nacimiento,
-c.dni,
-c.email,
-c.telefono,
-c.conocio,
-t.nombre ticket_nombre,
-p.status status_pago,
-IFNULL(a.nominados,0) nominados', false);
-		$this->db->where('o.evento_id',$this->evento_id);
-		$this->db->join('order_tickets ot', 'ot.order_id = o.id','LEFT');
-		$this->db->join('pagos p', 'p.order_id = o.id','LEFT');
-		$this->db->join('tickets t', 't.id = ot.ticket_id','LEFT');
-		$this->db->join('customers c', 'c.id = o.customer_id','LEFT');
-		$this->db->join('order_discounts od', 'od.order_id = o.id','LEFT');
-		$this->db->join('(SELECT COUNT(id) nominados, order_ticket_id FROM acreditados GROUP BY order_ticket_id) a', 'a.order_ticket_id = ot.id','LEFT');
 
-		if(isset($_POST['search']) && !empty($_POST['search'])) {
-			$like_arr = array('c.nombre', 'c.apellido', 'c.email');
-			foreach($like_arr as  $l){
-				$like_str .= $l." LIKE '%".$this->input->post('search',true)."%' OR ";
-			}
-			$like_str = '('.substr($like_str,0,-4).')';
-			$this->db->where($like_str);
-		}
-		if(isset($_POST['medio_pago']) && $_POST['medio_pago'] != '-1') {
-			$this->db->where('o.gateway',filter_input(INPUT_POST,'medio_pago'));
-		}
-		if(isset($_POST['payment_status']) && $_POST['payment_status'] != '-1') {
-			$this->db->where('p.status',filter_input(INPUT_POST,'payment_status'));
-		}
+		$sql = 'SELECT c.`empresa`,
+								c.`cargo`,
+								c.`nombre`,
+								c.`apellido`,
+								c.`fecha_nacimiento`,
+								c.`dni`,
+								c.`email`,
+								c.`telefono`,
+								c.`conocio`,
+								o.`id`,
+								o.`customer_id`,
+								o.`evento_id`,
+								o.`total_price`,
+								o.`discount_amount`,
+								o.`total_discounted_price`,
+								o.`status`,
+								o.`fa`,
+								o.`gateway`,
+								ot.`nombre` ticket_nombre,
+								ot.`nominar` quantity,
+								ot.`nominadas` nominados,
+								ot.`discount_code`,
+								ot.`discount_name`,
+								p.`status` status_pago
+								FROM orders o
+								LEFT JOIN (
+								SELECT  o_t.id, o_t.ticket_id, o_t.order_id, t.nombre, SUM(o_t.nominar) nominar, IFNULL(ac.nominadas,0) nominadas, od.discount_name, od.discount_code
+								FROM order_tickets o_t
+								LEFT JOIN (SELECT id, nombre FROM tickets) t ON t.id = o_t.`ticket_id`
+								LEFT JOIN (SELECT COUNT(id) nominadas, order_ticket_id FROM acreditados WHERE acreditados.`status` >= 0 GROUP BY order_ticket_id) ac ON ac.order_ticket_id = o_t.`id`
+								LEFT JOIN (SELECT o_d.order_id, o_d.discount_code, o_d.discount_id, c.nombre discount_name, c.plan_id FROM order_discounts o_d LEFT JOIN cupons c ON c.id = o_d.discount_id) od ON (od.plan_id = o_t.`ticket_id` AND od.order_id = o_t.`order_id`)
+								GROUP BY o_t.order_id, o_t.ticket_id) ot ON ot.order_id = o.id
+								LEFT JOIN customers c ON c.id = o.`customer_id`
+								LEFT JOIN pagos p ON p.`order_id` = o.`id`
+								WHERE o.`evento_id` = ?';
 
-		$this->db->order_by('o.id', 'DESC');
-		$this->db->from($this->table.' o');
+
+		//$data = $this->db->query($sql, [$this->evento_id]);
 		$this->db->stop_cache();
-		$result = $this->db->get()->result();
+		$result = $this->db->query($sql, [$this->evento_id])->result();
 		$this->db->flush_cache();
 
-		unset($_POST);
-		$_POST = array();
+
 		$file_name = 'acreditados_omg';
 		$alphas = array('A');
 		$current = 'A';
@@ -463,6 +453,8 @@ IFNULL(a.nominados,0) nominados', false);
 		$columns[] = array("title" => "Status Pago");
 		$columns[] = array("title" => "Cantidad Entradas");
 		$columns[] = array("title" => "Cantidad Nominadas");
+		$columns[] = array("title" => "Fecha Compra");
+		$columns[] = array("title" => "Status Orden");
 		$nro_cols = (count($columns)-1);
 		$this->phpexcel->getActiveSheet()->mergeCells('A1:'.$alphas[$nro_cols].'1');
 		$this->phpexcel->getActiveSheet()->mergeCells('A2:'.$alphas[$nro_cols].'2');
@@ -574,6 +566,12 @@ IFNULL(a.nominados,0) nominados', false);
 			$this->phpexcel->getActiveSheet()->setCellValue("U".$i, $row->nominados);
 			$this->phpexcel->getActiveSheet()->getStyle("U".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("U")->setAutoSize(true);
+			$this->phpexcel->getActiveSheet()->setCellValue("V".$i, $row->fa);
+			$this->phpexcel->getActiveSheet()->getStyle("V".$i)->getAlignment()->setWrapText(true);
+			$this->phpexcel->getActiveSheet()->getColumnDimension("V")->setAutoSize(true);
+			$this->phpexcel->getActiveSheet()->setCellValue("W".$i, $row->status);
+			$this->phpexcel->getActiveSheet()->getStyle("W".$i)->getAlignment()->setWrapText(true);
+			$this->phpexcel->getActiveSheet()->getColumnDimension("W")->setAutoSize(true);
 			$i++;
 		}
 	   $this->phpexcel->getActiveSheet()->setTitle('Acreditados Evento');

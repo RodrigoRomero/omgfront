@@ -130,7 +130,7 @@
 					</div>
 	</div>
 </section>-->
-<?php // echo $agenda ?>
+<?php echo $agenda ?>
 <?php // echo $this->load->view('evento/corte_a',[],true) ?>
 <?php echo $oradores; ?>
 

@@ -29,7 +29,7 @@ class Cupons_mod extends RR_Model {
 				}
 
 				#VALIDO QUE QUEDEN CUPONES DISPONIBLES
-				if($cupon->quantity < $cupon->available){
+				if($cupon->quantity <= $cupon->available){
 					throw new Exception("Debe ingresar un cupón válido",1);
 				}
 

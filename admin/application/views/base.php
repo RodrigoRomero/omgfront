@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
         <!-- start: Header -->
 
 	<div class="navbar">
@@ -135,5 +134,4 @@
     </div>
 
  </body>
-
 </html>

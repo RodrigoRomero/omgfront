@@ -1,3 +1,3 @@
-<?php
-header('Location: code39.php');
+<?php
+header('Location: code39.php');
 ?>

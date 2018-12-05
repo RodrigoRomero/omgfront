@@ -28,12 +28,14 @@ $config = Array(
   'protocol' => 'smtp',
   'smtp_host' => 'smtp.sendgrid.net',
   'smtp_port' => 25,
-  'smtp_user' => 'orsonia',
-  'smtp_pass' => 'orsonia2018',
+  'smtp_user' => 'argenv2020',
+  'smtp_pass' => 'p8T8EeS5gF8regxA',
   'mailtype' => 'html',
   'crlf' => "\r\n",
   'newline' => "\r\n"
 );
+
+
 
 /* End of file email.php */
 /* Location: ./system/application/config/email.php vnstudios2017!*/

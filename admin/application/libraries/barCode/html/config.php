@@ -1,3 +1,3 @@
-<?php
-$class_dir = '../class';
+<?php
+$class_dir = '../class';
 ?>

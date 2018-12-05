@@ -16,21 +16,35 @@ class dashboard_mod extends RR_Model {
 	public function getTotal($tipo_ticket){
 		$sql = "SELECT SUM(nominar) total
   				FROM order_tickets
-				LEFT JOIN orders ON order_tickets.`order_id` = orders.`id`
-  				WHERE orders.`evento_id` = ?
-  				AND orders.`status` = 1
+  				WHERE order_tickets.`evento_id` = ?
   				AND tipo = ?";
+
 		$total = $this->db->query($sql, [$this->evento_id,$tipo_ticket])->row();
 
 		return $total;
 	}
 
 	public function getTotalActive($tipo_ticket){
+		$sql = "SELECT SUM(nominar) total
+				FROM order_tickets
+				LEFT JOIN orders ON orders.id = order_tickets.`order_id`
+				WHERE order_tickets.`evento_id` = ?
+				AND tipo = ?
+				AND orders.`status` >= 0";
+
+		$total = $this->db->query($sql,[$this->evento_id,$tipo_ticket])->row();
+
+		return $total;
+	}
+
+	public function getTotalNominados($tipo_ticket){
 		$sql = "SELECT COUNT(acreditados.`id`) total
 				FROM   acreditados
 				LEFT JOIN order_tickets ON acreditados.`order_ticket_id` = order_tickets.`id`
 				WHERE acreditados.`evento_id` = ?
-				AND order_tickets.`tipo` = ?";
+				AND order_tickets.`tipo` = ?
+				AND acreditados.`status` >= 0";
+
 		$total = $this->db->query($sql,[$this->evento_id,$tipo_ticket])->row();
 
 		return $total;
@@ -48,7 +62,8 @@ class dashboard_mod extends RR_Model {
 				LIMIT ?";
 		$result = $this->db->query($sql, [$this->evento_id,$tipo_ticket,$limit])->result();
 
-		$box_header = $this->load->view('layout/panels/box_header', array('title'=>'Últimas 10 Nominaciones', 'icon'=>'icon-user', 'box_icon'=>true), true);
+		$title = ($tipo_ticket ==2) ? 'Últimas 10 Nominaciones (Almuerzos)' :  'Últimas 10 Nominaciones (Evento)';
+		$box_header = $this->load->view('layout/panels/box_header', array('title'=>$title, 'icon'=>'icon-user', 'box_icon'=>true), true);
 		$box_content = '<ul class="unstyled">';
 		foreach($result as $usuario){
 			$box_content .= '<li><b>'.$usuario->empresa.'</b> - '.$usuario->nombre.' '.$usuario->apellido.'</li>';
@@ -63,7 +78,9 @@ class dashboard_mod extends RR_Model {
 		$sql ="SELECT SUM(order_tickets.`nominar`) total, tickets.`nombre`
 			   FROM order_tickets
 			   LEFT JOIN tickets ON tickets.`id` = order_tickets.`ticket_id`
+			  # LEFT JOIN orders ON orders.`id` = order_tickets.`order_id`
 			   WHERE order_tickets.`evento_id` = ?
+			   #AND orders.`status` >= 0
 			   GROUP BY order_tickets.`ticket_id`";
 
 		$total_tickets = $this->db->query($sql, [$this->evento_id])->result();
@@ -200,14 +217,17 @@ class dashboard_mod extends RR_Model {
 		$evento = $this->db->get_where('eventos',array('status'=>1))->row();
 
 		if(count($evento)>0){
-			$sql = "SELECT COUNT(id) total_by_date, DATE_FORMAT(fa, '%d-%m-%Y') fa FROM acreditados WHERE status >= 0  AND evento_id =? GROUP BY DATE_FORMAT(fa, '%d-%m-%Y') ORDER BY acreditados.fa ASC";
+			//	$sql = "SELECT COUNT(id) total_by_date, DATE_FORMAT(fa, '%d-%m-%Y') fa FROM acreditados WHERE status >= 0  AND evento_id =? GROUP BY DATE_FORMAT(fa, '%d-%m-%Y') ORDER BY acreditados.fa ASC";
+		//	$nominados = $this->db->query($sql, [$this->evento_id])->result();
+
+			$sql = "SELECT SUM(ot.nominar) total_by_date, DATE_FORMAT(o.fa, '%d-%m-%Y') fa FROM orders o LEFT JOIN order_tickets ot ON ot.order_id = o.id WHERE o.evento_id = ? AND ot.tipo = 1  GROUP BY DATE_FORMAT(o.fa, '%d-%m-%Y') ORDER BY o.fa ASC";
 			$nominados = $this->db->query($sql, [$this->evento_id])->result();
 
-			$sql = "SELECT SUM(ot.nominar) total_by_date, DATE_FORMAT(o.fa, '%d-%m-%Y') fa FROM orders o LEFT JOIN order_tickets ot ON ot.order_id = o.id WHERE o.evento_id = 14 GROUP BY DATE_FORMAT(o.fa, '%d-%m-%Y') ORDER BY o.fa ASC";
 
 			$fechainicio = date('Y-m-d',strtotime($evento->fa." - 1 day"));
 			$fechafin    = date('Y-m-d',strtotime($evento->fecha_baja));
-			$arrayFechas = $this->devuelveArrayFechasEntreOtrasDos($fechainicio,$fechafin);
+			//$arrayFechas = $this->devuelveArrayFechasEntreOtrasDos($fechainicio,$fechafin);
+
 			$values = array();
 			if(count($nominados)>0){
 				foreach($nominados as $registro){
@@ -312,13 +332,13 @@ class dashboard_mod extends RR_Model {
 	public function getFacturacionTotalStatus(){
 		$total_facturacion = $this->getFacturacionTotal();
 
-		$sql = "SELECT SUM(o.total_discounted_price) total FROM orders o INNER JOIN pagos p ON p.order_id = o.id WHERE o.status >=1 AND p.pago_status = 2  AND o.evento_id = ?";
+		$sql = "SELECT SUM(o.total_discounted_price) total FROM orders o INNER JOIN pagos p ON p.order_id = o.id WHERE o.status >=0 AND p.pago_status = 2  AND o.evento_id = ?";
 		$total_facturacion_pendiente = $this->db->query($sql, [$this->evento_id])->row();
 
-		$sql = "SELECT SUM(o.total_discounted_price) total FROM orders o INNER JOIN pagos p ON p.order_id = o.id WHERE o.status >=1 AND p.pago_status = 1  AND o.evento_id = ?";
+		$sql = "SELECT SUM(o.total_discounted_price) total FROM orders o INNER JOIN pagos p ON p.order_id = o.id WHERE o.status >=0 AND p.pago_status = 1  AND o.evento_id = ?";
 		$total_facturacion_aprobada = $this->db->query($sql, [$this->evento_id])->row();
 
-		$sql = "SELECT SUM(o.total_discounted_price) total FROM orders o INNER JOIN pagos p ON p.order_id = o.id WHERE o.status >=1 AND p.pago_status = -1  AND o.evento_id = ?";
+		$sql = "SELECT SUM(o.total_discounted_price) total FROM orders o INNER JOIN pagos p ON p.order_id = o.id WHERE o.status >=0 AND p.pago_status = -1  AND o.evento_id = ?";
 		$total_facturacion_rechazada = $this->db->query($sql, [$this->evento_id])->row();
 
 		return array('total'=> ($total_facturacion->total) ? $total_facturacion->total : 0,
