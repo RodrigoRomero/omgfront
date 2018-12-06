@@ -37,7 +37,6 @@ class Cupons_mod extends RR_Model {
 					throw new Exception("El cupon ingresado ya se encuentra aplicado o tiene un cupon aplicado a los productos",1);
 				}
 
-
 				#CALCULO EL % PARA EL DESCUENTO
 				$ratio = ($cupon->value/100);
 
@@ -46,8 +45,10 @@ class Cupons_mod extends RR_Model {
 
 				$not_apply = true;
 				$discounted_price = 0;
+
 				foreach($this->cart->contents() as $cart){
 					if($cupon->plan_id == $cart['options']['ticket_id']){
+
 						$not_apply = false;
 						$discount  = ($ticket_cupon->precio_regular * $ratio)*-1;
 						$new_price =  ($ticket_cupon->precio_regular + $discount);
@@ -76,9 +77,25 @@ class Cupons_mod extends RR_Model {
 							/*echo 'tengo que remover el producto y agregar el regular';*/
 						}
 
+						$remaing_uses = $cupon->quantity-$cupon->available;
+						if($remaing_uses > $cart['qty']){
+							$remaing_uses = $cart['qty'];
+
+						}
+
+						/*echo $remaing_uses;
+
+						echo '<pre>';
+				print_r($cupon);
+				echo '</pre>';
+				echo '<pre>';
+				print_r($this->cart->contents());
+				echo '</pre>';
+				die;*/
+
 						#AGREGO EL CUPON AL CART
 						$description = 'Descuento '.$cupon->value.'% Tarifa Regular - '.$ticket_cupon->nombre;
-						$addcupon = $this->Cart->addCupon($cupon->code, $discount, $description, $cart['qty'], $cupon->plan_id);
+						$addcupon = $this->Cart->addCupon($cupon->code, $discount, $description, $remaing_uses, $cupon->plan_id);
 
 						if(!$addcupon){
 							throw new Exception("Error al Procesar su cupón por favor inténtelo más tarde",1);
@@ -260,11 +277,11 @@ class Cupons_mod extends RR_Model {
 	}
 
 
-	public function downCupons($cupon_code, $ticket_id){
+	public function downCupons($cupon_code, $ticket_id, $used){
 		$cupon = $this->db->get_where('cupons',['code'=>$cupon_code, 'plan_id' =>$ticket_id, 'evento_id'=>$this->evento->id])->row();
 
 		$this->db->where('id', $cupon->id);
-		$upd = $this->db->update('cupons',array('available'=>$cupon->available+1));
+		$upd = $this->db->update('cupons',array('available'=>$cupon->available+$used));
 		return $cupon;
 	}
 

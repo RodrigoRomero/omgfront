@@ -298,6 +298,8 @@ class cart_mod extends RR_Model {
 					array_push($discount_code, $row);
 					$discount_amount += $row['subtotal'];
 
+
+
 				}  else {
 
 
@@ -308,6 +310,10 @@ class cart_mod extends RR_Model {
 
 				}
 			}
+
+
+
+
 
 
 			$values = ['customer_id' 			  => get_session('id', false),
@@ -336,7 +342,7 @@ class cart_mod extends RR_Model {
           	#BAJO LOS CUPONES PARA QUE NO SE PUEDAN USAR DE NUEVO
 			$c = [];
           	foreach($discount_code as $used_code){
-          		$discount = $this->Cupons->downCupons($used_code['options']['code'], $used_code['options']['plan_id'] );
+          		$discount = $this->Cupons->downCupons($used_code['options']['code'], $used_code['options']['plan_id'], $used_code['qty'] );
           		array_push($c, ['order_id'=>$order_id, 'discount_code'=>$discount->code, 'discount_id' =>$discount->id, 'discounted_amount' => $used_code['subtotal']]);
           	}
 
@@ -375,7 +381,7 @@ class cart_mod extends RR_Model {
 	        		$customer   = $this->Account->getCustomerById();
 	        		$order = (object)$values;
                 	$body  = $this->view('email/transferencia_bancaria', array('user_info'=>$customer, 'evento'=>$this->evento, 'order_id'=>$order_id));
-                	$email = $this->Email->send('email_info', $customer->email, $subject, $body, array('cc'=>$customer->email));
+                	#$email = $this->Email->send('email_info', $customer->email, $subject, $body, array('cc'=>$customer->email));
 		      		$success = true;
 					$responseType = 'redirect';
 					$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('cart/thanks'));
