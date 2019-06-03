@@ -94,6 +94,7 @@ class orders_mod extends RR_Model {
 		}
 		$paginador = $this->paging_mod->get_paging($total, $this->limit);
 		$query = $this->db->get();
+//echo lq();
 		$this->db->flush_cache();
 		//CONFIG
 		//$lnk_del = set_url(array('a'=>'chk_deletea'));
@@ -257,12 +258,12 @@ class orders_mod extends RR_Model {
 
 						if($autonominar_ticket == true){
 							$this->load->model('Acreditados_mod','Acreditados');
-							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id, 'invitaciones');
+							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$customer_info->dni,$tid->order_id,$tid->evento_id,$tid->id,$customer_info->id, 'invitaciones');
 						}
 
 						if($autonominar_lunch ==true){
 							$this->load->model('Acreditados_mod','Acreditados');
-							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email,$lid->order_id,$lid->evento_id,$lid->id,$customer_info->id, 'almuerzo');
+							$this->Acreditados->nominarOnTheFly($customer_info->nombre, $customer_info->apellido,$customer_info->email, $customer_info->dni, $lid->order_id,$lid->evento_id,$lid->id,$customer_info->id, 'almuerzo');
 						}
 						break;
 

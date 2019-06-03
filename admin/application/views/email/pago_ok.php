@@ -48,7 +48,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
     </p>
  <p style="<?php echo $p ?>">
             En caso de que haya comprado más de 1 ticket para el evento, para confirmar la inscripción de las entradas, deberá  ingresar los datos de cada uno de los asistentes siguiendo estos pasos: <br>
-	            1. Haga click <a href="http://argentinavision2020.com/2018/account/summary"> AQUI </a> y complete los datos de su cuenta con su email y la password que utilizó para registrarse <br/>
+	            1. Haga click <a href="http://argentinavision2020.com/2019/account/summary"> AQUI </a> y complete los datos de su cuenta con su email y la password que utilizó para registrarse <br/>
 	            2. Presione el botón que dice <b>"NOMINAR"</b> y por último <b>"INVITAR"</b> <br/>
 	            
 	            Si usted adquirió sólo 1 ticket no deberá hacer nada más.<br/>

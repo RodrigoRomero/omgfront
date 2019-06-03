@@ -65,13 +65,13 @@ $newsletter = ($customer->newsletter == 1) ? 'checked' : ''
 
 							<div class="col_half ">
 								<label for="register-form-phone">Fecha Nacimiento:</label>
-								<input type="text" id="register-fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $fecha_nacimiento ?>" class="form-control tleft past-enabled"  placeholder="DD-MM-YYYY"/>
+								<input type="text" id="register-fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $fecha_nacimiento ?>" class="form-control tleft past-enabled required"  placeholder="DD-MM-YYYY"/>
 
 							</div>
 
 							<div class="col_half col_last">
 								<label for="register-form-username">DNI:</label>
-								<input type="text" id="register-dni" name="dni" value="<?php echo $customer->dni ?>" class="form-control" />
+								<input type="text" id="register-dni" name="dni" value="<?php echo $customer->dni ?>" class="form-control required number" />
 							</div>
 							<div class="clear"></div>
 							<div class="col_half ">

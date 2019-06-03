@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -46,6 +46,8 @@ class account_mod extends RR_Model {
 		$config[4] = array('field'=>'nombre', 'label'=>'Nombre', 'rules'=>'trim|required');
 		$config[5] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
 		$config[6] = array('field'=>'password', 'label'=>'Password', 'rules'=>'trim|required');
+		$config[7] = array('field'=>'dni', 'label'=>'DNI', 'rules'=>'trim|required');
+		$config[8] = array('field'=>'fecha_nacimiento', 'label'=>'Fecha de Nacimiento', 'rules'=>'trim|required');
 
 		$this->form_validation->set_rules($config);
 
@@ -56,12 +58,18 @@ class account_mod extends RR_Model {
 				throw new Exception($errors, 1);
 			}
 
+			$fecha_nacimiento = explode("-", filter_input(INPUT_POST,'fecha_nacimiento'));
+			$fecha_nacimiento = $fecha_nacimiento[2].'-'.$fecha_nacimiento[1].'-'.$fecha_nacimiento[0];
+
+
 			$customer = ['empresa' => filter_input(INPUT_POST,'empresa'),
 						 'cargo' => filter_input(INPUT_POST,'cargo'),
 						 'nombre' => filter_input(INPUT_POST,'nombre'),
 						 'apellido' => filter_input(INPUT_POST,'apellido'),
+						 'fecha_nacimiento' => empty($fecha_nacimiento) ? null : $fecha_nacimiento,
 						 'email' => filter_input(INPUT_POST,'email'),
 						 'password' => md5(filter_input(INPUT_POST,'password')),
+   						 'dni' => filter_input(INPUT_POST,'dni'),
 						 'newsletter' => 1
 						];
 
@@ -120,6 +128,8 @@ class account_mod extends RR_Model {
 		$config[3] = array('field'=>'email', 'label'=>'Email', 'rules'=>'trim|required|valid_email');
 		$config[4] = array('field'=>'nombre', 'label'=>'Nombre', 'rules'=>'trim|required');
 		$config[5] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
+		$config[6] = array('field'=>'dni', 'label'=>'DNI', 'rules'=>'trim|required');
+		$config[7] = array('field'=>'fecha_nacimiento', 'label'=>'Fecha de Nacimiento', 'rules'=>'trim|required');
 
 		$this->form_validation->set_rules($config);
 
@@ -191,12 +201,136 @@ class account_mod extends RR_Model {
 	}
 
 
-	public function restore(){
+	public function dorestore(){
 
-		$subject    = "Su Acreditación - ".$this->evento->nombre;
-        $body       = $this->view('email/restore');
-        $email      = $this->Email->send('email_info', 'rodrigo.romero@vnstudios.com', $subject, $body);
-        echo $email;
+		$success = 'false';
+		$config = array();
+		$config[1] = array('field'=>'username', 'label'=>'Email', 'rules'=>'trim|required|valid_email');
+
+
+		$this->form_validation->set_rules($config);
+
+		try {
+			if($this->form_validation->run()==FALSE){
+				$this->form_validation->set_error_delimiters('', '<br/>');
+				$errors = validation_errors();
+				throw new Exception($errors, 1);
+			}
+
+			$email = filter_input(INPUT_POST,'username');
+			$customer = $this->db->get_where('customers', ['email'=>$email])->row();
+
+			if(!$customer){
+    			$errors = "Se ha producido un error por favor intente más tarde";
+    			throw new Exception($errors, 1);
+    		}
+
+			$values = ['restore_salt' => md5($customer->password)];
+			$update = $this->db->where('id', $customer->id)->update('customers', $values);
+
+			if($update){
+				$subject    = "Recuperar Contraseña - ".$this->evento->nombre;
+            	$body       = $this->view('email/restore', ['user_info'=>$customer, 'evento'=>$this->evento, 'restore_salt'=>$values['restore_salt']]);
+            	$email      = $this->Email->send('email_info', $customer->email, $subject, $body);
+
+            	if(!$email){
+            		$errors = "Se ha producido un error por favor intente más tarde";
+        			throw new Exception($errors, 1);
+        		}
+
+				$success = 'true';
+	            $responseType = 'function';
+	            $function     = 'appendFormMessagesModal';
+	            $messages     = $this->view('alerts/modal_alert',
+	            	['texto'=> "Se le ha enviado un mail con el link de seguridad para acutalizar su contraseña.",
+	            	 'title'=>'Recuperar Contraseña',
+	            	 'class_type'=>'error']);
+	            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+			}
+
+
+		} catch (Exception $error) {
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Cupones',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+		}
+
+		return $data;
+
+	}
+
+
+	public function doupdatepassword(){
+
+		$success = 'false';
+		$config = array();
+		$config[1] = array('field'=>'salt', 'label'=>'Código Seguridad', 'rules'=>'trim|required');
+		$config[2] = array('field'=>'password', 'label'=>'Contraseña', 'rules'=>'trim|required');
+		$config[3] = array('field'=>'repassword', 'label'=>'Repetir Contraseña', 'rules'=>'trim|required|matches[password]');
+
+		$this->form_validation->set_rules($config);
+
+		try {
+			if($this->form_validation->run()==FALSE){
+				$this->form_validation->set_error_delimiters('', '<br/>');
+				$errors = validation_errors();
+				throw new Exception($errors, 1);
+			}
+			$salt = filter_input(INPUT_POST,'salt');
+			$customer = $this->db->get_where('customers', ['restore_salt'=>$salt])->row();
+
+
+			if(!$customer){
+    			$errors = "Se ha producido un error por favor intente más tarde";
+    			throw new Exception($errors, 1);
+    		}
+
+    		$values = ['password' =>  md5(filter_input(INPUT_POST,'password')), 'restore_salt' => null];
+
+			$update = $this->db->where('id', $customer->id)->update('customers', $values);
+
+			if(!$update){
+    			$errors = "Se ha producido un error por favor intente más tarde";
+    			throw new Exception($errors, 1);
+    		}
+
+			$success = 'true';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> "Su contraseña ha sido actualizada exitosamente.",
+            	 'title'=>'Recuperar Contraseña',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function, 'modal_redirect'=>base_url('/account'));
+
+
+		} catch (Exception $error) {
+			$error_code_id = $error->getCode();
+			$message = $this->error_codes[$error_code_id];
+
+			$success = 'false';
+            $responseType = 'function';
+            $function     = 'appendFormMessagesModal';
+            $messages     = $this->view('alerts/modal_alert',
+            	['texto'=> $error->getMessage(),
+            	 'title'=>'Cupones',
+            	 'class_type'=>'error']);
+            $data = array('success' => $success, 'responseType'=>$responseType, 'html'=>$messages, 'value'=>$function);
+
+		}
+
+		return $data;
+
+
 
 	}
 
@@ -246,6 +380,7 @@ class account_mod extends RR_Model {
 		$config[1] = array('field'=>'email', 'label'=>'Email', 'rules'=>'trim|required|valid_email');
 		$config[2] = array('field'=>'nombre', 'label'=>'Nombre', 'rules'=>'trim|required');
 		$config[3] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
+		$config[4] = array('field'=>'dni', 'label'=>'DNI', 'rules'=>'trim|required');
 
 
 		$this->form_validation->set_rules($config);
@@ -282,6 +417,7 @@ class account_mod extends RR_Model {
 						 'apellido' 	   => filter_input(INPUT_POST,'apellido'),
 						 'email'    	   => filter_input(INPUT_POST,'email'),
 						 'row'	    	   => filter_input(INPUT_POST,'row'),
+						 'dni'		   => filter_input(INPUT_POST, 'dni'),
 						 'order_id' 	   => $ot->order_id,
 						 'evento_id'       => $ot->evento_id,
 						 'order_ticket_id' => $ot->id,
@@ -329,11 +465,12 @@ class account_mod extends RR_Model {
 		return $data;
 	}
 
-	public function nominarOnTheFly($nombre, $apellido, $email,$order_id,$evento_id,$order_ticket_id,$customer_id, $template_email){
+	public function nominarOnTheFly($nombre, $apellido, $email,$dni,$order_id,$evento_id,$order_ticket_id,$customer_id, $template_email){
 
 		$invitado = ['nombre'   	   => $nombre,
 					 'apellido' 	   => $apellido,
 					 'email'    	   => $email,
+					 'dni'		   => $dni,
 					 'row'	    	   => 1,
 					 'order_id' 	   => $order_id,
 					 'evento_id'       => $evento_id,
@@ -373,22 +510,22 @@ class account_mod extends RR_Model {
 
 
 			$acreditado = $this->db->get_where('acreditados', ['id'=>$id])->row();
-			
-			
+
+
 			if(!($acreditado)){
 				throw new Exception("Por favor intentelo mas tarde", 1);
 			}
 			#EVNITO LA INVITACION
 			$subject    = "Su Acreditación - ".$this->evento->nombre;
 
-			
+
 			$ticket_tipo = $this->db->get_where('order_tickets', ['id'=>$acreditado->order_ticket_id])->row();
 			if ($ticket_tipo->tipo == 2) {
 				$template = 'almuerzo';
 			} else {
 				$template = 'invitaciones';
 			};
-			
+
             		$body       = $this->view('email/'.$template, array('user_info'=>$acreditado, 'evento'=>$this->evento));
 		        $email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 

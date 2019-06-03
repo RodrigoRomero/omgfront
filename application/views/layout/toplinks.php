@@ -36,6 +36,7 @@
 
 								</div>
 									<?php echo form_close() ?>
+									<a href="<?php echo base_url('account/forgotpassword')?>" class="text-center">Olvidé mi contraseña</a>
 								</div>
 							</li>
 							<?php } ?>

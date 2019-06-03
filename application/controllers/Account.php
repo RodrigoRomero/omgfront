@@ -50,54 +50,42 @@ class Account extends RR_Controller {
 	 	echo json_encode($data);
 	}
 
-	public function restore(){
-		$this->load->model('PHPMailer_mod','PHPMailer');
+	public function restore($s=null){
 
-		$html     = $this->view("email/restore");
-		$mailtest = $this->PHPMailer->send('email_info', 'rodrigo.thepulg@gmail.com', 'Bienvenido a AV2020', $html);
-
-
-		echo '<pre>';
-		print_r($mailtest);
-		echo '</pre>';
-
-		die;
-
-/*
-		$email = new \PHPMailer\PHPMailer\PHPMailer();
-
-
-
-		//Set who the message is to be sent from
-		$email->setFrom('rodrigo.romero@vnstudios.com', 'First Last');
-		//Set an alternative reply-to address
-		$email->addReplyTo('replyto@example.com', 'First Last');
-		//Set who the message is to be sent to
-		$email->addAddress('webmaster@orsonia.com.ar', 'John Doe');
-		//Set the subject line
-		$email->Subject = 'PHPMailer sendmail test';
-		//Read an HTML message body from an external file, convert referenced images to embedded,
-		//convert HTML into a basic plain-text alternative body
-		$html      = $this->view("email/template", array("body"=>$body, "extra"=>$extra));
-		$email->msgHTML($html);
-		//Replace the plain text body with one created manually
-		$email->AltBody = 'This is a plain-text message body';
-		//Attach an image file
-		//$mail->addAttachment('images/phpmailer_mini.png');
-		//send the message, check for errors
-		if (!$email->send()) {
-		    echo "Mailer Error: " . $email->ErrorInfo;
+		if($this->input->is_ajax_request()){
+			$data = $this->Account->dorestore();
+	 		echo json_encode($data);
 		} else {
-		    echo "Message sent!";
+			if($s == null){
+				redirect(base_url('/'));
+			}
+
+
+			$data = ['salt'=>$s];
+			$module = $this->view('accounts/newpassword',$data);
+			echo $this->show_main($module);
 		}
 
+	}
 
+	public function changepassword(){
+		if($this->input->is_ajax_request()){
+			$data = $this->Account->doupdatepassword();
+	 		echo json_encode($data);
+		} else {
 
-		print_r($email);
-		die;
-	*/	//$data = $this->Account->restore();
+			redirect(base_url('/'));
+		}
 
 	}
+
+	public function forgotpassword(){
+
+		$module = $this->view('accounts/forgotpassword');
+		echo $this->show_main($module);
+
+	}
+
 	public function update($id){
 		$data = $this->Account->update($id);
 	 	echo json_encode($data);

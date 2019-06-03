@@ -39,10 +39,11 @@ class acreditados_mod extends RR_Model {
 		$datagrid["columns"][] = array("title" => "Apellido", "field" => "apellido", 'sort'=>'a.apellido');
 		$datagrid["columns"][] = array("title" => "Nombre", "field" => "nombre", 'sort'=>'a.nombre');
 		$datagrid["columns"][] = array("title" => "Email", "field" => "email", 'sort'=>'a.email');
+		$datagrid["columns"][] = array("title" => "DNI", "field" => "dni", 'sort'=>'a.dni');
 		$datagrid["columns"][] = array("title" => "Status", "field" => "status", 'format'=>'icon-activo');
 		#CONDICIONES & CACHE DE CONDICIONES
 		$this->db->start_cache();
-		$this->db->select('a.id, a.nombre, a.apellido, a.email, a.status', false);
+		$this->db->select('a.id, a.nombre, a.apellido, a.email, a.dni, a.status', false);
 		$this->db->where('a.status >=',0);
 		$this->db->where('a.evento_id',$this->evento_id);
 		$this->db->where('t.tipo',$this->tipo_ticket);
@@ -157,6 +158,7 @@ class acreditados_mod extends RR_Model {
 		 $config = array(array('field'   => 'nombre', 'label'   => 'Nombre', 'rules'   => 'trim|required'),
 						array('field'   => 'apellido', 'label'   => 'Apellido', 'rules'   => 'trim|required'),
 						array('field'   => 'email', 'label'   => 'Email', 'rules'   => 'trim|required|valid_email'),
+						array('field'   => 'dni', 'label'   => 'DNI', 'rules'   => 'trim|required'),
 					  );
 		 $this->form_validation->set_rules($config);
 		 if($this->form_validation->run()==FALSE){
@@ -172,6 +174,7 @@ class acreditados_mod extends RR_Model {
 			$values = array('nombre'   => filter_input(INPUT_POST,'nombre'),
 							'apellido' => filter_input(INPUT_POST,'apellido'),
 							'email' => filter_input(INPUT_POST,'email'),
+							'dni' => filter_input(INPUT_POST,'dni'),
 							'status' => $status
 							);
 			#STATUS PAGOS
@@ -307,6 +310,7 @@ class acreditados_mod extends RR_Model {
 						   a.nombre,
 						   a.apellido,
 						   a.email,
+						   a.dni,
 						   a.barcode,
 						   a.reminder,
 						   a.status,
@@ -356,6 +360,7 @@ class acreditados_mod extends RR_Model {
 		$columns[] = array("title" => "Empresa");
 		$columns[] = array("title" => "Nombre");
 		$columns[] = array("title" => "Apellido");
+		$columns[] = array("title" => "DNI");
 		$columns[] = array("title" => "Email");
 		$columns[] = array("title" => "Código de Barras");
 		$columns[] = array("title" => "Ticket");
@@ -423,27 +428,30 @@ class acreditados_mod extends RR_Model {
 			$this->phpexcel->getActiveSheet()->setCellValue("D".$i, $row->apellido);
 			$this->phpexcel->getActiveSheet()->getStyle("D".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("D")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("E".$i, $row->email);
+			$this->phpexcel->getActiveSheet()->setCellValue("E".$i, $row->dni);
 			$this->phpexcel->getActiveSheet()->getStyle("E".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("E")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("F".$i, $row->barcode);
+			$this->phpexcel->getActiveSheet()->setCellValue("F".$i, $row->email);
 			$this->phpexcel->getActiveSheet()->getStyle("F".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("F")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("G".$i, $row->ticket_name);
+			$this->phpexcel->getActiveSheet()->setCellValue("G".$i, $row->barcode);
 			$this->phpexcel->getActiveSheet()->getStyle("G".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("G")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("H".$i, $row->status);
+			$this->phpexcel->getActiveSheet()->setCellValue("H".$i, $row->ticket_name);
 			$this->phpexcel->getActiveSheet()->getStyle("H".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("H")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("I".$i, $row->fa);
+			$this->phpexcel->getActiveSheet()->setCellValue("I".$i, $row->status);
 			$this->phpexcel->getActiveSheet()->getStyle("I".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("I")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("J".$i, $row->acreditado);
+			$this->phpexcel->getActiveSheet()->setCellValue("J".$i, $row->fa);
 			$this->phpexcel->getActiveSheet()->getStyle("J".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("J")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("K".$i, $row->barcode.'.png');
+			$this->phpexcel->getActiveSheet()->setCellValue("K".$i, $row->acreditado);
 			$this->phpexcel->getActiveSheet()->getStyle("K".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("K")->setAutoSize(true);
+			$this->phpexcel->getActiveSheet()->setCellValue("L".$i, $row->barcode.'.png');
+			$this->phpexcel->getActiveSheet()->getStyle("L".$i)->getAlignment()->setWrapText(true);
+			$this->phpexcel->getActiveSheet()->getColumnDimension("L")->setAutoSize(true);
 			$i++;
 		}
 	   $this->phpexcel->getActiveSheet()->setTitle('Acreditados Evento');
@@ -465,11 +473,12 @@ class acreditados_mod extends RR_Model {
 	   return true;
 	}
 
-	public function nominarOnTheFly($nombre, $apellido, $email,$order_id,$evento_id,$order_ticket_id,$customer_id, $template_email){
+	public function nominarOnTheFly($nombre, $apellido, $email, $dni, $order_id,$evento_id,$order_ticket_id,$customer_id, $template_email){
 
 		$invitado = ['nombre'   	   => $nombre,
 					 'apellido' 	   => $apellido,
 					 'email'    	   => $email,
+					 'dni'		   => $dni,
 					 'row'	    	   => 1,
 					 'order_id' 	   => $order_id,
 					 'evento_id'       => $evento_id,

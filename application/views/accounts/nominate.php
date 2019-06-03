@@ -39,6 +39,7 @@
 										<th>Nombre</th>
 										<th>Apellido</th>
 										<th>Email</th>
+										<th>DNI</th>
 										<th>Editar</th>
 										<th>Invitar</th>
 									</tr>

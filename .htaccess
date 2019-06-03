@@ -23,7 +23,7 @@
 
 RewriteEngine On
 # Please do-not forget to change RewriteBase /YOUR-SUBFOLDER HERE
-RewriteBase /2018/
+RewriteBase /2019/
 
 RewriteRule ^$ index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -34,17 +34,17 @@ $codeGenerated = getBarCode($user_info->id);
 <table width="600" cellpadding="0" cellspacing="0" style="<?php echo $table ?>">
 	<tr>
 		<td  colspan="3">
-			<p style="<?php echo $p ?>">Sr/a <br />
-			Su inscripci髇 al evento  fue confirmada.<br />
-			<strong>Lo esperamos el  de Hs. </strong><br />
-			<br />
-			No olvide llevar el c骴igo de barras, impreso o digital<p>
+			<p style="<?php echo $p ?>">Sr/a <?php echo $user_info->nombre.' '.$user_info->apellido?><br />
+			Usted ha solicitado blanquear la contrase帽a, para Argentina Visi贸n 2020/40. Precione el bot贸n a continuaci贸n<br/>
+			<a href="<?php echo base_url('account/restore/'.$restore_salt) ?>" style="<?php echo $btn ?>">Recuperar Contrase帽a</a><br/>
+			Si usted no solicit贸 este mail le pedimos por favor que ignore este mail.
+			<p>
 		   </td>
 	</tr>
 	<tr>
 		<td colspan="3">
 
-			
+
 		</td>
 	</tr>
 	<tr>
@@ -57,5 +57,5 @@ $codeGenerated = getBarCode($user_info->id);
 			<p style="text-transform: uppercase; text-align: center; color: #ce5c5f; font-size: 34px; font-weight: bold; margin: 0"><?php echo $evento->nombre ?></p>
 		</td>
 	</tr>
-	<
+
 </table>

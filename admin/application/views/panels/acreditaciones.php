@@ -44,6 +44,8 @@ echo form_open($action,$data);
                 echo '<div class="row-fluid">';
                 $data = array('name'=>'email','id'=>'email','placeholder'=>'Email', 'class'=>'required input-xlarge', 'value'=>$user_info->email);
                 echo control_group('Email', form_input($data),$attr = array('class'=>'span6'));
+                $data = array('name'=>'dni','id'=>'dni','placeholder'=>'DNI', 'class'=>'required input-xlarge number', 'value'=>$user_info->dni);
+                echo control_group('DNI', form_input($data),$attr = array('class'=>'span6'));
                 echo '</div>';
                 echo '<div class="row-fluid">';
                 $data = array('name'=>'empresa','id'=>'empresa','placeholder'=>'Empresa', 'disabled'=>'disabled', 'class'=>'required input-xlarge', 'value'=>$empresa->empresa);

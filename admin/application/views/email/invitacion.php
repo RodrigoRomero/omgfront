@@ -33,7 +33,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
     <tr>
         <td colspan="3">
             <p style="<?php echo $p ?>"><?php echo $acreditado_info->nombre.' '.$acreditado_info->apellido ?><br />
-            Su inscripción al evento <?php echo $evento->nombre ?> ha sido confirmada. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br />
+            Su inscripción al evento <?php echo $evento->nombre ?> ha sido confirmada. <br />
             <strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />
             </p>
         </td>

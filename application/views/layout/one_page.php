@@ -47,7 +47,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 							<div class="container clearfix">
 							<?php //ep($this->evento) ?>
 								<div class="slider-caption slider-caption-center">
-									<h3> 6to ENCUENTRO DE REFLEXIÓN</h3>
+									<h3> 7mo ENCUENTRO DE REFLEXIÓN</h3>
 									<h2 data-caption-animate="fadeInUp" style="margin-bottom: 0"><?php echo $this->evento->nombre ?></h2>
 
 
@@ -83,7 +83,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
                                 </div>
                                <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
 								<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white">Comprar Tickets</a>
-								<a href="https://www.youtube.com/watch?v=-Q8m07fVPhY"  data-lightbox="iframe"  class="button button-xlarge button-inverse">Ver Video</a>
+								<a href="https://www.youtube.com/watch?v=_v3SOFaTOb4"  data-lightbox="iframe"  class="button button-xlarge button-inverse">Ver Video</a>
 
 								</div>
 								<!--

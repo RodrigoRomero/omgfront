@@ -381,7 +381,7 @@ class cart_mod extends RR_Model {
 	        		$customer   = $this->Account->getCustomerById();
 	        		$order = (object)$values;
                 	$body  = $this->view('email/transferencia_bancaria', array('user_info'=>$customer, 'evento'=>$this->evento, 'order_id'=>$order_id));
-                	#$email = $this->Email->send('email_info', $customer->email, $subject, $body, array('cc'=>$customer->email));
+                    $email = $this->Email->send('email_info', $customer->email, $subject, $body, array('cc'=>$customer->email));
 		      		$success = true;
 					$responseType = 'redirect';
 					$data    = array('success' =>$success,'responseType'=>$responseType, 'value'=>base_url('cart/thanks'));

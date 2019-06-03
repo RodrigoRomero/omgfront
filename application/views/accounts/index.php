@@ -32,6 +32,8 @@
 								</div>
 
 							<?php echo form_close() ?>
+
+							<a href="<?php echo base_url('account/forgotpassword')?>" class="text-center">Olvidé mi contraseña</a>
 						</div>
 
 					</div>
@@ -74,16 +76,27 @@
 								<label for="register-form-phone">Apellido:</label>
 								<input type="text" id="register-apellido" name="apellido" value="" class="form-control required" />
 							</div>
-
 							<div class="clear"></div>
 
 							<div class="col_half">
-								<label for="register-form-password">Choose Password:</label>
+								<label for="register-form-dni">DNI:</label>
+								<input type="text" id="register-dni" name="dni" value="" class="form-control required number" />
+							</div>
+
+							<div class="col_half col_last">
+								<label for="register-form-fecha_nacimiento">Fecha Nacimiento:</label>
+								<input type="text" id="register-fecha_nacimiento" name="fecha_nacimiento" value="" class="form-control tleft past-enabled required"  placeholder="DD-MM-YYYY"/>
+
+							</div>
+							<div class="clear"></div>
+
+							<div class="col_half">
+								<label for="register-form-password">Contraseña:</label>
 								<input type="password" id="register-password" name="password" value="" class="required form-control" />
 							</div>
 
 							<div class="col_half col_last">
-								<label for="register-form-repassword">Re-enter Password:</label>
+								<label for="register-form-repassword">Repetir Contraseña:</label>
 								<input type="password" id="register-repassword" name="repassword" equalTo="#register-password" value="" class="form-control required" />
 							</div>
 

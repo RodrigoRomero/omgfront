@@ -89,7 +89,7 @@ echo form_open($action,$data);
 
 						$data = array('transferencia_bancaria'        => 'Transferencia Bancaria',
 									  'mercado_pago'         => 'Mercado Pago',
-									  'FOC'      => 'Free of Charge'
+									  'foc'      => 'Free of Charge'
 									  );
 
 

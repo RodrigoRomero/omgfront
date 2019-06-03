@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+
+
 if(config.page_handle == 'cart/thanks'){
 	countdown(5)
 }
@@ -45,7 +47,7 @@ function countdown(secs){
       }
       else {
         clearInterval(int);
-         window.location.href = "/2018";
+         window.location.href = "/2019";
       }
     },5000);
 }
@@ -382,6 +384,12 @@ function open_modal(data){
             window.location.href = data.modal_redirect
         })
 
+    } else if (data.modal_redirect){
+    	const regex_restore = /^account\/restore\/?/gm;
+    	r = regex_restore.exec(config.page_handle)
+    	if(r[0] == 'account/restore/'){
+    		window.location.href = data.modal_redirect
+    	}
     }
 
 }

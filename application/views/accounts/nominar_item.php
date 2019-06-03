@@ -19,6 +19,7 @@
 	</td>
 	<td><input type="text" name="apellido" class="form-control required" value="<?php echo ($nominado->apellido) ? $nominado->apellido : '' ?>"></td>
 	<td><input type="text" name="email" class="form-control required email" value="<?php echo ($nominado->email) ? $nominado->email : '' ?>"></td>
+	<td><input type="text" name="dni" class="form-control required number" value="<?php echo ($nominado->dni) ? $nominado->dni : '' ?>"></td>
 	<td>
 		<button class="button button-mini" id="<?php echo $form_name ?>"  onclick="validateForm('<?php echo $form_name ?>')"><i class="icon-edit"></i>Nominar</button>
 	</td>

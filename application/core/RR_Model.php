@@ -61,7 +61,8 @@ class RR_Model extends CI_Model
 	private function _getEventoActivo(){
 		$result = $this->db->select('eventos.id, eventos.status, eventos.nombre, eventos.bajada, eventos.descripcion, eventos.fecha_inicio, eventos.fecha_baja, eventos.telefono, eventos.capacidad, eventos.costo,
 								    eventos.newsletter, eventos.json_socials, eventos.payments_enabled, eventos.show_register, eventos.cupons_enabled, eventos.show_full_bio, lugares.lugar, lugares.direccion, lugares.json_direccion')->join('lugares', 'lugares.evento_id = eventos.id')->get_where('eventos',array('eventos.status'=>1))->row();
-		return $result;
+		
+return $result;
 	}
 
 

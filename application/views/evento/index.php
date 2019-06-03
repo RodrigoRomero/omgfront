@@ -9,7 +9,7 @@
 -->
 
 <section>
-				<div class="section yt-bg-player nomargin dark" data-quality="hd1080" data-start="0" data-stop="14" data-video="https://youtu.be/-Q8m07fVPhY" style="height: 600px;">
+				<div class="section yt-bg-player nomargin dark" data-quality="hd1080" data-start="0" data-stop="16" data-video="https://www.youtube.com/watch?v=_v3SOFaTOb4" style="height: 600px;">
 					<div class="container vertical-middle center clearfix">
 						<!--<i class="i-plain i-large icon-line-video divcenter" data-animate="fadeInDown"></i>-->
 						<div class="emphasis-title nomargin" data-animate="fadeInUp">
@@ -25,9 +25,13 @@
 					<h3 class="center">Organizan:</h3>
 					<ul class="clients-grid grid-4 nobottommargin clearfix">
 
-						<li><img src="uploads/organizadores/ministerio.png" class="fadeInDown animated" alt="Ministerio de Producción" data-animate="fadeInDown"> </a></li>
-						<li><img src="uploads/organizadores/adblick.png" class="fadeInDown animated" alt="ADBlick Agro"></a></li>
+						<!--<li><img src="uploads/organizadores/ministerio.png" class="fadeInDown animated" alt="Ministerio de Producción" data-animate="fadeInDown"> </a></li>-->
+						
 						<li><img src="uploads/organizadores/austral.png" class="fadeInDown animated" alt="Universidad Austral"></a></li>
+						<li><img src="uploads/organizadores/bioceres.png" class="fadeInDown animated" alt="Universidad Austral"></a></li>
+						<li><img src="uploads/organizadores/adblick.png" class="fadeInDown animated" alt="ADBlick Agro"></a></li>
+						
+						
 						<li><img src="uploads/organizadores/bb.png" class="fadeInDown animated" alt="BisBlick Talento Joven"></a></li>
 					</ul>
 <!-- 					<h3 class="center">	<a href="http://argentinavision2020.com/2017/uploads/galeria/polo_tecnologico.jpg"  data-lightbox="image"  class=" button button-xlarge ">Conozca el Lugar</a></h3>
@@ -130,7 +134,7 @@
 					</div>
 	</div>
 </section>-->
-<?php echo $agenda ?>
+<?php // echo echo $agenda ?>
 <?php // echo $this->load->view('evento/corte_a',[],true) ?>
 <?php echo $oradores; ?>
 
