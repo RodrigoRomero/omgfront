@@ -4,64 +4,83 @@
  * 
  */
 ini_set("memory_limit","100M");
+
 include("resize.php");
+
 class UploadManager{
     
     var $batch_file = "resize_batch.txt";
-    function upload(){       
+    
+    function upload(){    
+
+        foreach($_FILES as $k=>$v){
+            $_FILES['Filedata'] = $v;
+            unset($_FILES[$k]);
+        };
+
+
         $newName    = $_FILES['Filedata']['name'];
-        $f          = file_put_contents("upload_debug_1", $newName);
+     
         $arr_ext    = explode(".", $newName);
         $ext        = array_pop($arr_ext);
         $ext        = strtolower($ext);
+        $ext        = ($ext == 'jpeg') ? "jpg" : $ext;
         $newName    = "tmp_".date("YmdHis").".".$ext;
-         
-        $resize     = (!empty($_REQUEST['resize'])) ? explode(",", str_replace(" ", "", $_REQUEST['resize'])) : "";
+        
+        $resize     = (!empty($_REQUEST['resize']) && $_REQUEST['resize'] != 'undefined') ? explode(",", str_replace(" ", "", $_REQUEST['resize'])) : "";
         $original   = (!empty($resize)) ? "original/" : "";
-        $ratio      = (isset($_REQUEST['ratio'])) ? explode("x", strtolower($_REQUEST['ratio'])) : ""; 
-        if(!empty($ratio)){
-            $mw = $ratio[0];
-            $mh = $ratio[1];
-            list($width, $height, $type, $w) = getimagesize($_FILES['Filedata']['tmp_name']);
-            if($width < $mw || $height < $mh){
-                $data = array("success"=>false, "error"=>"size", "msg"=>"($width x $height)");
-                echo json_encode($data);die;
-            }else if(round(($width/$height) ,2)!= round(($mw/$mh),2)){
-                $data = array("success"=>false, "error"=>"ratio", "msg"=>"($width x $height)");
-                echo json_encode($data);die;
-            }else if($height > 2000){
-                $data = array("success"=>false, "error"=>"maxsize", "msg"=>"($width x $height)");
-                echo json_encode($data);die;
-            }
-        }
         
-          
-        $file_path  = $_REQUEST['sistem_path'].$_REQUEST['fodler'].$original.$newName;    
-        $f    = file_put_contents("upload_debug", $file_path);
+        // $ratio      = (isset($_REQUEST['ratio'])) ? explode("x", strtolower($_REQUEST['ratio'])) : ""; 
+        // if(!empty($ratio)){
+        //     $mw = $ratio[0];
+        //     $mh = $ratio[1];
             
+        //     list($width, $height, $type, $w) = getimagesize($_FILES['Filedata']['tmp_name']);
+        //     if($width < $mw || $height < $mh){
+        //         $data = array("success"=>false, "error"=>"size", "msg"=>"($width x $height)");
+        //         echo json_encode($data);die;
+        //     }else if(round(($width/$height) ,2)!= round(($mw/$mh),2)){
+        //         $data = array("success"=>false, "error"=>"ratio", "msg"=>"($width x $height)");
+        //         echo json_encode($data);die;
+        //     }else if($height > 2000){
+        //         $data = array("success"=>false, "error"=>"maxsize", "msg"=>"($width x $height)");
+        //         echo json_encode($data);die;
+            
+        //     }
+        // }
+        $file_path  = $file_path  = getcwd()."/../../../../".$_REQUEST['folder'].$original.$newName;
+        $f    = file_put_contents("upload_debug", $file_path);
         $ret        = move_uploaded_file($_FILES['Filedata']['tmp_name'], $file_path);
-        
-        
 		@chmod($file_path, 0644);
+        
+        
         $row = array("file"=>$file_path, "resize"=>$resize, "pos" => $_REQUEST['pos']);
         $fp  = fopen($this->batch_file, 'a+') or die("can't open file");
         fwrite($fp, json_encode($row)."\n");
         fclose($fp);
         
+        
+        
         $data       = array("file_path" => $file_path, "file_name" => $newName, "success"=>true);
         if(isset($width) && !empty($width)) $data["w"] = $width;
+        
         echo json_encode($data);
     }
     
-    function resize($id, $path=""){        
+    function resize($id, $path=""){
+        
         //http://server/server/Desarrollo/VIRTUACOMMERCE/Develop/bin/rr-admin/assets/widgets/uploadManager/UploadManager.php?a=resize&id=10
         $this->batch_file = $path.$this->batch_file;
+
         if(!file_exists($this->batch_file)) return false;
         $batch = file_get_contents($this->batch_file);
+        
         $batch = explode("\n", $batch);
         array_pop($batch);
+        
         foreach($batch as $row){
             $data       = json_decode($row);
+            
             $file_arr   = explode("/", $data->file);
             $file_name  = array_pop($file_arr);
             $thumb_path = implode("/", str_replace("original", "thumbs", $file_arr))."/";
@@ -69,28 +88,34 @@ class UploadManager{
             if(!empty($data->resize)){
                 foreach($data->resize as $size){
                     $newName    = $id."_".$data->pos."_".$size.".".$file_ext[1];
+                    
+                    
                     $thumb = new thumbnail($data->file);
                     $thumb->size_width($size);
                     $thumb->save("$thumb_path/$newName");
+                    
                 }
             }
             $rename_file = $id."_".$data->pos.".".$file_ext[1];
             $rename_file = implode("/", $file_arr)."/".$rename_file;
             rename($data->file, $rename_file);
         }
+        
+        
         unlink($this->batch_file);
+        
         return true;
     }
     
     function batch($folder="", $size=""){
-        
-        $f    = file_put_contents("upload_debug", 'b');
+
         //http://server/server/Desarrollo/VIRTUACOMMERCE/Develop/bin/vc-admin/assets/widgets/uploadManager/UploadManager.php?a=batch&folder=uploads/productos/original&size=20,30
         $or_size       = $size;
-        $sistem_path   = str_replace("assets/widgets/uploadManager/UploadManager.php", "", $_SERVER["SCRIPT_FILENAME"]);
+        $sistem_path   = str_replace("rr-admin/assets/widgets/uploadManager/UploadManager.php", "", $_SERVER["SCRIPT_FILENAME"]);
         $size          = str_replace(" ", "", $size);
         $size_arr      = explode(",", $size);
         $relative_path = "../../../../";
+        
         if ($handle = opendir($relative_path.$folder)) {
             $count = 1;
             while (false !== ($file = readdir($handle)) && $count<50) {
@@ -100,13 +125,17 @@ class UploadManager{
 				if(!in_array(array_pop($tmp_f_arr), array("jpg", "jpeg", "png", "gif"))){
 					$fl = false;
 				}
+				
                 if ($file != "." && $file != ".." && $fl) {
                     $original_path = $sistem_path.$folder."/";
+					
                     if(preg_match("/[A-Z]/", $file)===0){
                         rename($original_path.$file, strtolower($original_path.$file));
 					}
+                    
                     $thumb_path    = str_replace("batch", "thumbs", $original_path);
                     $thumb_arr     = explode(".", $file);
+                    
                     foreach($size_arr as $s){
                         $thumb_name    = $thumb_arr[0]."_".$s.".".$thumb_arr[1];
                         $thumb_name    = strtolower($thumb_name);
@@ -119,6 +148,7 @@ class UploadManager{
                         }
                     }
 					rename($original_path.$file, $original_path."../original/".$file);
+					
                 }
             }
             closedir($handle);
@@ -128,12 +158,48 @@ class UploadManager{
             }else{
                 echo "<h3>Proceso terminado. Ya puede cerrar esta pagina.</h3>";
             }
+            
+          
         }
     }
     
     function remove_batch(){
-    	if(file_exists($this->batch_file))
+        
+        if(isset($_REQUEST['folder']) 
+            && isset($_REQUEST['id']) 
+            && isset($_REQUEST['pos']) 
+            && isset($_REQUEST['filter'])
+        ){
+
+            $server = "/home/argenv/public_html/evento/";
+            $patterFiles   = $server.$_REQUEST['folder'].$_REQUEST['id'].'_'.$_REQUEST['pos'].'.'.$_REQUEST['filter']; 
+            $originalFiles = glob($patterFiles);
+
+            foreach($originalFiles as $deleteFiles){
+                echo $deleteFiles;
+                @unlink($deleteFiles);
+            }
+
+        }
+
+        $this->batch_file = $path.$this->batch_file;
+
+        if(!file_exists($this->batch_file)) return false;
+        $batch = file_get_contents($this->batch_file);
+        
+        $batch = explode("\n", $batch);
+        array_pop($batch);
+
+        foreach($batch as $row){
+            $data       = json_decode($row);
+            $t = unlink($data->file);  
+        }
+
+    	if(file_exists($this->batch_file)){
         	unlink($this->batch_file);
+        }
+
+        
     }
     
     function test(){
@@ -142,6 +208,7 @@ class UploadManager{
     
     function delete($file, $resize=""){
         unlink($file);
+
         if(!empty($resize)){
             $file_arr    = explode(".", $file);
             $ext         = array_pop($file_arr);
@@ -155,11 +222,14 @@ class UploadManager{
         }
     }
 }
+
 //
-$action = $_REQUEST['a'];
+
+$action = isset($_REQUEST['a']) ? $_REQUEST['a'] : "";
 $up     = new UploadManager();
+
 switch($action){
-    case "upload":        
+    case "upload":
         $up->upload();
         break;
 	case "delete":
@@ -177,4 +247,5 @@ switch($action){
         break;
 }
 
+ 
 ?>

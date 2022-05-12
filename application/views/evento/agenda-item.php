@@ -1,5 +1,6 @@
 <div class="fancy-title title-bottom-border">
-	<h4><span><?php echo substr($item->hora, 0, -3).' Hs.'; ?></span> - <?php echo $item->title ?></h4>
+	<h4>
+<!--<span><?php echo substr($item->hora, 0, -3).' Hs.'; ?></span> - --><?php echo $item->title ?></h4>
 </div>
 <?php
 if(isset($item->brief) && !empty($item->brief)) { ?>

@@ -33,16 +33,29 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
     <tr>
         <td colspan="3">
             <p style="<?php echo $p ?>"><?php echo $acreditado_info->nombre.' '.$acreditado_info->apellido ?><br />
-            Su inscripción al evento <?php echo $evento->nombre ?> ha sido confirmada. <br />
-            <strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />
+            <!-- Texto con código de fecha
+	            Lo esperamos <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> de 8:30 a 10:00 para participar de la Semana <?php echo $evento->nombre ?>-->
+	            
+	           Su inscripción al 9º Encuentro de Reflexión Argentina Visión 2040 ha sido confirmada. 
+
+            Lo esperamos del 12 al 15 de octubre de 8:30 a 10:00 para participar online de la Semana Argentina Visión 2040<br>  
+                    
+            <!--<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />-->
+            <br />
+            
+
             </p>
         </td>
     </tr>
+    
+    <!-- BarCode
     <tr>
         <td colspan="3">
             <?php echo up_asset('barcodes/'.$acreditado_info->barcode.'.png', array('style'=>'display: block; margin: 0 auto;')) ?>
         </td>
     </tr>
+    Fin Barcode-->
+    
     <tr>
         <td style="padding: 10px 0; border-top: 2px solid #ebebeb; border-bottom: 2px solid #ebebeb" colspan="3">
             <p style="text-transform: uppercase; text-align: center; color: #ce5c5f; font-size: 34px; font-weight: bold; margin: 0"><?php echo $evento->nombre ?></p>

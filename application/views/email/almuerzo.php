@@ -34,9 +34,10 @@ $codeGenerated = getBarCode($user_info->id);
 <table width="600" cellpadding="0" cellspacing="0" style="<?php echo $table ?>">
 	<tr>
 		<td  colspan="3">
-			<p style="<?php echo $p ?>">Sr/a <?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
+			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 			Su inscripción al Almuerzo de networking fue confirmada.<br />
-			<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>  Se realizará a partir de las 13:15 hs, al finalizar la jornada. <?php echo $evento->lugar ?></strong><br />
+			<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>  <br/>
+			Se realizará a partir de las 13:15 hs, al finalizar la jornada. <?php echo $evento->lugar ?></strong><br />
 			<br />
 		   </td>
 	</tr>

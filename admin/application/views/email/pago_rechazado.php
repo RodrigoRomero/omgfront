@@ -38,10 +38,11 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
     <tr>
         <td colspan="3">
             <p style="<?php echo $p ?>"><?php echo $customer_info->nombre.' '.$customer_info->apellido ?><br />
-            El pago realizado para participar del evento <?php echo $evento->nombre ?> a llevarse a cabo el día <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> fue rechazado.<br/>
-            Solicitamos que se contacte con la organización a fin de regularizar la situación.<br/>
-			Muchas gracias.<br/>
-			Disculpe las molestias ocasionadas</p>
+           ¡Su pago para participar del evento <?php echo $evento->nombre ?> ha sido rechazado!<br>
+			
+			Puede contactarse con la organización <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> para que podamos ayudarlo a regularizar la situación <br>
+			¡Muchas gracias! <br>
+			Disculpe las molestias ocasionadas
         </td>
     </tr>
 </table>

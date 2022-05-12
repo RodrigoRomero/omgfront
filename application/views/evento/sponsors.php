@@ -1,7 +1,7 @@
 <section id="section-sponsors" class="page-section topmargin-lg">
 	<div class="container clearfix">
 		<div class="fancy-title title-double-border">
-			<h1><span>S</span>ponsors</h1>
+			<h1>Sponsors</h1>
 		</div>
 	<?php
 		$total_items = count($sponsors);
@@ -18,5 +18,7 @@
 	//}
 	?>
 	<div class="clear"></div>
+			<p> </p>
+
 	</div>
 </section>

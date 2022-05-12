@@ -580,11 +580,14 @@ function isJson($string) {
 
 
 
-function getMes($mes){
-
+function getMes($mes, $full=false){
+	if($full==true){
+		$meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+	} else {
 		$meses = array('Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
-
-		return $meses[$mes-1];
+	}
+	
+	return $meses[$mes-1];
 
 }
 

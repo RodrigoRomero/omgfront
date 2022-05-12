@@ -35,14 +35,13 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 <table width="600" cellpadding="0" cellspacing="0" style="<?php echo $table ?>">
 	<tr>
 		<td colspan="3">
-			<p style="<?php echo $p ?>"><?php echo $user->nombre.' '.$user_info->apellido ?><br />
-			Usted se ha pre-inscripto para participar del evento <?php echo $evento->nombre ?>.<br />
-
-
-			El pago realizado se encuentra pendiente de revisión por Mercado Pago. Si en los próximos 5 días no recibe un nuevo mail confirmando que su pago fue acreditado correctamente, le solicitamos por favor ponerse en contacto con:<br />
-			Noelia Villaca <a href="mailto:nvillaca@bisblick.org">nvillaca@bisblick.org</a> <br />
-			Le agradecemos mucho su colaboración y le pedimos disculpas por las molestias que podría causarle.<br />
-			Saludos,</p>
+			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
+			¡Su pago para participar del evento <?php echo $evento->nombre ?> se encuentra pendiente!<br>
+			
+			En caso de que ya lo haya realizado, por favor contáctese con la organización <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a>  <br>
+			¡Muchas gracias! <br>
+			
+			</p>
 		</td>
 	</tr>
 

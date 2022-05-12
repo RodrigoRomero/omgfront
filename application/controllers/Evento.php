@@ -64,4 +64,20 @@ class Evento extends RR_Controller {
 		$speaker = $this->Main->getOradorById($id);
 		$this->load->view('evento/speaker-detail', ['orador' => $speaker]);
 	}
+
+	public function reminder(){
+
+		$this->load->model('event_mod','Evento');
+	    $this->Evento->_doReminder();
+
+	}
+
+	public function runreminder(){
+		$total_rows = $this->db->from('acreditados')->where(['reminder'=>0, 'status'=>1])->count_all_results();
+		echo $total_rows;
+	}
+
+	public function covid(){
+		$this->load->view('evento/covid');
+	}
 }

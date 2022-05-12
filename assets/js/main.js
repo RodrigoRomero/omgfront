@@ -30,10 +30,16 @@ function validateCupon(){
 
 function enableInvite(data){
 	$('td#tir-'+data.extras.row+' a').attr('data-acreditacion',data.extras.data).removeClass('hide');
+	open_modal(data)
 }
 
 function sendInvite(e){
-	$id = e.data('acreditacion');
+	//console.log(e)
+	//$id = e.data('acreditacion');
+	
+	//console.log($id)
+	//console.log(e[0].data('acreditacion'))
+	$id = e.context.attributes[3].value
 	ajaxUrl = config.shop_url+'/account/invite/'+$id
  	frm_send('none', ajaxUrl,'xxx')
 }
@@ -47,7 +53,7 @@ function countdown(secs){
       }
       else {
         clearInterval(int);
-         window.location.href = "/2019";
+         window.location.href = "/evento";
       }
     },5000);
 }
@@ -64,7 +70,9 @@ console.log(datos);
 }
 
 function checkoutReturn (data) {
+   //alert("123");
 	console.log(data);
+//alert("resturn mp");
    ajaxUrl = config.shop_url+'checkout/close/id/'+data.external_reference+'/collection_id/'+data.collection_id+'/collection_status/'+data.collection_status+'/payment_type/'+data.payment_type+'/preference_id/'+data.preference_id;
    frm_send('none', ajaxUrl,'checkout')
 

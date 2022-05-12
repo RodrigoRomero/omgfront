@@ -34,10 +34,10 @@ $codeGenerated = getBarCode($user_info->id);
 <table width="600" cellpadding="0" cellspacing="0" style="<?php echo $table ?>">
 	<tr>
 		<td  colspan="3">
-			<p style="<?php echo $p ?>">Sr/a <?php echo $user_info->nombre.' '.$user_info->apellido?><br />
-			Usted ha solicitado blanquear la contraseña, para Argentina Visión 2020/40. Precione el botón a continuación<br/>
+			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido?><br />
+			Usted ha solicitado blanquear la contraseña, para Argentina Visión 2040. Presione el botón a continuación<br/>
 			<a href="<?php echo base_url('account/restore/'.$restore_salt) ?>" style="<?php echo $btn ?>">Recuperar Contraseña</a><br/>
-			Si usted no solicitó este mail le pedimos por favor que ignore este mail.
+			Si usted no solicitó el blanqueo de contraseña, por favor ignore este mail.
 			<p>
 		   </td>
 	</tr>

@@ -55,7 +55,18 @@ $social = json_decode($row->json_socials);
 
 						<?php
 
-						echo control_group('Foto Orador', upload_manager("",array("id"=>$row->id, "uploadFolder"=>"uploads/oradores/", "filter"=>'jpg', "ratio"=>'400x400')),$attr = array('id'=>'uploadGroupNo', 'help-block'=>'(Imágen JPG - 400x400)'));
+						echo control_group('', upload_manager("Foto Orador (Imágen JPG - 400x400) ",
+							array(
+								"id"=>$row->id, 
+								"uploadFolder"=>"uploads/oradores/", 
+								"fileType"=>'image/jpeg',
+								"pos"=>"0",
+								"filter"=>'jpg', 
+								"proporcion" =>'1:1',
+								"ratio"=>'400x400')
+						)
+
+						);
 
 						$data = array('name'=>'twitter','id'=>'twitter','placeholder'=>'Twitter del Orador', 'class'=>'', 'value'=>$social->twitter);
 						echo control_group('Twitter', form_input($data),$attr = array('prepend'=>'<i class="icon-twitter"></i>','append'=>'<a class="icon-question ax-modal tip-right" data-original-title="Ver ayuda" href="'.base_url('helps/general/2').'"></a>'));

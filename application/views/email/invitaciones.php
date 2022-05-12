@@ -29,25 +29,34 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 		text-decoration: none;
 		text-transform: uppercase;";
 
+
 $codeGenerated = getBarCode($user_info->id);
+
 ?>
 <table width="600" cellpadding="0" cellspacing="0" style="<?php echo $table ?>">
 	<tr>
 		<td  colspan="3">
-			<p style="<?php echo $p ?>">Sr/a <?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
-			Su inscripción al evento <?php echo $evento->nombre ?> fue confirmada.<br />
-			<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />
-			<br />
-			No olvide llevar el código de barras, impreso o digital<p>
+			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
+			
+			Su inscripción al 9no Encuentro de Reflexión Argentina Visión 2040 ha sido confirmada. 
+
+			Lo esperamos del 12 al 15 de octubre de 8:30 a 10:00 para participar online de la Semana Argentina Visión 2040 <br>	
+					
+			<!--<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />-->
+			<br />En las próximas semanas, recibirá el link para acceder al Encuentro. <br>
+			<b> Ante cualquier duda, puede comunicarse con: <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> </b><br/><p>
 		   </td>
 	</tr>
+	<!-- Barcode
 	<tr>
 		<td colspan="3">
 
 			<?php echo up_asset('barcodes/'.$codeGenerated['numbers'].'.png', array('style'=>'display: block; margin: 0 auto;', 'alt'=>$evento->nombre, 'title'=>$evento->nombre)) ?>
 		</td>
 	</tr>
-	<tr>
+	Fin Barcode-->
+	
+	<!-- <tr>
 		<td colspan="3">
 		<p style="<?php echo $p ?>"></p>
 		</td>
@@ -77,5 +86,5 @@ $codeGenerated = getBarCode($user_info->id);
 			<p style="font-weight: bold; margin: 0;"><?php echo $evento->lugar ?></p>
 			<p style="margin: 0;"><?php echo $evento->direccion ?></p>
 		</td>
-	</tr>
+	</tr> -->
 </table>

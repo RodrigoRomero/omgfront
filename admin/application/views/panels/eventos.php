@@ -133,8 +133,22 @@ $social = json_decode($row_evento->json_socials);
                 <div class="box-content">
                     <div class="form_container">
                         <?php
-                        echo control_group('Imágen Home', upload_manager("",array("id"=>$row_evento->id, "uploadFolder"=>"uploads/slider/", "filter"=>"jpg", "ratio"=>"1920x1000")),$attr = array('id'=>'uploadGroup', 'help-block'=>'(Imágen JPG - 1920x1000)'));
-                        echo control_group('', $addImage,$attr = array());
+                        echo control_group('', 
+                            upload_manager("Imágen Home (Imágen JPG - 1920x1000)",
+                                array(
+                                    "id"=>$row_evento->id, 
+                                    "pos"=>"0",
+                                    "uploadFolder"=>"uploads/slider/", 
+                                    "filter"=>"jpg", 
+                                    "ratio"=>"1920x1000",
+                                    "fileType"=>'image/jpeg',
+                                    "proporcion" =>'1920:1000'
+                                    )
+                            )
+                            // ,
+                            // $attr = array('id'=>'uploadGroup', 'help-block'=>'(Imágen JPG - 1920x1000)')
+                        );
+                        //echo control_group('', $addImage,$attr = array());
                         ?>
                     </div>
                 </div>

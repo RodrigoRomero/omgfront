@@ -42,9 +42,10 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 
             <p style="<?php echo $p ?>"><?php echo $customer_info->nombre.' '.$customer_info->apellido ?><br />
 
-            Este email confirma que la compra de entradas para el evento <?php echo $evento->nombre ?> a llevarse a cabo el día <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>. Ha sido cancelada.</p>
+            Este email confirma que la compra de entradas para el evento <?php echo $evento->nombre ?> a llevarse a cabo el día <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>. Ha sido cancelada.
+            
+            <b> Ante cualquier duda, puede comunicarse con: <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> </b><br/>
+            </p>
         </td>
-
     </tr>
-
 </table>

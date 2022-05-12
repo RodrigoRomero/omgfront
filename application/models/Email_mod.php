@@ -49,6 +49,7 @@ class Email_mod extends RR_Model {
 		#echo $html;
 
 		$this->email->setFrom($from, $from_desc);
+		$this->email->clearAddresses();
 		$this->email->addAddress($to);
 
 		/*if(!isset($extra['bcc_no'])) {

@@ -36,7 +36,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 <table width="600" cellpadding="0" cellspacing="0" style="<?php echo $table ?>">
 	<tr>
 		<td colspan="3">
-			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br/>
+			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 			Usted se ha pre-inscripto para participar del evento <?php echo $evento->nombre ?>.<br />
 			Se confirmará su registro una vez complete el pago.</p>
 			<a href="<?php echo base_url('cart/restore/'.$order_info->salt) ?>" style="<?php echo $btn ?>">Realizar Pago</a><br/>

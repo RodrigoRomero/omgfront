@@ -6,8 +6,8 @@
 	} else {
 		$position = $position+1;
 	}
-
-	echo heading($item->nombre, ($position))
+	//echo heading($item->nombre, ($position))
+	echo heading($item->nombre, 4)
 	?>
 
 </div>

@@ -33,7 +33,12 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
     <tr>
         <td colspan="3">
             <p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
-            Su orden se encuentra confirmada.</p>
+            Su orden se encuentra confirmada.<br/>
+            
+           
+
+            
+            </p>
         </td>
     </tr>
 </table>

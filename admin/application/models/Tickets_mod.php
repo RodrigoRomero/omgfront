@@ -169,7 +169,7 @@ class tickets_mod extends RR_Model {
                 'status'         => $status,
                 'agotadas'       => $agotadas,
                 'background'     => $this->input->post('background', true),
-                'sku'            => str_replace(' ', '_', strtolower($this->input->post('nombre',true)).'_'.$this->input->post('precio_regular', true).'-'.$this->eid) ,
+                'sku'            => strtolower($this->input->post('sku',true)), //str_replace(' ', '_', strtolower($this->input->post('nombre',true)).'_'.$this->input->post('precio_regular', true).'-'.$this->eid) ,
                 'min_qty'        => (filter_input(INPUT_POST,'min_qty')) ? $this->input->post('min_qty', true) : 0,
                 'max_qty'        => (filter_input(INPUT_POST,'min_qty')) ? $this->input->post('max_qty', true) : 0,
                 );

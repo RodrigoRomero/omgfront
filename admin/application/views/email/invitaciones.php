@@ -35,19 +35,28 @@ $codeGenerated = getBarCode($user_info->id);
 	<tr>
 		<td  colspan="3">
 			<p style="<?php echo $p ?>">Sr. <?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
-			Su inscripción al evento <?php echo $evento->nombre ?> fue confirmada.<br />
-			<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />
-			<br />
-			No olvide llevar el código de barras, impreso o digital<p>
+			
+			<!-- Invitación con codigo de fecha
+				Lo esperamos <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> de 8:30 a 10:00 para participar de la Semana <?php echo $evento->nombre ?>
+				Fin codigo -->
+				
+				Su inscripción al 9º Encuentro de Reflexión Argentina Visión 2040 ha sido confirmada. 
+
+			Lo esperamos del 12 al 15 de octubre de 8:30 a 10:00 para participar online de la Semana Argentina Visión 2040 <br>	
+					
+			<!--<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />-->
+			<br />		</p>
 		   </td>
 	</tr>
+	<!-- BarCode
 	<tr>
 		<td colspan="3">
 			
 		<?php echo up_asset('barcodes/'.$codeGenerated['numbers'].'.png', array('style'=>'display: block; margin: 0 auto;')) ?>
 		</td>
 	</tr>
-	<tr>
+	Fin BarCode-->
+	<!-- <tr>
 		<td colspan="3">
 		<p style="<?php echo $p ?>"></p>
 		</td>
@@ -77,5 +86,5 @@ $codeGenerated = getBarCode($user_info->id);
 			<p style="font-weight: bold; margin: 0;"><?php echo $evento->lugar ?></p>
 			<p style="margin: 0;"><?php echo $evento->direccion ?></p>
 		</td>
-	</tr>
+	</tr> -->
 </table>

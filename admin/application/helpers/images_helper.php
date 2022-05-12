@@ -59,50 +59,90 @@ function up_file($name, $exists=true){
     return $file;
 }
 
-function upload_manager($title="", $array){
+function upload_manager($title="", $array, $help="", $extra=""){ 
+    $help                = (!empty($help)) ? help_asset($help) : "";
     $pos                 = $array["pos"];
     $resize              = (isset($array["resize"]) && !empty($array["resize"])) ?  explode(",", str_replace(" ","", $array["resize"])) : "";
     $original            = ($resize!="" && count($resize)>0) ? "original/" : "";
     $array["lang"]       = "sp";
     $array["serverPath"] = config_item("base_url");
     $array["sistemPath"] = BASEPATH."../../";
-        $imgArr      = get_filenames('../'.$array['uploadFolder'].$original);
-        $totalImages = count($imgArr);
-        $posArr      = array();
-        if(empty($pos)) {
-            foreach($imgArr as $img) {
-                $tmpArr = explode('.',$img);
-                $tmpArr = explode('_',$tmpArr[0]);
-                if($array['id']==$tmpArr[0]) {
-                    $posArr[] = (int)$tmpArr[1];
-                }
-            }
-            if(!is_int($posArr[0]) && empty($posArr[0])){
-                $posArr = array('0');
-            }
-            if(isset($array['lastPos'])) {
-                $posArr = array($array['lastPos']);
-            }
-        } else {
-            $posArr[] = $pos;
-        }
-    $html = "";
-    foreach($posArr as $pos){
-        $array['pos'] = $pos;
-        $file_name           = $array["id"]."_".$array["pos"].".".$array["filter"];
-        if($array["id"]!=null){
-            $array["file_name"]  = $array["sistemPath"].$array["uploadFolder"].$original;
-        }else{
-            $array["file_name"]  = "";
-        }
-        $array["file_name"]  = (file_exists($array["file_name"].$file_name)) ? $file_name : "" ;
-        $json  = json_encode($array);
-        $html .= "<span class='x-upload_manager-title'>$title</span><div id='upload_manager_$pos'>$json</div>";
-        if(isset($array['pie']) && $array['pie']==true){
-            $data = array('name'=>'pie_imagen_'.$pos.'','id'=>'pie_imagen_'.$pos.'','placeholder'=>'Píe de imágen', 'class'=>'input-xlarge', 'value'=>'pie_imagen_'.$pos.'');
-            $json_data = (isset($array['json'])) ? $array['json'] : '';
-            $html .= '<div>'.frm_input_lang($data,$json_data).'</div>';
-        }
-    }   $html .= "<div class='clear'></div>";
+    
+    $file_name           = $array["id"]."_".$array["pos"].".".$array["filter"];
+    
+    if($array["id"]!=null){
+        $array["file_name"]  = $array["sistemPath"].$array["uploadFolder"].$original;
+    }else{
+        $array["file_name"]  = "";
+    }
+    //echo $array["file_name"].$file_name;
+    $array["file_name"]  = (file_exists($array["file_name"].$file_name)) ? $file_name : "" ;
+    
+
+    $json = json_encode($array);
+    $html = "<div class='x-content $extra'>
+              <span class='x-upload_manager-title'>$title $help</span>
+                <div class='x-upload_manager' id='upload_manager_$pos' data-json='$json' >
+                  
+                   
+                  </div></div>
+
+                   <input type='file' 
+                         class='filepond'
+                         id='FileData'
+                         data-nm='FileData'
+                         data-json='$json'
+                         name='upload_manager_$pos'
+                         multiple>
+                         <div class='clear'></div>";
+    
     return $html;
 }
+
+// function upload_manager($title="", $array){
+//     $pos                 = $array["pos"];
+//     $resize              = (isset($array["resize"]) && !empty($array["resize"])) ?  explode(",", str_replace(" ","", $array["resize"])) : "";
+//     $original            = ($resize!="" && count($resize)>0) ? "original/" : "";
+//     $array["lang"]       = "sp";
+//     $array["serverPath"] = config_item("base_url");
+//     $array["sistemPath"] = BASEPATH."../../";
+//         $imgArr      = get_filenames('../'.$array['uploadFolder'].$original);
+//         $totalImages = count($imgArr);
+//         $posArr      = array();
+//         if(empty($pos)) {
+//             foreach($imgArr as $img) {
+//                 $tmpArr = explode('.',$img);
+//                 $tmpArr = explode('_',$tmpArr[0]);
+//                 if($array['id']==$tmpArr[0]) {
+//                     $posArr[] = (int)$tmpArr[1];
+//                 }
+//             }
+//             if(!is_int($posArr[0]) && empty($posArr[0])){
+//                 $posArr = array('0');
+//             }
+//             if(isset($array['lastPos'])) {
+//                 $posArr = array($array['lastPos']);
+//             }
+//         } else {
+//             $posArr[] = $pos;
+//         }
+//     $html = "";
+//     foreach($posArr as $pos){
+//         $array['pos'] = $pos;
+//         $file_name           = $array["id"]."_".$array["pos"].".".$array["filter"];
+//         if($array["id"]!=null){
+//             $array["file_name"]  = $array["sistemPath"].$array["uploadFolder"].$original;
+//         }else{
+//             $array["file_name"]  = "";
+//         }
+//         $array["file_name"]  = (file_exists($array["file_name"].$file_name)) ? $file_name : "" ;
+//         $json  = json_encode($array);
+//         $html .= "<span class='x-upload_manager-title'>$title</span><div id='upload_manager_$pos'>$json</div>";
+//         if(isset($array['pie']) && $array['pie']==true){
+//             $data = array('name'=>'pie_imagen_'.$pos.'','id'=>'pie_imagen_'.$pos.'','placeholder'=>'Píe de imágen', 'class'=>'input-xlarge', 'value'=>'pie_imagen_'.$pos.'');
+//             $json_data = (isset($array['json'])) ? $array['json'] : '';
+//             $html .= '<div>'.frm_input_lang($data,$json_data).'</div>';
+//         }
+//     }   $html .= "<div class='clear'></div>";
+//     return $html;
+// }

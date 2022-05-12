@@ -391,7 +391,12 @@ class orders_mod extends RR_Model {
 								o.`total_price`,
 								o.`discount_amount`,
 								o.`total_discounted_price`,
-								o.`status`,
+								case
+								when o.`status` = 1 then "Activa"
+								when o.`status` = 2 then "Archivada"
+								when o.`status` = -1 then "Cancelada"
+								else o.`status`
+								end as status,
 								o.`fa`,
 								o.`gateway`,
 								ot.`nombre` ticket_nombre,
@@ -399,10 +404,11 @@ class orders_mod extends RR_Model {
 								ot.`nominadas` nominados,
 								ot.`discount_code`,
 								ot.`discount_name`,
+								ot.`ticket_price`,
 								p.`status` status_pago
 								FROM orders o
 								LEFT JOIN (
-								SELECT  o_t.id, o_t.ticket_id, o_t.order_id, t.nombre, SUM(o_t.nominar) nominar, IFNULL(ac.nominadas,0) nominadas, od.discount_name, od.discount_code
+								SELECT  o_t.id, o_t.ticket_id, o_t.ticket_price, o_t.order_id, t.nombre, SUM(o_t.nominar) nominar, IFNULL(ac.nominadas,0) nominadas, od.discount_name, od.discount_code
 								FROM order_tickets o_t
 								LEFT JOIN (SELECT id, nombre FROM tickets) t ON t.id = o_t.`ticket_id`
 								LEFT JOIN (SELECT COUNT(id) nominadas, order_ticket_id FROM acreditados WHERE acreditados.`status` >= 0 GROUP BY order_ticket_id) ac ON ac.order_ticket_id = o_t.`id`
@@ -442,7 +448,6 @@ class orders_mod extends RR_Model {
 		$columns[] = array("title" => "DNI");
 		$columns[] = array("title" => "Email");
 		$columns[] = array("title" => "Teléfono");
-		$columns[] = array("title" => "Conocio");
 		$columns[] = array("title" => "Precio");
 		$columns[] = array("title" => "Cantidad");
 		$columns[] = array("title" => "Sub Total");
@@ -531,48 +536,48 @@ class orders_mod extends RR_Model {
 			$this->phpexcel->getActiveSheet()->setCellValue("I".$i, $row->telefono);
 			$this->phpexcel->getActiveSheet()->getStyle("I".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("I")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("J".$i, $row->conocio);
+			#$this->phpexcel->getActiveSheet()->setCellValue("J".$i, $row->conocio);
+			#$this->phpexcel->getActiveSheet()->getStyle("J".$i)->getAlignment()->setWrapText(true);
+			#$this->phpexcel->getActiveSheet()->getColumnDimension("J")->setAutoSize(true);
+			$this->phpexcel->getActiveSheet()->setCellValue("J".$i, $row->ticket_price);
 			$this->phpexcel->getActiveSheet()->getStyle("J".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("J")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("K".$i, $row->item_price);
+			$this->phpexcel->getActiveSheet()->setCellValue("K".$i, $row->quantity);
 			$this->phpexcel->getActiveSheet()->getStyle("K".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("K")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("L".$i, $row->quantity);
+			$this->phpexcel->getActiveSheet()->setCellValue("L".$i, $row->total_price);
 			$this->phpexcel->getActiveSheet()->getStyle("L".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("L")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("M".$i, $row->total_price);
+			$this->phpexcel->getActiveSheet()->setCellValue("M".$i, $row->discount_amount);
 			$this->phpexcel->getActiveSheet()->getStyle("M".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("M")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("N".$i, $row->discount_amount);
+			$this->phpexcel->getActiveSheet()->setCellValue("N".$i, $row->total_discounted_price);
 			$this->phpexcel->getActiveSheet()->getStyle("N".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("N")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("O".$i, $row->total_discounted_price);
+			$this->phpexcel->getActiveSheet()->setCellValue("O".$i, $row->ticket_nombre);
 			$this->phpexcel->getActiveSheet()->getStyle("O".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("O")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("P".$i, $row->ticket_nombre);
+			$this->phpexcel->getActiveSheet()->setCellValue("P".$i, $row->gateway);
 			$this->phpexcel->getActiveSheet()->getStyle("P".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("P")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("Q".$i, $row->gateway);
+			$this->phpexcel->getActiveSheet()->setCellValue("Q".$i, $row->discount_code);
 			$this->phpexcel->getActiveSheet()->getStyle("Q".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("Q")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("R".$i, $row->discount_code);
+			$this->phpexcel->getActiveSheet()->setCellValue("R".$i, $row->status_pago);
 			$this->phpexcel->getActiveSheet()->getStyle("R".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("R")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("S".$i, $row->status_pago);
+			$this->phpexcel->getActiveSheet()->setCellValue("S".$i, $row->quantity);
 			$this->phpexcel->getActiveSheet()->getStyle("S".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("S")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("T".$i, $row->quantity);
+			$this->phpexcel->getActiveSheet()->setCellValue("T".$i, $row->nominados);
 			$this->phpexcel->getActiveSheet()->getStyle("T".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("T")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("U".$i, $row->nominados);
+			$this->phpexcel->getActiveSheet()->setCellValue("U".$i, $row->fa);
 			$this->phpexcel->getActiveSheet()->getStyle("U".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("U")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("V".$i, $row->fa);
+			$this->phpexcel->getActiveSheet()->setCellValue("V".$i, $row->status);
 			$this->phpexcel->getActiveSheet()->getStyle("V".$i)->getAlignment()->setWrapText(true);
 			$this->phpexcel->getActiveSheet()->getColumnDimension("V")->setAutoSize(true);
-			$this->phpexcel->getActiveSheet()->setCellValue("W".$i, $row->status);
-			$this->phpexcel->getActiveSheet()->getStyle("W".$i)->getAlignment()->setWrapText(true);
-			$this->phpexcel->getActiveSheet()->getColumnDimension("W")->setAutoSize(true);
 			$i++;
 		}
 	   $this->phpexcel->getActiveSheet()->setTitle('Acreditados Evento');

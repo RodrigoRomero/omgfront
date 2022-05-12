@@ -1,22 +1,25 @@
 ﻿
-<!--<section>
-	<div class="parallax" style="background-image: url('images/parallax/bkg_celebrando.jpg'); padding: 200px 0;" data-stellar-background-ratio="0.3">
-		<div class="heading-block center nobottomborder nobottommargin">
-			<h2></h2>
-		</div>
-	</div>
-</section>
--->
-
 <section>
-				<div class="section yt-bg-player nomargin dark" data-quality="hd1080" data-start="0" data-stop="16" data-video="https://www.youtube.com/watch?v=_v3SOFaTOb4" style="height: 600px;">
+				<div class="section yt-bg-player nomargin dark" data-quality="hd1080" data-start="0" data-stop="17" data-video="https://youtu.be/feodFYWZ4VM" style="height: 600px;">
 					<div class="container vertical-middle center clearfix">
-						<!--<i class="i-plain i-large icon-line-video divcenter" data-animate="fadeInDown"></i>-->
+						<!--<i class="i-plain i-large icon-line-video divcenter" data-animate="fadeInDown"></i>
 						<div class="emphasis-title nomargin" data-animate="fadeInUp">
-							<!--<h2 style="font-size: 56px;">Section with Background Youtube Video</h2>-->
-						</div>
+							<h2 style="font-size: 56px;">Section with Background Youtube Video</h2>
+						</div>-->
 					</div>
 				</div>
+</section>
+
+<section style="background:#38024f">
+        <div class="container clearfix ">
+                <div class="">
+                <div class="center topmargin-sm bottommargin-sm one-page-menu fadeInUp animated" data-caption-animate="fadeInUp" data-caption-delay="200">
+                                                                <a href="javascript:void(0)" data-href="#section-tickets" "="" class="button button-xlarge button-white">Comprar Tickets</a>
+                                                                <a href="https://www.youtube.com/watch?v=feodFYWZ4VM" data-lightbox="iframe" class="button button-xlarge button-inverse hidden-xs">Ver Video</a>
+                                                              <!--  <a href="#" data-href="#covid19" class="button button-xlarge button-inverse">COVID-19</a>       -->
+                                                                </div>
+                </div>
+        </div>
 </section>
 
 <section>
@@ -28,12 +31,13 @@
 						<!--<li><img src="uploads/organizadores/ministerio.png" class="fadeInDown animated" alt="Ministerio de Producción" data-animate="fadeInDown"> </a></li>-->
 						
 						<li><img src="uploads/organizadores/austral.png" class="fadeInDown animated" alt="Universidad Austral"></a></li>
-						<li><img src="uploads/organizadores/bioceres.png" class="fadeInDown animated" alt="Universidad Austral"></a></li>
+						<li><img src="uploads/organizadores/logo_argensun.jpg" class="fadeInDown animated" alt="Argensun"></a></li>
 						<li><img src="uploads/organizadores/adblick.png" class="fadeInDown animated" alt="ADBlick Agro"></a></li>
 						
 						
 						<li><img src="uploads/organizadores/bb.png" class="fadeInDown animated" alt="BisBlick Talento Joven"></a></li>
 					</ul>
+					
 <!-- 					<h3 class="center">	<a href="http://argentinavision2020.com/2017/uploads/galeria/polo_tecnologico.jpg"  data-lightbox="image"  class=" button button-xlarge ">Conozca el Lugar</a></h3>
 
 						<li><img src="uploads/organizadores/adblick.png" class="fadeInDown animated" alt="ADBlick Agro"></a></li>
@@ -134,13 +138,13 @@
 					</div>
 	</div>
 </section>-->
-<?php // echo echo $agenda ?>
-<?php // echo $this->load->view('evento/corte_a',[],true) ?>
+<?php echo $agenda; ?>
 <?php echo $oradores; ?>
 
 <section>	
 					<div class="container clearfix">
-						<h3 class="center">En breve próximos oradores</h3>
+						
+						
 					</div>
 </section>
 <?php echo $tickets; ?>
@@ -188,6 +192,7 @@
 				</section>
 				-->
 
+<?php //echo $this->load->view('evento/corte_a',[],true) ?>
 <?php echo $this->load->view('evento/gallery',[],true) ?>
 
 <?php //echo $agenda; ?>

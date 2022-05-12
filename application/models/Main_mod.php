@@ -19,7 +19,7 @@ class main_mod extends RR_Model {
 						   ->from('schedule a')
 						   ->where( array('a.status'=>1, 'a.evento_id'=>$this->evento->id))
 						   ->join('oradores o','o.id = a.orador_id','left')
-						   ->order_by('a.hora','ASC')->get()->result();
+						   ->order_by('a.o','ASC')->get()->result();
 
 		return $agenda;
 

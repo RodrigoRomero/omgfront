@@ -1,7 +1,7 @@
 <section id="section-oradores" class="page-section topmargin-lg">
 	<div class="container clearfix">
 		<div class="fancy-title title-double-border">
-			<h1><span>O</span>radores</h1>
+			<h1>Oradores</h1>
 		</div>
 	<?php
 
@@ -18,6 +18,5 @@
 		echo '<div class="clear"></div>';
 	}
 	?>
-
 	</div>
 </section>

@@ -40,23 +40,17 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
         <td colspan="3">
             <p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br/>
             Usted ha solicitado el cambio de medio de pago para abonar las entradas al evento <?php echo $evento->nombre ?> a llevarse a cabo el día <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>.<br/>
+            
             Si usted no solicitó el cambio de medio de pago, deje sin efecto este aviso.<br/>
+            
             Presione en el siguiente link para acceder a pagar con Mercado Pago.</p>
              <a href="<?php echo config_item("front_url").'/cart/restore/'.$order_info->salt ?>" style="<?php echo $btn ?>">Realizar Pago</a><br/>
-            <p style="<?php echo $p ?>">Muchas gracias</p>
-
+             
+            <p style="<?php echo $p ?>">Muchas gracias
+	            <b> Ante cualquier duda, puede comunicarse con: <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> </b><br/>
+            </p>
         </td>
-
     </tr>
-
-
-
-
-
-
-
-
-
 </table>
 
 

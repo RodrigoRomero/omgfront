@@ -1,9 +1,9 @@
 ﻿<section id="section-gallery" class="page-section">
 
 
-			<div class="container clearfix" style="padding: 1px 0 0 0;">
+			<div class="container clearfix" style="">
 				<div class="fancy-title title-double-border">
-					<h1><span>G</span>alería</h1>
+					<h1>Galer&iacute;a</h1>
 				</div>
 
 				<div id="page-menu" class="no-sticky">
@@ -146,6 +146,72 @@
 					<article class="portfolio-item pf-graphics pf-video">
 							<div class="portfolio-image">
 								<a href="#">
+									<img src="uploads/gallery/thumbs/thumb_video_11.jpg" alt="Alfonso Amat ARGENTINA VISIÓN 2020/40">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="https://www.youtube.com/watch?v=LUE9yVtxKlw" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+								</div>
+							</div>
+					</article>
+					
+					
+					
+					<article class="portfolio-item pf-graphics pf-video">
+							<div class="portfolio-image">
+								<a href="#">
+									<img src="uploads/gallery/thumbs/thumb_video_10.jpg" alt="Tomás Peña - Managing Director The Yeld Lab y Co-fundador de S4">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="https://www.youtube.com/watch?v=zKZc6f9x0o0" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+								</div>
+							</div>
+					</article>
+					
+					
+					
+					
+					<article class="portfolio-item pf-graphics pf-video">
+							<div class="portfolio-image">
+								<a href="#">
+									<img src="uploads/gallery/thumbs/thumb_video_9.jpg" alt="Alec Oxenford - Fundador y CEO LetGo">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="https://www.youtube.com/watch?v=YH0RQ75t_S8" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+								</div>
+							</div>
+					</article>
+					
+					
+					
+					
+					<article class="portfolio-item pf-graphics pf-video">
+							<div class="portfolio-image">
+								<a href="#">
+									<img src="uploads/gallery/thumbs/thumb_video_8.jpg" alt="Javier Goñi - CEO Ledesma">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="https://www.youtube.com/watch?v=yyzzpQklXTA" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+								</div>
+							</div>
+					</article>
+					
+					
+					
+					
+					<article class="portfolio-item pf-graphics pf-video">
+							<div class="portfolio-image">
+								<a href="#">
+									<img src="uploads/gallery/thumbs/thumb_video_7.jpg" alt="Daniel Pellegrina - Presidente de la Sociedad Rural Argentina">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="https://www.youtube.com/watch?v=1i-APPtoZAM" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+								</div>
+							</div>
+					</article>
+					
+					<article class="portfolio-item pf-graphics pf-video">
+							<div class="portfolio-image">
+								<a href="#">
 									<img src="uploads/gallery/thumbs/thumb_video_1.jpg" alt="Marcos Peña en Argentina Visión 2020/40">
 								</a>
 								<div class="portfolio-overlay">
@@ -154,6 +220,39 @@
 							</div>
 					</article>
 					
+					
+					<article class="portfolio-item pf-media pf-fotos">
+							<div class="portfolio-image">
+								<a href="portfolio-single.html">
+									<img src="uploads/gallery/thumbs/t22.jpg" alt="Argentina Visión 2020/40">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="uploads/gallery/original/25.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+								</div>
+							</div>
+					</article>
+					
+					<article class="portfolio-item pf-media pf-fotos">
+							<div class="portfolio-image">
+								<a href="portfolio-single.html">
+									<img src="uploads/gallery/thumbs/t21.jpg" alt="Argentina Visión 2020/40">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="uploads/gallery/original/24.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+								</div>
+							</div>
+					</article>
+					
+					<article class="portfolio-item pf-media pf-fotos">
+							<div class="portfolio-image">
+								<a href="portfolio-single.html">
+									<img src="uploads/gallery/thumbs/t20.jpg" alt="Argentina Visión 2020/40">
+								</a>
+								<div class="portfolio-overlay">
+									<a href="uploads/gallery/original/23.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+								</div>
+							</div>
+					</article>
 					
 					
 					<article class="portfolio-item pf-media pf-fotos">

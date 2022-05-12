@@ -21,7 +21,7 @@ abstract class RR_Controller extends CI_Controller {
 	protected $module_title;
 	protected $layout     = 'layout/one_page';
 
-	protected $css_layout = array('bootstrap', 'style', 'swiper', 'dark', 'font-icons', 'animate', 'magnific-popup', 'responsive', 'pricing-table', 'ion.rangeslider','components/radio-checkbox');
+	protected $css_layout = array('bootstrap', 'style', 'swiper', 'dark', 'font-icons', 'animate', 'magnific-popup', 'pricing-table','responsive', 'ion.rangeslider','components/radio-checkbox');
 	protected $css_view   = array();
 
 	protected $js_layout  = array('jquery','modernizr','plugins', 'functions', 'rangeslider.min', 'keeper', 'main');

@@ -35,11 +35,23 @@ $social = json_decode($row->json_socials);
     <div class="box span5">
         <div class="row-fluid">
             <div class="box span12">
-                <?php $this->load->view('layout/panels/box_header', array('title'=>'Social Links', 'icon'=>'icon-thumbs-up', 'subaction'=>false)) ?>
+                <?php $this->load->view('layout/panels/box_header', array('title'=>'Logo Sponsor', 'icon'=>'icon-thumbs-up', 'subaction'=>false)) ?>
                 <div class="box-content">
                     <div class="form_container">
                         <?php
-                        echo control_group('Logo', upload_manager("",array("id"=>$row->id, "uploadFolder"=>"uploads/sponsors/", "filter"=>'jpg', "ratio"=>'360x200')),$attr = array('id'=>'uploadGroupNo', 'help-block'=>'(Imágen JPG - 360x200)'));
+                        echo control_group('', 
+                            upload_manager("Logo (Imágen JPG - 360x200)",
+                                array(
+                                    "id"=>$row->id, 
+                                    "pos" => "0",
+                                    "fileType"=>'image/jpeg',
+                                    "uploadFolder"=>"uploads/sponsors/", 
+                                    "filter"=>'jpg', 
+                                    "ratio"=>'360x200',
+                                    "proporcion" =>'18:10'
+                                    ))
+                            //,$attr = array('id'=>'uploadGroupNo', 'help-block'=>'')
+                        );
                         ?>
                     </div>
                 </div>

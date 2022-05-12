@@ -108,4 +108,13 @@ class Account extends RR_Controller {
 		$data = $this->Account->sendInvite();
 	 	echo json_encode($data);
 	}
+
+	public function bc(){
+		$this->Account->bc();
+	}
+
+	public function forcenomina(){
+	//	$this->Account->findNomina($this->evento->id);	
+		die;
+	}
 }

@@ -41,11 +41,11 @@ class cart_mod extends RR_Model {
 	    $this->load->model('checkout_mod','Checkout');
 
 		$this->load->library('cart');
-
-		/*echo '<pre>';
+	/*
+		echo '<pre>';
 		print_r($this->cart->contents());
 		echo '</pre>';
-*/
+		*/
 	}
 
 
@@ -56,7 +56,7 @@ class cart_mod extends RR_Model {
 		$name  = ($name) ? $name : filter_input(INPUT_POST,'ticket_name');
 		$price = ($price) ? $price : filter_input(INPUT_POST,'ticket_ammount');
 
-
+		
 
 		try{
 			$qty   =  ($qty) ? $qty : filter_input(INPUT_POST,'quantity');
@@ -90,6 +90,7 @@ class cart_mod extends RR_Model {
 				  $options['nominar'] = $qty;
 				  $options['packs'] = 'N/A';
 			}
+			
 
 			$options['extras']    = (!empty($ticket->descripcion)) ? $ticket->descripcion : '';
 			$options['ticket_id'] = (!empty($ticket->id)) ? $ticket->id : '';
@@ -392,7 +393,7 @@ class cart_mod extends RR_Model {
 	        				'id' => $order_id,
 	        				'barcode' =>$codeGenerated['barcode']  ];
 	        		$data = $this->Checkout->getPreferences($mp);
-
+			
 	        		break;
 
 	        	case 'pago_mis_cuentas':

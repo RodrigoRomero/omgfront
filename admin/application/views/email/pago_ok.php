@@ -42,20 +42,29 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 
             <p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 
-           Este email confirma que el pago realizado para el evento <?php echo $evento->nombre ?> a llevarse a cabo el día <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?>. fue aprobado.<br/>
+           ¡Su pago ha sido aprobado!<br>
+           
+           
+           <!--
+	           Lo esperamos <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> de 8:30 a 10:00 para participar online de la Semana  <?php echo $evento->nombre ?>
+	           -->
+	           
+	           
+	           Lo esperamos del 12 al 15 de octubre de 8:30 a 10:00 para participar online de la Semana Argentina Visión 2040 <br>
+	           
+	           
+           
+           Recuerde que en caso de que haya comprado más de un ticket para el evento, deberá ingresar los datos de los asistentes para confirmar su inscripción: <br>
+           1. Haga click <a href="http://argentinavision2020.com/evento/account/summary"> AQUI </a> y complete los datos de la cuenta con su mail y la contraseña que utilizó para registrarse. <br/>
+           2. Haga click en "NOMINAR", complete los datos de los asistentes y, por último, en "INVITAR" para que cada uno de los invitados reciba el link y la contraseña para el encuentro. <br/>
+           
+           Si adquirió un solo ticket, estos pasos no son necesarios<br/>
+           
+           <b> Ante cualquier duda, puede comunicarse con: <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> </b><br/>
+           
+           
 
-
-    </p>
- <p style="<?php echo $p ?>">
-            En caso de que haya comprado más de 1 ticket para el evento, para confirmar la inscripción de las entradas, deberá  ingresar los datos de cada uno de los asistentes siguiendo estos pasos: <br>
-	            1. Haga click <a href="http://argentinavision2020.com/2019/account/summary"> AQUI </a> y complete los datos de su cuenta con su email y la password que utilizó para registrarse <br/>
-	            2. Presione el botón que dice <b>"NOMINAR"</b> y por último <b>"INVITAR"</b> <br/>
-	            
-	            Si usted adquirió sólo 1 ticket no deberá hacer nada más.<br/>
-          Muchas gracias.
     </p>
         </td>
-
     </tr>
-
 </table>

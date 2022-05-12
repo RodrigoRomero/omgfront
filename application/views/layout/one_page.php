@@ -7,6 +7,7 @@ $hora_inicio  = substr($fecha_inicio[1],0,-3);
 $hora_cierre  = substr($fecha_cierre[1],0,-3);
 $fecha_inicio_array = explode("-", $fecha_inicio[0]);
 $fecha_cierre_array = explode("-", $fecha_cierre[0]);
+
 ?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
@@ -47,7 +48,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 							<div class="container clearfix">
 							<?php //ep($this->evento) ?>
 								<div class="slider-caption slider-caption-center">
-									<h3> 7mo ENCUENTRO DE REFLEXIÓN</h3>
+									<h3> 9º ENCUENTRO DE REFLEXIÓN</h3>
 									<h2 data-caption-animate="fadeInUp" style="margin-bottom: 0"><?php echo $this->evento->nombre ?></h2>
 
 
@@ -60,31 +61,34 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 									<div class="col-md-3 col-md-offset-3">
 
-									<div class="venue_place">
-                                <span class="icon-location"></span>
+									<div class="venue_place" style="font-weight:bold">
+                                <span class="icon-wifi-full"></span>
                                 <p><?php echo $place[0] ?><br /><?php echo $this->evento->lugar ?></p>
                             </div>
 									</div>
 									<div class="col-md-3">
-									 <div class="venue_date">
+									 <div class="venue_date" style="font-weight:bold">
                                 <span class="icon-calendar"></span>
                                 <p>
+
                                 <?php if($fecha_inicio[0]==$fecha_cierre[0]) { ?>
                                     <span class="day"><?php echo $fecha_inicio_array[2] ?></span>
-                                    <span class="month"><?php echo strtoupper(getMes($fecha_inicio_array[1])) ?></span>
+                                    <span class="month"><?php echo strtoupper(getMes($fecha_inicio_array[1]),true) ?></span>
                                 <?php } else { ?>
-                                    <?php echo $fecha_inicio[0] ?><br />
-                                    <?php echo $fecha_cierre[0] ?>
+					Semana del <?php echo $fecha_inicio_array[2] ?> al <?php echo $fecha_cierre_array[2] ?><br/>
+					<span class="month"><?php echo getMes($fecha_inicio_array[1],true) ?></span>
                                 <?php } ?>
-                                <br /><span><?php echo $hora_inicio.' a '.$hora_cierre.' hs.' ?></span>
-                                </p>
+                               
+				 <br /><span><?php echo $hora_inicio.' a '.$hora_cierre.' hs.' ?></span>
+                               
+				 </p>
                             </div>
                                 </div>
                                 </div>
                                <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
-								<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white">Comprar Tickets</a>
-								<a href="https://www.youtube.com/watch?v=_v3SOFaTOb4"  data-lightbox="iframe"  class="button button-xlarge button-inverse">Ver Video</a>
-
+								<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white hidden-xs">Comprar Tickets</a>
+								<a href="hhttps://www.youtube.com/watch?v=feodFYWZ4VM"  data-lightbox="iframe"  class="button button-xlarge button-inverse hidden-xs">Ver Video</a>
+							<!--	<a href="#" data-href="#covid19"  class="hidden-xs button button-xlarge button-inverse">COVID-19</a>	-->
 								</div>
 								<!--
 									<div  class="one-page-menu">
@@ -115,14 +119,15 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 					<!-- Logo
 					============================================= -->
-					<div id="logo">
+					<!-- <div id="logo">
 						<a href="<?php echo base_url('/') ?>" class="standard-logo" data-dark-logo="images/logo-dark.png">
 							<?php echo image_asset('logo.png', '','') ?>
 						</a>
 						<a href="<?php echo base_url('/') ?>" class="retina-logo" data-dark-logo="images/logo-dark@2x.png">
 							<?php echo image_asset('logo.png', '','') ?>
 						</a>
-					</div><!-- #logo end -->
+					</div> -->
+					<!-- #logo end -->
 
 					<!-- Primary Navigation
 					============================================= -->
@@ -158,7 +163,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 	<!-- Go To Top
 	============================================= -->
 	<div id="gotoTop" class="icon-angle-up"></div>
-	<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDMxJ92oBkSnVNHFX3R8XhtYQPEgk1_IiI"></script>
+<!--	<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDMxJ92oBkSnVNHFX3R8XhtYQPEgk1_IiI"></script> --!>
 	<script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
 	<?php
 		foreach ($js_layout as $js) {
@@ -200,7 +205,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 
 
-
+/*
 	<script type="text/javascript">
 		var e = $("#google-map");
 
@@ -241,6 +246,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 		});
 
 	</script>
+*/
 <script type="text/javascript">
 
 		jQuery(window).load(function(){

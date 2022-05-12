@@ -54,6 +54,10 @@ if(!empty($row->descripcion)){
                     $data = array('name'=>'background','id'=>'background','placeholder'=>'Hexadecimal Background', 'class'=>'required input-xlarge', 'value'=>$row->background);
                     echo control_group($data['placeholder'], form_input($data));
                     echo '</div>';
+			 echo '<div class="span6">';
+                    $data = array('name'=>'sku','id'=>'sku','placeholder'=>'SKU', 'class'=>'required input-xlarge', 'value'=>$row->sku);
+                    echo control_group($data['placeholder'], form_input($data));
+                    echo '</div>';
                 echo '</div>';
                  echo '<div class="row-fluid">';
                     echo '<div class="span6">';

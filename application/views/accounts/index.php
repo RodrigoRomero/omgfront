@@ -64,7 +64,7 @@
 								<label for="register-form-email">Email:</label>
 								<input type="text" id="register-email" name="email" value="" class="form-control required email" />
 							</div>
-
+							
 							<div class="clear"></div>
 
 							<div class="col_half">
@@ -82,12 +82,17 @@
 								<label for="register-form-dni">DNI:</label>
 								<input type="text" id="register-dni" name="dni" value="" class="form-control required number" />
 							</div>
-
+							<div class="col_half col_last">
+                                                                <label for="register-form-phone">Teléfono:</label>
+                                                                <input type="text" id="register-telefono" name="telefono" value="" class="form-control required" />
+                                                        </div>
+<!--
 							<div class="col_half col_last">
 								<label for="register-form-fecha_nacimiento">Fecha Nacimiento:</label>
 								<input type="text" id="register-fecha_nacimiento" name="fecha_nacimiento" value="" class="form-control tleft past-enabled required"  placeholder="DD-MM-YYYY"/>
 
 							</div>
+-->
 							<div class="clear"></div>
 
 							<div class="col_half">

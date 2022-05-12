@@ -14,9 +14,10 @@ class Checkout_mod extends RR_Model {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->config('mp', TRUE);
+	$this->load->config('mp', TRUE);
         $mp_config = $this->config->item('mp');
-
+	#print_r($mp_config);
+	#die;
         $this->load->library('mp', $mp_config);
         #$this->mp->sandbox_mode(TRUE);
         $this->load->model('email_mod','Email');
@@ -25,7 +26,10 @@ class Checkout_mod extends RR_Model {
 
 
 
-
+	public function gp(){
+		$a = $this->mp->get_payment_info(5781341487);
+		ep($a);
+	}
 
     public function getPreferences($values){
 
@@ -51,8 +55,9 @@ class Checkout_mod extends RR_Model {
                            "external_reference" => $values['id'].'-'.$values['barcode']
                            );
 
-        $preferenceResult = $this->mp->create_preference($preference);
-        $success      = true;
+        	#ep($preference);
+	$preferenceResult = $this->mp->create_preference($preference);
+	$success      = true;
         $responseType = 'function';
         $function     = 'paymentLink';
         #$messages     = $preferenceResult['response']['sandbox_init_point'];
@@ -89,37 +94,40 @@ class Checkout_mod extends RR_Model {
 
 		$order_info    = $this->db->get_where('orders',array('id'=>$id))->row();
 		$customer_info = $this->db->get_where('customers',array('id'=>$order_info->customer_id))->row();
+		
+		#var_dump($this->params);
 
 		$success = false;
-		if($this->params['collection_id'] != 'null'){
-			$payment_info = $this->mp->get_payment_info($this->params['collection_id']);
+		if($this->params['collection_id'] != 'null' && $this->params["collection_id"] != "undefined" ){
+			$payment_info = $this->mp->get_payment($this->params['collection_id']);
 
+	      #ep($payment_info);
+		#die;
 
-
-			$update  = array('collection_id'       => $payment_info['response']['collection']['id'],
-							 'collection_status'   => $payment_info['response']['collection']['status'],
+			$update  = array('collection_id'       => $payment_info['response']['id'],
+							 'collection_status'   => $payment_info['response']['status'],
 							'preference_id'       => $this->params['preference_id'],
-							'currency_id'         => $payment_info['response']['collection']['currency_id'],
-							'transaction_amount'  => $payment_info['response']['collection']['transaction_amount'],
-							'payment_type'        => $payment_info['response']['collection']['payment_type'],
+							'currency_id'         => $payment_info['response']['currency_id'],
+							'transaction_amount'  => $payment_info['response']['transaction_amount'],
+							'payment_type'        => $payment_info['response']['payment_type_id'],
 							#'order_id'            => $payment_info['response']['collection']['order_id'],
-							'status'              => $payment_info['response']['collection']['status_detail']
+							'status'              => $payment_info['response']['status_detail']
 							);
 
 			$this->db->where('order_id',$order_info->id);
 			$query = $this->db->update('pagos',$update);
 
 			if(!$query){
-
+					echo "123";
 			} else {
-				switch($payment_info['response']['collection']['status']){
+				switch($payment_info['response']['status']){
 					case 'approved':
 					case 'accredited':
 						$template =  'pago_ok';
 						$subject    = "Acreditacion ".$this->evento_name;
 						#ACTUALIZO PAGO STATUS
 						$this->db->where('order_id',$order_info->id);
-						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['collection']['status']));
+						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['status']));
 
 						$this->db->where('id',$order_info->id);
 						$this->db->update('orders', array('status'=>1));
@@ -173,7 +181,7 @@ class Checkout_mod extends RR_Model {
 						case 'pending_contingency':
 						#ACTUALIZO PAGO STATUS
 						$this->db->where('order_id',$order_info->id);
-						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['collection']['status']));
+						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['status']));
 
 						$this->db->where('id',$order_info->id);
 						$this->db->update('orders', array('status'=>2));
@@ -201,10 +209,10 @@ class Checkout_mod extends RR_Model {
 						#ACTUALIZO PAGO STATUS
 						#ACTUALIZO PAGO STATUS
 						$this->db->where('order_id',$order_info->id);
-						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['collection']['status']));
+						$this->db->update('pagos', array('pago_status'=>$payment_info['response']['status']));
 
 						$this->db->where('id',$order_info->id);
-						$this->db->update('orders', array('status'=>3));
+						$this->db->update('orders', array('status'=>-1));
 
 
 

@@ -86,7 +86,7 @@ echo form_open($action,$data);
 						echo control_group('Monto', form_input($data),$attr = array());
 						*/
 
-
+					
 						$data = array('transferencia_bancaria'        => 'Transferencia Bancaria',
 									  'mercado_pago'         => 'Mercado Pago',
 									  'foc'      => 'Free of Charge'
@@ -104,6 +104,7 @@ echo form_open($action,$data);
 									  'refunded'        => 'Devuelto al usuario',
 									  'cancelled'       => 'Cancelado',
 									  'in_mediation'    => 'En Mediación',
+									  'cc_rejected_other_reason'        => 'Rechazado',
 									  );
 						echo control_group('Pago Status', form_dropdown('payment_status',$data, $pago_info->status),$attr = array());
 

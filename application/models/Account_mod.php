@@ -36,7 +36,15 @@ class account_mod extends RR_Model {
 		parent::__construct();
 		$this->load->model('email_mod', 'Email');
 	}
-
+	
+	public function bc(){
+		$codeGenerated = getBarCode(1);
+		echo print_r($codeGenerated); echo '---';
+		$result = $this->db->get_where('acreditados',array('evento_id' => $this->evento->id))->result();
+		foreach($result as $a){
+			echo $a->barcode;
+		}
+	}
 	public function create(){
 		$success = 'false';
 		$config = array();
@@ -47,7 +55,8 @@ class account_mod extends RR_Model {
 		$config[5] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
 		$config[6] = array('field'=>'password', 'label'=>'Password', 'rules'=>'trim|required');
 		$config[7] = array('field'=>'dni', 'label'=>'DNI', 'rules'=>'trim|required');
-		$config[8] = array('field'=>'fecha_nacimiento', 'label'=>'Fecha de Nacimiento', 'rules'=>'trim|required');
+		$config[8] = array('field'=>'telefono', 'label'=>'Telefono', 'rules'=>'trim|required');
+		//$config[8] = array('field'=>'fecha_nacimiento', 'label'=>'Fecha de Nacimiento', 'rules'=>'trim|required');
 
 		$this->form_validation->set_rules($config);
 
@@ -70,6 +79,7 @@ class account_mod extends RR_Model {
 						 'email' => filter_input(INPUT_POST,'email'),
 						 'password' => md5(filter_input(INPUT_POST,'password')),
    						 'dni' => filter_input(INPUT_POST,'dni'),
+    						 'telefono' => filter_input(INPUT_POST,'telefono'),
 						 'newsletter' => 1
 						];
 
@@ -129,7 +139,7 @@ class account_mod extends RR_Model {
 		$config[4] = array('field'=>'nombre', 'label'=>'Nombre', 'rules'=>'trim|required');
 		$config[5] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
 		$config[6] = array('field'=>'dni', 'label'=>'DNI', 'rules'=>'trim|required');
-		$config[7] = array('field'=>'fecha_nacimiento', 'label'=>'Fecha de Nacimiento', 'rules'=>'trim|required');
+		//$config[7] = array('field'=>'fecha_nacimiento', 'label'=>'Fecha de Nacimiento', 'rules'=>'trim|required');
 
 		$this->form_validation->set_rules($config);
 
@@ -356,6 +366,7 @@ class account_mod extends RR_Model {
 
 	        $orders = $this->db->query($sql, [get_session('id', false), $event->id])->result();
 	   		$grouped_orders[$event->id]['name'] = $event->nombre;
+			$grouped_orders[$event->id]['status'] = $event->status;
 			$grouped_orders[$event->id]['orders'] = $orders;
      	}
 
@@ -464,7 +475,32 @@ class account_mod extends RR_Model {
 
 		return $data;
 	}
+	public function findNomina($evento_id){
+		$array_where = array('o.evento_id' => $evento_id, 'o.gateway' => 'foc', 'o.status' => 1);	
+		
+		$orderCustomers =  $this->db->select('o.id orderId,c.*')
+                                                    ->from('orders o')
+                                                    ->where($array_where)
+                                                    ->join('customers c', 'o.customer_id = c.id','INNER')
+                                                    ->get()
+                                                    ->result();	
+		 foreach($orderCustomers as $oc){
+			$sql1 = "SELECT ot.*, t.tipo FROM order_tickets ot LEFT JOIN tickets t ON ot.`ticket_id` = t.`id` WHERE ot.order_id = ? AND t.tipo = ?";
+                        $find_tickets = $this->db->query($sql1,[$oc->orderId, 1]);
+                        $total_rows = $find_tickets->num_rows();
+			
+                        if(count($total_rows == 1)){
+                        	$tid = $find_tickets->row();
+                                $is_nominated = $this->db->get_where('acreditados', ['order_ticket_id'=>$tid->id])->num_rows();
+				ep($is_nominated);
+                                if($tid->quantity == 1 && $is_nominated == 0){
+						$this->nominarOnTheFly($oc->nombre, $oc->apellido,$oc->email,$oc->dni,$oc->orderId,$evento_id,$tid->id,$oc->id,'invitaciones');
 
+                                }
+                         }
+		}	
+		die;
+	}
 	public function nominarOnTheFly($nombre, $apellido, $email,$dni,$order_id,$evento_id,$order_ticket_id,$customer_id, $template_email){
 
 		$invitado = ['nombre'   	   => $nombre,
@@ -511,7 +547,7 @@ class account_mod extends RR_Model {
 
 			$acreditado = $this->db->get_where('acreditados', ['id'=>$id])->row();
 
-
+			
 			if(!($acreditado)){
 				throw new Exception("Por favor intentelo mas tarde", 1);
 			}

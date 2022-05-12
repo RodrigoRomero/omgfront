@@ -1,0 +1,18 @@
+{
+
+"lineup": [
+		{
+		"dia": 1, 
+		"titulo": "aaaa",
+		"brief": "balabla",
+		"oradores": [2,4]
+		},
+		{
+		"dia": 2, 
+		"brief": "balabla 2",
+		"titulo": "bbbb",
+		"oradores": [1,3]
+		}
+	]
+
+}

@@ -164,7 +164,8 @@ class agenda_mod extends RR_Model {
                             'brief'         => $this->input->post('brief', true),
                             'hora'          => $this->input->post('hora',true),
                             'orador_id'     => $this->input->post('orador_id',true),
-                            'status'        => $status,
+                            'o' => $this->input->post('o',true),
+			    'status'        => $status,
                            );
             switch($this->params['iu']) {
                 case 'new':

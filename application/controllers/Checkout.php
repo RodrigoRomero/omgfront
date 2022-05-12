@@ -19,4 +19,8 @@ class Checkout extends RR_Controller {
         echo json_encode($return);
 	}
 
+	public function gp(){
+		$this->Checkout->gp();
+	}
+
 }

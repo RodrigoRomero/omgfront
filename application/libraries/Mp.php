@@ -8,59 +8,43 @@
  *
  */
 
+#$GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
+
 class MP {
 
-
-
-    const version = "0.5.2";
+    const version = "0.5.3";
 
     private $client_id;
     private $client_secret;
     private $ll_access_token;
     private $access_data;
-    private $sandbox = FALSE;
+    private $sandbox = false;
 
     function __construct($config) {
-
-        /*
-
+       
+	/*
         $i = func_num_args();
 
-        ep($i);
-
         if ($i > 2 || $i < 1) {
-
-            throw new Exception("Invalid arguments. Use CLIENT_ID and CLIENT SECRET, or ACCESS_TOKEN");
-
+            throw new MercadoPagoException("Invalid arguments. Use CLIENT_ID and CLIENT SECRET, or ACCESS_TOKEN");
         }
-
-
 
         if ($i == 1) {
-
             $this->ll_access_token = func_get_arg(0);
-
         }
-
-
-
+	
         if ($i == 2) {
-
-            $this->client_id = $config['mp']['client_id']; #func_get_arg(0);
-
-            $this->client_secret =  $config['mp']['client_secret']; #func_get_arg(1);
-
+            $this->client_id =  $config['mp']['client_id']; #func_get_arg(0);
+            $this->client_secret = $config['mp']['client_secret']; #func_get_arg(1);
         }*/
-
-        $this->client_id = $config['mp']['client_id']; #func_get_arg(0);
-        $this->client_secret =  $config['mp']['client_secret']; #func_get_arg(1);
+	
+	$this->client_id =  $config['mp']['client_id']; #func_get_arg(0);
+        $this->client_secret = $config['mp']['client_secret']; #func_get_arg(1);
     }
 
-
-
-    public function sandbox_mode($enable = NULL) {
+    public function sandbox_mode($enable = null) {
         if (!is_null($enable)) {
-            $this->sandbox = $enable === TRUE;
+            $this->sandbox = $enable === true;
         }
 
         return $this->sandbox;
@@ -79,7 +63,7 @@ class MP {
             'client_secret' => $this->client_secret,
             'grant_type' => 'client_credentials'
         );
-
+	
         $access_data = MPRestClient::post(array(
             "uri" => "/oauth/token",
             "data" => $app_client_values,
@@ -87,13 +71,14 @@ class MP {
                 "content-type" => "application/x-www-form-urlencoded"
             )
         ));
+	
 
         if ($access_data["status"] != 200) {
             throw new MercadoPagoException ($access_data['response']['message'], $access_data['status']);
         }
 
-        $this->access_data = $access_data['response'];
-
+	$this->access_data = $access_data['response'];
+	
         return $this->access_data['access_token'];
     }
 
@@ -106,18 +91,17 @@ class MP {
         $uri_prefix = $this->sandbox ? "/sandbox" : "";
 
         $request = array(
-            "uri" => $uri_prefix."/collections/notifications/{$id}",
+            "uri" => "/v1/payments/{$id}",
             "params" => array(
                 "access_token" => $this->get_access_token()
             )
         );
-
-
+	
         $payment_info = MPRestClient::get($request);
-        return $payment_info;
+        #ep($payment_info);
+	return $payment_info;
     }
     public function get_payment_info($id) {
-
         return $this->get_payment($id);
     }
 
@@ -145,16 +129,13 @@ class MP {
      */
     public function refund_payment($id) {
         $request = array(
-            "uri" => "/collections/{$id}",
+            "uri" => "/v1/payments/{$id}/refunds",
             "params" => array(
                 "access_token" => $this->get_access_token()
-            ),
-            "data" => array(
-                "status" => "refunded"
             )
         );
 
-        $response = MPRestClient::put($request);
+        $response = MPRestClient::post($request);
         return $response;
     }
 
@@ -165,7 +146,7 @@ class MP {
      */
     public function cancel_payment($id) {
         $request = array(
-            "uri" => "/collections/{$id}",
+            "uri" => "/v1/payments/{$id}",
             "params" => array(
                 "access_token" => $this->get_access_token()
             ),
@@ -212,7 +193,7 @@ class MP {
         $uri_prefix = $this->sandbox ? "/sandbox" : "";
 
         $request = array(
-            "uri" => $uri_prefix."/collections/search",
+            "uri" => "/v1/payments/search",
             "params" => array_merge ($filters, array(
                 "access_token" => $this->get_access_token()
             ))
@@ -228,7 +209,8 @@ class MP {
      * @return array(json)
      */
     public function create_preference($preference) {
-        $request = array(
+       
+	 $request = array(
             "uri" => "/checkout/preferences",
             "params" => array(
                 "access_token" => $this->get_access_token()
@@ -478,13 +460,15 @@ class MPRestClient {
             array_push($headers, "content-type: application/json");
         }
 
+        array_push($headers, "x-product-id: BC32A7VTRPP001U8NHK0");
+
         // Build $connect
         $connect = curl_init();
 
-        curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago PHP SDK v" . MP::version);
+        curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago PHP SDK /v" . MP::version);
         curl_setopt($connect, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connect, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($connect, CURLOPT_CAINFO, APPPATH.'libraries/mp/cacert.pem');
+        curl_setopt($connect, CURLOPT_CAINFO, APPPATH."libraries/mp/cacert.pem");
         curl_setopt($connect, CURLOPT_CUSTOMREQUEST, $request["method"]);
         curl_setopt($connect, CURLOPT_HTTPHEADER, $headers);
 
@@ -517,7 +501,6 @@ class MPRestClient {
             curl_setopt($connect, CURLOPT_POSTFIELDS, $request["data"]);
         }
 
-
         return $connect;
     }
 
@@ -528,8 +511,8 @@ class MPRestClient {
 
         $api_result = curl_exec($connect);
         $api_http_code = curl_getinfo($connect, CURLINFO_HTTP_CODE);
-
-        if ($api_result === FALSE) {
+	#print_r($api_result);
+        if ($api_result === false) {
             throw new MercadoPagoException (curl_error ($connect));
         }
 
@@ -538,14 +521,18 @@ class MPRestClient {
             "response" => json_decode($api_result, true)
         );
 
+
         if ($response['status'] >= 400) {
             $message = $response['response']['message'];
             if (isset ($response['response']['cause'])) {
                 if (isset ($response['response']['cause']['code']) && isset ($response['response']['cause']['description'])) {
                     $message .= " - ".$response['response']['cause']['code'].': '.$response['response']['cause']['description'];
                 } else if (is_array ($response['response']['cause'])) {
-                    foreach ($response['response']['cause'] as $cause) {
-                        $message .= " - ".$cause['code'].': '.$cause['description'];
+                    $causes = $response['response']['cause'];
+                    foreach ($causes as $cause) {
+                        if (isset ($cause['code']) && isset ($cause['description'])) {
+                            $message .= " - ".$cause['code'].': '.$cause['description'];
+                        }
                     }
                 }
             }
@@ -578,7 +565,6 @@ class MPRestClient {
 
     public static function post($request) {
         $request["method"] = "POST";
-
         return self::exec($request);
     }
 

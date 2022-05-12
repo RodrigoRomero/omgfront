@@ -884,22 +884,108 @@ function defaultPass(el){
 }
 
 function init_upload_manager(){
-	$("[id^='upload_manager']").each(function(n,el){
-		var id   = $(el).attr('id')
-		var json = $(el).html()
-		var flashvars = frm_jsonDecode(json);
-		var params = {
-				menu: "false",
-				scale: "noScale",
-				allowFullscreen: "true",
-				allowScriptAccess: "always",
-				bgcolor: "#ffffff"
-			};
-		 var attributes = {
-				id:"uploadManager"
-			};
-		 swfobject.embedSWF(_base_url+"/assets/widgets/uploadManager/uploadManager.swf", id, "400", "25", "9.0.0", "expressInstall.swf", flashvars, params, attributes);
-		})
+
+	FilePond.registerPlugin(
+		FilePondPluginImageValidateSize,
+		FilePondPluginFileValidateType,
+		FilePondPluginFileValidateSize,
+		FilePondPluginImagePreview  
+	);
+
+	$("[id^='upload_manager']").each(function(n,el){ 
+
+		var elId   = $(el).attr('id');
+		var elJson   = $(el).attr('data-json');
+		var fpondConfig = frm_jsonDecode(elJson);
+		console.log(fpondConfig)
+		const fpEle = document.querySelector('input[name="'+elId+'"]');
+		const urls = {
+			'upload': 'assets/widgets/uploadManager/UploadManager.php?a=upload&pos='+fpondConfig.pos+'&folder='+fpondConfig.uploadFolder+'&resize='+fpondConfig.resize,
+			'delete': (fpondConfig.id != null && fpondConfig.file_name != "") ? 'assets/widgets/uploadManager/UploadManager.php?a=remove_batch&pos='+fpondConfig.pos+'&folder='+fpondConfig.uploadFolder+'&filter='+fpondConfig.filter+'&id='+fpondConfig.id : 'assets/widgets/uploadManager/UploadManager.php?a=remove_batch',
+		}
+
+		const fpInst = FilePond.create(fpEle,{
+			instantUpload:true,
+			allowFileTypeValidation:true,
+			maxFiles:1,
+			acceptedFileTypes:[fpondConfig.fileType],
+			server:{
+				url: fpondConfig.serverPath,
+				process: {
+					url: urls.upload
+				},
+				revert: {
+					url: urls.delete,
+					method: 'POST'
+				},
+			restore: null,
+			load: null,
+			fetch: null,
+		}
+		});
+
+
+		if(fpondConfig.ratio != null){
+			minSize = fpondConfig.ratio.split("x");
+			
+			fpInst.setOptions({
+				allowImageValidateSize:true, 
+				imageValidateSizeMinWidth: minSize[0],
+				imageValidateSizeMinHeight: minSize[1],
+				imageValidateSizeMaxWidth: minSize[0]*2,
+				imageValidateSizeMaxHeight: minSize[1]*2,
+				imageValidateSizeLabelExpectedMinSize: 'Minimum size is '+minSize[0]+'x'+minSize[1],
+				imageValidateSizeLabelExpectedMaxSize: 'Maximum size is '+minSize[0]*2+'x'+minSize[1]*2,
+			})
+		}
+
+		if(fpondConfig.id != null && fpondConfig.file_name != ""){
+			var registro = Date.now();
+			var urlPreview = (typeof fpondConfig.resize !== 'undefined') ? _base_url+"../"+fpondConfig.uploadFolder+"/original/"+fpondConfig.id+"_"+fpondConfig.pos+"."+fpondConfig.filter+'?ts='+registro : _base_url+"../"+fpondConfig.uploadFolder+"/"+fpondConfig.id+"_"+fpondConfig.pos+"."+fpondConfig.filter+'?ts='+registro
+
+			console.log(urlPreview);
+			fpInst.setOptions({
+				files: [
+					{				
+					source: urlPreview
+					// set type to limbo to tell FilePond this is a temp file
+					// options: {
+				 //		// type: 'remote'
+					// }
+					}
+				]
+			});
+		}
+
+
+		if(fpondConfig.proporcion != null){
+			fpInst.setOptions({
+				allowImageCrop:true,
+				imageCropAspectRatio: fpondConfig.proporcion
+			});
+		}
+		  
+
+	})
+
+
+
+	// $("[id^='upload_manager']").each(function(n,el){
+	// 	var id   = $(el).attr('id')
+	// 	var json = $(el).html()
+	// 	var flashvars = frm_jsonDecode(json);
+	// 	var params = {
+	// 			menu: "false",
+	// 			scale: "noScale",
+	// 			allowFullscreen: "true",
+	// 			allowScriptAccess: "always",
+	// 			bgcolor: "#ffffff"
+	// 		};
+	// 	 var attributes = {
+	// 			id:"uploadManager"
+	// 		};
+	// 	 swfobject.embedSWF(_base_url+"/assets/widgets/uploadManager/uploadManager.swf", id, "400", "25", "9.0.0", "expressInstall.swf", flashvars, params, attributes);
+	// 	})
 }
 
 function resize_images(id){

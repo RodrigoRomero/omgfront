@@ -19,10 +19,12 @@ $social = json_decode($row->json_socials);
 
                 $data = frm_select('',array('name'=>'orador_id'),$oradores, $row->orador_id,'',false,array(),'','Seleccione Orador');
                 echo control_group('Oradores', $data, $attr = array('help-in-label'=>'<a class="fa fa-question ax-modal tip-right" data-original-title="Ver ayuda" href="'.base_url('helps/general/1').'"></a>'));
+		$data = array('name'=>'o','id'=>'o','placeholder'=>'Orden', 'class'=>'required input-xlarge', 'value'=>$row->o);
+                echo control_group($data['placeholder'], form_input($data),$attr = array('append'=>'<a class="icon-question ax-modal tip-right" data-original-title="Ver ayuda" href="'.base_url('helps/general/1').'"></a>'));
 
                 $html  = '<div class="span6 bootstrap-timepicker"><span class="add-on"><i class="icon-time"></i></span>'.form_input(array('class'=>'j-timepicker input-small', 'id'=>'timepicker', 'value'=>$row->hora, 'name'=>'hora')).'</div>';
                 echo control_group('Hora:', $html, $attr = array('class_controls'=>'', 'prepend'=>''));
-
+		
                 $checked = ($row->status==1) ? array('checked'=>true) : array();
                 $data = array('name'=>'status','id'=>'status', 'class'=>'', 'type'=>'checkbox');
                 echo control_group('Activo', form_input($data+$checked),$attr = array());

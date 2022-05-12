@@ -20,7 +20,7 @@
 							<div class="heading-block noborder">
 							<!--	<h3><?php echo $customer->empresa ?></h3> -->
 								<h3><?php echo $customer->nombre.' '.$customer->apellido?></h3>
-								<span>Por favor, nomine sus entradas con los datos correspondientes de los asistentes en el siguiente ícono <i class="i-plain icon-edit i-small" style=""></i> ubicado en el recuadro de abajo. Es importante que para que cada uno de los asistentes reciba su mail de confirmación con el código de acceso al evento, haga click en el botón de INVITAR en la página que sigue.</span>
+								<span>Por favor, nomine sus entradas con los datos correspondientes de los asistentes en la columna nominar del Evento en curso a través del  link "NOMINAR ENTRADA" . Es importante que para que cada uno de los asistentes reciba su mail de confirmación con el código de acceso al evento, haga click en el botón de INVITAR en la página que s.</span>
 							</div>
 
 							<div class="clear"></div>
@@ -47,7 +47,7 @@
 										  <th class="hidden-xs">Final</th>
 
 										  <th>Status</th>
-										  <th>Nominar</th>
+										<?php echo ($event['status'] == 1) ? '<th>Nominar</th>' : '' ?>
 										</tr>
 									  </thead>
 									  <tbody>
@@ -96,14 +96,17 @@
 										  <td class="hidden-xs">$ <?php echo number_format($order->total_discounted_price, 2,",",".")  ?></td>
 
 										  <td><?php echo $status ?></td>
+										
+										<?php if ($event['status'] == 1) { ?>
 										  <td>
 										  	<?php if($nominar_link) { ?>
-										  		<a href="<?php echo base_url($nominate) ?>"><i class="i-plain icon-edit i-small" style=""></i></a>
+										  		<a href="<?php echo base_url($nominate) ?>" class="button button-3d">NOMINAR ENTRADA</a>
 										  	<?php } else { ?>
 										  		<a href="javascript:void(0)"><i class="i-plain icon-remove i-small" style=""></i></a>
 										  	<?php } ?>
 
 										  </td>
+										<?php } ?>
 										</tr>
 									  <?php } ?>
 									  </tbody>

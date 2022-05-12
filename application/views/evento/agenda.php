@@ -15,8 +15,9 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 
 	<div class="container clearfix">
 	<div class="fancy-title title-double-border">
-		<h1><span>A</span>genda</h1>
+		<h1>Semana Argentina Visión 2040</h1>
 	</div>
+	
 	<!-- Posts
 	============================================= -->
 
@@ -30,7 +31,8 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 				$this->load->view('evento/agenda-item', ['position'=>$k, 'item' => $item]);
 			}
 		?>
-
+<div class="one-page-menu center">
+ <a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white">Comprar Tickets</a></div>
 	</div>
 
 	</div>

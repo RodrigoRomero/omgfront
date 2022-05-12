@@ -1,4 +1,4 @@
-<?php
+ <?php
 $metas = array(
     array('name' => 'description', 'content' =>$description),
     array('name' => 'keywords', 'content' => $keywords),
@@ -48,7 +48,14 @@ foreach($widgets as $folder => $v){
     }
 }
 ?>
+<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+<script src='https://unpkg.com/filepond-plugin-image-validate-size/dist/filepond-plugin-image-validate-size.js'></script>
+<script src='https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js'></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 
+<script src='https://unpkg.com/filepond/dist/filepond.js'></script>
 <script>
 _base_url = "<?php echo config_item('base_url')?>"
 _categoria_id = "<?php echo $this->params['c']?>"

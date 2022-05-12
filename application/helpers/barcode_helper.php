@@ -7,6 +7,7 @@
 
 
 function getBarCode ($id){
+
 	$codigoBarrasNumber      = str_pad($id,12,0,STR_PAD_LEFT);
 	$codigoBarrasFinalNumber = ean13_check_digit($codigoBarrasNumber);
 	return ['barcode' => $codigoBarrasFinalNumber, 'numbers'=> $codigoBarrasNumber];
