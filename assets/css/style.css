@@ -145,7 +145,7 @@ body {
 
 a {
 	text-decoration: none !important;
-	color: #38024f;
+	color: #24aeef;
 }
 
 a:hover { color: #222; }
@@ -1158,7 +1158,7 @@ body.stretched #header.full-header .container {
 }
 
 #primary-menu ul li:hover > a,
-#primary-menu ul li.current > a { color: #38024f; }
+#primary-menu ul li.current > a { color: #24aeef; }
 
 #primary-menu > ul > li.sub-menu > a > div { }
 
@@ -3604,7 +3604,7 @@ body:not(.device-touch) .grid-container {
 
 .portfolio-filter li.activeFilter a {
 	color: #FFF !important;
-	background-color: #38024f;
+	background-color: #24aeef;
 	margin: -1px 0;
 	padding: 13px 18px;
 	font-weight: bold;
@@ -6639,7 +6639,7 @@ body:not(.device-xs):not(.device-xxs) .countdown.countdown-large.coming-soon .co
 	font-size: 14px;
 	height: 40px;
 	line-height: 40px;
-	background-color: #38024f;
+	background-color: #24aeef;
 	color: #FFF;
 	font-weight: 600;
 	text-transform: uppercase;
@@ -6826,7 +6826,7 @@ body:not(.device-touch) .button {
 }
 
 .button.button-3d:hover {
-	background-color: #38024f !important;
+	background-color: #25aceb !important;
 	opacity: 0.9;
 }
 
@@ -7090,9 +7090,9 @@ body:not(.device-touch) .button.button-full strong {
 
 /* Buttons - Colors
 -----------------------------------------------------------------*/
-.button-white {background-color: #ffffff; color:#38024f; border: 2px solid #ffffff}
+.button-white {background-color: #ffffff; color:#24aeef; border: 2px solid #ffffff}
 .button-inverse {background-color: transparent; border: 2px solid #ffffff; color: #ffffff;}
-.button-inverse:hover {background-color: #ffffff !important; color:#38024f !important; border: 2px solid #ffffff !important}
+.button-inverse:hover {background-color: #ffffff !important; color:#24aeef !important; border: 2px solid #ffffff !important}
 .button-red { background-color: #C02942; }
 .button-3d.button-red:hover,
 .button-reveal.button-red:hover,
@@ -7104,7 +7104,8 @@ body:not(.device-touch) .button.button-full strong {
 	border-color: #C02942;
 }
 
-.button-teal { background-color: #53777A; }
+.button-teal { background-color: #444; }
+
 .button-3d.button-teal:hover,
 .button-reveal.button-teal:hover,
 .button-border.button-teal:hover,
@@ -10036,7 +10037,6 @@ body:not(.device-touch) .team-overlay {
 	padding: 15px 0;
 	background-color: #F9F9F9;
 	border-radius: 3px 3px 0 0;
-	text-shadow: 1px 1px 1px #FFF;
 	border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
@@ -11148,12 +11148,12 @@ input[type=checkbox]:not(:checked) + label.error { display: block !important; }
 
 .title-block {
 	padding: 2px 0 3px 20px;
-	border-left: 7px solid #38024f;
+	border-left: 7px solid #25aceb;
 	margin-bottom: 30px;
 }
 
 .title-block.av2020{
-	background-color: #38024f;
+	background-color: #24aeef;
 }
 
 .title-block.av2020 h2 span, .title-block.av2020 h1, .title-block.av2020 h2, .title-block.av2020 h3, .title-block.av2020 h4{

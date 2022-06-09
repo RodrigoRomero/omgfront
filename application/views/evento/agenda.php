@@ -15,7 +15,7 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 
 	<div class="container clearfix">
 	<div class="fancy-title title-double-border">
-		<h1>Semana Argentina Visión 2040</h1>
+<h1>Agenda</h1>
 	</div>
 	
 	<!-- Posts
@@ -27,12 +27,16 @@ $fecha_cierre_array = explode("-", $fecha_cierre[0]);
 
 
 		<?php
+			if(count($agenda) >=1){
 			foreach($agenda as $k => $item){
 				$this->load->view('evento/agenda-item', ['position'=>$k, 'item' => $item]);
 			}
+			} else {
+				echo "<h3 class='text-center'>Próximamente</h3>";
+			}
 		?>
 <div class="one-page-menu center">
- <a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white">Comprar Tickets</a></div>
+ <a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-teal">Comprar Tickets</a></div>
 	</div>
 
 	</div>

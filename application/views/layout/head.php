@@ -76,3 +76,4 @@ fbq('track', 'PageView');*/
 
   gtag('config', 'UA-50805014-1');
 </script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LceBVogAAAAAJRfVlWI97U4lENb4nu0Z0UzMuJg"></script>

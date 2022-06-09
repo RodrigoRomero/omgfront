@@ -7,7 +7,6 @@ $hora_inicio  = substr($fecha_inicio[1],0,-3);
 $hora_cierre  = substr($fecha_cierre[1],0,-3);
 $fecha_inicio_array = explode("-", $fecha_inicio[0]);
 $fecha_cierre_array = explode("-", $fecha_cierre[0]);
-
 ?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
@@ -48,7 +47,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 							<div class="container clearfix">
 							<?php //ep($this->evento) ?>
 								<div class="slider-caption slider-caption-center">
-									<h3> 9º ENCUENTRO DE REFLEXIÓN</h3>
+									<h3> 10º ENCUENTRO DE REFLEXIÓN</h3>
 									<h2 data-caption-animate="fadeInUp" style="margin-bottom: 0"><?php echo $this->evento->nombre ?></h2>
 
 
@@ -58,8 +57,13 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 
 <div class="row">
-
-									<div class="col-md-3 col-md-offset-3">
+	<div class="col-md-6 col-md-offset-3 text-center">
+	<?php if($fecha_inicio[0]==$fecha_cierre[0]) { ?>
+									<p style="font-weight:bold"><?php echo $fecha_inicio_array[2] ?> de <?php echo ucfirst(getMes($fecha_inicio_array[1],true)) ?>, <?php echo $hora_inicio.' hs. a '.$hora_cierre.' hs.' ?><br/>
+								Modalidad Presencial | CABA</p>
+<?php } ?>
+	</div>
+							<!--		<div class="col-md-3 col-md-offset-3">
 
 									<div class="venue_place" style="font-weight:bold">
                                 <span class="icon-wifi-full"></span>
@@ -73,7 +77,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
                                 <?php if($fecha_inicio[0]==$fecha_cierre[0]) { ?>
                                     <span class="day"><?php echo $fecha_inicio_array[2] ?></span>
-                                    <span class="month"><?php echo strtoupper(getMes($fecha_inicio_array[1]),true) ?></span>
+                                    <span class="month"><?php echo strtoupper(getMes($fecha_inicio_array[1], true)) ?></span>
                                 <?php } else { ?>
 					Semana del <?php echo $fecha_inicio_array[2] ?> al <?php echo $fecha_cierre_array[2] ?><br/>
 					<span class="month"><?php echo getMes($fecha_inicio_array[1],true) ?></span>
@@ -83,11 +87,11 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
                                
 				 </p>
                             </div>
-                                </div>
+                                </div> -->
                                 </div>
                                <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
 								<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white hidden-xs">Comprar Tickets</a>
-								<a href="hhttps://www.youtube.com/watch?v=feodFYWZ4VM"  data-lightbox="iframe"  class="button button-xlarge button-inverse hidden-xs">Ver Video</a>
+								<!-- <a href="hhttps://www.youtube.com/watch?v=feodFYWZ4VM"  data-lightbox="iframe"  class="button button-xlarge button-inverse hidden-xs">Ver Video</a> -->
 							<!--	<a href="#" data-href="#covid19"  class="hidden-xs button button-xlarge button-inverse">COVID-19</a>	-->
 								</div>
 								<!--

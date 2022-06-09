@@ -24,12 +24,11 @@ class Auth_mod extends RR_Model {
 
 
 	public function do_login(){
-
-		#VALIDO FORM POR PHP
 		$success = 'false';
 		$config = array();
 		$config[1] = array('field'=>'username', 'label'=>'Usuario', 'rules'=>'trim|required');
 		$config[2] = array('field'=>'password', 'label'=>'Contrasena', 'rules'=>'trim|required|md5');
+		$config[3] = array('field'=>'token', 'label'=>'Token', 'rules'=>'trim|required');
 
 		$this->form_validation->set_rules($config);
 
@@ -38,6 +37,17 @@ class Auth_mod extends RR_Model {
 				$this->form_validation->set_error_delimiters('', '<br/>');
 				$errors = validation_errors();
 				throw new Exception($errors, 1);
+			}
+			$captcha = $this->input->post('token',true);
+			$secret   = '6LceBVogAAAAAK4EeU7vHNrHYthyuo6VyewMetCf';
+			$response = file_get_contents(
+        "https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captcha . "&remoteip=" . $_SERVER['REMOTE_ADDR']
+    );
+    // use json_decode to extract json response
+   			$response = json_decode($response);
+
+			if($response->success === false){
+				throw new Exception("Token validación invalido",1);
 			}
 
 			$table = 'customers';

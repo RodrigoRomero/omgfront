@@ -8,6 +8,13 @@ class Evento extends RR_Controller {
 
 	}
 
+	public function runtest(){
+die;
+		$this->load->model('event_mod','Evento');
+	   $a = $this->Evento->runtest();	
+var_dump($a);
+	}
+
 	public function index(){
 		$module = $this->view('evento/index',
 										['agenda'   => $this->getAgenda(),

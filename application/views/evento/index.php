@@ -1,6 +1,6 @@
 ﻿
-<section>
-				<div class="section yt-bg-player nomargin dark" data-quality="hd1080" data-start="0" data-stop="17" data-video="https://youtu.be/feodFYWZ4VM" style="height: 600px;">
+ <section>
+				<div class="section yt-bg-player nomargin dark" data-quality="hd1080" data-start="0" data-stop="17" data-video="https://youtu.be/feodFYWZ4VM" style="height: 600px;"> 
 					<div class="container vertical-middle center clearfix">
 						<!--<i class="i-plain i-large icon-line-video divcenter" data-animate="fadeInDown"></i>
 						<div class="emphasis-title nomargin" data-animate="fadeInUp">
@@ -8,24 +8,24 @@
 						</div>-->
 					</div>
 				</div>
-</section>
+</section> 
 
-<section style="background:#38024f">
+<section style="background:#24aeef">
         <div class="container clearfix ">
                 <div class="">
                 <div class="center topmargin-sm bottommargin-sm one-page-menu fadeInUp animated" data-caption-animate="fadeInUp" data-caption-delay="200">
-                                                                <a href="javascript:void(0)" data-href="#section-tickets" "="" class="button button-xlarge button-white">Comprar Tickets</a>
-                                                                <a href="https://www.youtube.com/watch?v=feodFYWZ4VM" data-lightbox="iframe" class="button button-xlarge button-inverse hidden-xs">Ver Video</a>
+                                                                <a href="javascript:void(0)" data-href="#section-tickets" "="" class="button button-xlarge button-teal">Comprar Tickets</a>
+              <!--                                                  <a href="https://www.youtube.com/watch?v=feodFYWZ4VM" data-lightbox="iframe" class="button button-xlarge button-inverse hidden-xs">Ver Video</a> -->
                                                               <!--  <a href="#" data-href="#covid19" class="button button-xlarge button-inverse">COVID-19</a>       -->
                                                                 </div>
                 </div>
         </div>
 </section>
-
+<?php echo $this->load->view('evento/corte_a',[],true) ?>
 <section>
 	<div class="container clearfix ">
 				<div class="topmargin-sm">
-					<h3 class="center">Organizan:</h3>
+					<h3 class="center">Organizan</h3>
 					<ul class="clients-grid grid-4 nobottommargin clearfix">
 
 						<!--<li><img src="uploads/organizadores/ministerio.png" class="fadeInDown animated" alt="Ministerio de Producción" data-animate="fadeInDown"> </a></li>-->
@@ -140,7 +140,7 @@
 </section>-->
 <?php echo $agenda; ?>
 <?php echo $oradores; ?>
-
+<?php echo $sponsors; ?>
 <section>	
 					<div class="container clearfix">
 						
@@ -149,7 +149,6 @@
 </section>
 <?php echo $tickets; ?>
 
-<?php echo $sponsors; ?>
 <?php // echo $lugar; ?>
 
 <!--

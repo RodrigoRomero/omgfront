@@ -3,16 +3,17 @@
 		<div class="fancy-title title-double-border">
 			<h1>Seleccioná tu entrada</h1>
 		</div>
-		<h3>Modalidad On-Line | de 8.30 a 10hs</h3>
-<p>En Argentina, el 17% de los jóvenes en situación de vulnerabilidad acceden a un estudio superior. En BisBlick acompañamos a 89 jóvenes para que puedan finalizar sus estudios superiores. Son jóvenes con alto potencial que, a través del estudio, generan un impacto real en su entorno y su comunidad. ¿Te sumás a ayudarlos? </p>
-<p>*La compra de la entrada habilita el ingreso a los cuatro días del evento</p>
+		
+<p>En Argentina, sólo el 13% de los jóvenes de contextos vulnerables logra realizar un estudio superior. ARGENTINA VISIÓN 2040 se realiza 100% a beneficio de BisBlick, ONG que brinda a jóvenes con alto potencial y escasos recursos económico la oportunidad de convertirse en los primeros profesionales de sus familias.
+Con tu entrada ayudás a que más jóvenes puedan realizar una carrera universitaria/terciaria y transformar su futuro.   </p>
+
 		<div class="row pricing bottommargin clearfix">
 <?php
 	//	ep($this->evento);
 		if($this->evento->show_register && (strtotime($this->evento->fecha_baja) > strtotime("+1 day",date('Y-m-d H:i:s')))) {
 			if($this->evento->payments_enabled) {
 				foreach($tickets as $k => $item) {
-					$this->load->view('evento/ticket-item-vertical', ['position'=>$k, 'item' => $item]);
+					$this->load->view('evento/ticket-item', ['position'=>$k, 'item' => $item]);
 				}
 			} else {
 				echo 'armar free';

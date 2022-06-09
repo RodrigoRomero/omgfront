@@ -10,6 +10,12 @@ class event_mod extends RR_Model {
 	}
 
 
+	public function runtest(){
+		$this->load->model('EmailSG_mod','Email');
+		$body  = $this->view('email/reminder_two',array('user'=>$acreditado, 'evento'=>$this->evento));
+		$email = $this->Email->send('email_info', "rodrigo.lolo.romero@gmail.com", $subject, $body);
+		return $email;
+	}
 
 	public function getEventoById($id){
 		$evento = $this->get_where('eventos',['id'=>$id])->row();

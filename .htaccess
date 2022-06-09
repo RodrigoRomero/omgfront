@@ -90,3 +90,7 @@ ExpiresDefault "access 1 month"
 <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|webp)$">
     Header set Cache-Control "max-age=2592000, public"
 </filesMatch>
+
+<FilesMatch ".(eot|ttf|otf|woff)">
+    Header set Access-Control-Allow-Origin "*"
+</FilesMatch>

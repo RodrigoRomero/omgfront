@@ -1,6 +1,6 @@
 <?php
 $form_name = 'ticketsForm_'.$item->id;
-$data   = array ('id'=>$form_name, 'class'=>'form relative');
+$data   = array ('id'=>$form_name, 'class'=>'form relative', 'style'=>'width:100%');
 $action = base_url('cart/add');
 echo form_open($action,$data);
 echo form_hidden('sku', $item->sku);
@@ -60,8 +60,6 @@ if(!array_key_exists ( 0 , $options )){
     $options[0] = 0;
 }
 ksort($options);
-
-
 ?>
 
 <div class="pricing-box pricing-extended bottommargin clearfix" style=" <?php echo !empty($item->background) ? 'background: #'.$item->background : ''; ?>; min-height: 320px;">

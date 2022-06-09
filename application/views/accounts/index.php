@@ -1,4 +1,14 @@
-
+<script>
+    grecaptcha.ready(function() {
+    // do request for recaptcha token
+    // response is promise with passed token
+        grecaptcha.execute('6LceBVogAAAAAJRfVlWI97U4lENb4nu0Z0UzMuJg', {action:'validate_captcha'})
+                  .then(function(token) {
+            // add token value to form
+            document.getElementById('token').value = token;
+        });
+    });
+</script>
 
 <div class="container clearfix">
 
@@ -14,7 +24,7 @@
 
 
 								<h3>Ingresar a mi cuenta</h3>
-
+								<input type="hidden" id="token" name="token">
 								<div class="col_full">
 									<label for="login-form-username">Email:</label>
 									<input type="text" id="login-form-username" name="username" value="" class="form-control required email" />

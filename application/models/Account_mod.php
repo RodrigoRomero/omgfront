@@ -541,7 +541,7 @@ class account_mod extends RR_Model {
 		try {
 			$id = $this->uri->segment(3);
 			if(!($id)){
-				throw new Exception("Por favor intentelo mas tarde", 1);
+				throw new Exception("Por favor intentelo mas tarde ID", 1);
 			}
 
 
@@ -549,7 +549,7 @@ class account_mod extends RR_Model {
 
 			
 			if(!($acreditado)){
-				throw new Exception("Por favor intentelo mas tarde", 1);
+				throw new Exception("Por favor intentelo mas tarde acreditado", 1);
 			}
 			#EVNITO LA INVITACION
 			$subject    = "Su Acreditación - ".$this->evento->nombre;
@@ -566,14 +566,14 @@ class account_mod extends RR_Model {
 		        $email      = $this->Email->send('email_info', $acreditado->email, $subject, $body);
 
 	            	if(!$email){
-        	    		throw new Exception("Por favor intentelo mas tarde", 1);
+        	    		throw new Exception("Por favor intentelo mas tarde email", 1);
             		}
 
             $this->db->where('id', $acreditado->id);
             $upd = $this->db->update('acreditados', ['invitacion'=>1]);
 
             if(!$upd){
-            	throw new Exception("Por favor intentelo mas tarde", 1);
+            	throw new Exception("Por favor intentelo mas tarde update", 1);
             }
 
             $success = 'true';

@@ -2,6 +2,7 @@
 	<div class="container clearfix">
 		<div class="fancy-title title-double-border">
 			<h1>Oradores</h1>
+			<p>* Sujeto a confirmación
 		</div>
 	<?php
 
