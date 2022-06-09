@@ -38,13 +38,10 @@ class Auth_mod extends RR_Model {
 				$errors = validation_errors();
 				throw new Exception($errors, 1);
 			}
+			
 			$captcha = $this->input->post('token',true);
-			$secret   = '6LceBVogAAAAAK4EeU7vHNrHYthyuo6VyewMetCf';
-			$response = file_get_contents(
-        "https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captcha . "&remoteip=" . $_SERVER['REMOTE_ADDR']
-    );
-    // use json_decode to extract json response
-   			$response = json_decode($response);
+			$this->load->library('recaptcha');
+			$this->recaptcha->validate($captcha);
 
 			if($response->success === false){
 				throw new Exception("Token validación invalido",1);
