@@ -41,9 +41,9 @@ class Auth_mod extends RR_Model {
 			
 			$captcha = $this->input->post('token',true);
 			$this->load->library('recaptcha');
-			$this->recaptcha->validate($captcha);
+			$validateCaptcha = $this->recaptcha->validate($captcha)
 
-			if($response->success === false){
+			if($validateCaptcha === false){
 				throw new Exception("Token validación invalido",1);
 			}
 

@@ -19,7 +19,11 @@ class Recaptcha {
         );
         $response = json_decode($response);
 
-        var_dump($response);
+        if ($response->success === false) {
+            return false;
+        }
+
+        return true;
 	}
 
 }
