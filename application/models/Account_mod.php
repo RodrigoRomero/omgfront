@@ -56,6 +56,7 @@ class account_mod extends RR_Model {
 		$config[6] = array('field'=>'password', 'label'=>'Password', 'rules'=>'trim|required');
 		$config[7] = array('field'=>'dni', 'label'=>'DNI', 'rules'=>'trim|required');
 		$config[8] = array('field'=>'telefono', 'label'=>'Telefono', 'rules'=>'trim|required');
+		$config[9] = array('field'=>'token', 'label'=>'Token', 'rules'=>'trim|required');
 		//$config[8] = array('field'=>'fecha_nacimiento', 'label'=>'Fecha de Nacimiento', 'rules'=>'trim|required');
 
 		$this->form_validation->set_rules($config);
@@ -65,6 +66,14 @@ class account_mod extends RR_Model {
 				$this->form_validation->set_error_delimiters('', '<br/>');
 				$errors = validation_errors();
 				throw new Exception($errors, 1);
+			}
+
+			$captcha = $this->input->post('token',true);
+			$this->load->library('recaptcha');
+			$validateCaptcha = $this->recaptcha->validate($captcha);
+
+			if($validateCaptcha === false){
+				throw new Exception("Token validación invalido",1);
 			}
 
 			$fecha_nacimiento = explode("-", filter_input(INPUT_POST,'fecha_nacimiento'));
@@ -392,6 +401,7 @@ class account_mod extends RR_Model {
 		$config[2] = array('field'=>'nombre', 'label'=>'Nombre', 'rules'=>'trim|required');
 		$config[3] = array('field'=>'apellido', 'label'=>'Apellido', 'rules'=>'trim|required');
 		$config[4] = array('field'=>'dni', 'label'=>'DNI', 'rules'=>'trim|required');
+		$config[5] = array('field'=>'token', 'label'=>'Token', 'rules'=>'trim|required');
 
 
 		$this->form_validation->set_rules($config);
@@ -403,6 +413,14 @@ class account_mod extends RR_Model {
 				$this->form_validation->set_error_delimiters('', '<br/>');
 				$errors = validation_errors();
 				throw new Exception($errors, 1);
+			}
+			
+			$captcha = $this->input->post('token',true);
+			$this->load->library('recaptcha');
+			$validateCaptcha = $this->recaptcha->validate($captcha);
+
+			if($validateCaptcha === false){
+				throw new Exception("Token validación invalido",1);
 			}
 
 			$ot  = filter_input(INPUT_POST,'ot_id');
