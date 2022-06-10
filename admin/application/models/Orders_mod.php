@@ -171,7 +171,8 @@ class orders_mod extends RR_Model {
 		 $success = 'false';
 		 $config = array(array('field'   => 'payment_status', 'label'   => 'Status Pago', 'rules'   => 'trim|required'),
 						   array('field'   => 'status', 'label'   => 'Order Status', 'rules'   => 'trim|required'),
-						   array('field'   => 'medio_pago', 'label'   => 'Medio Pago', 'rules'   => 'trim|required')
+						   array('field'   => 'medio_pago', 'label'   => 'Medio Pago', 'rules'   => 'trim|required'),
+						   array('field'   => 'token', 'label'   => 'Token', 'rules'   => 'trim|required')
 					  );
 		 $this->form_validation->set_rules($config);
 
@@ -182,6 +183,19 @@ class orders_mod extends RR_Model {
 			$messages     = validation_errors();
 			$data = array('success' => $success, 'responseType'=>$responseType, 'messages'=>$messages, 'value'=>$function);
 		 } else {
+
+			$captcha = filter_input(INPUT_POST,'token');
+			$this->load->library('recaptcha');
+			$validateCaptcha = $this->recaptcha->validate($captcha);
+
+			if($validateCaptcha === true){
+				$responseType = 'function';
+				$function     = 'appendFormMessages';
+				$messages     = validation_errors();
+				$data = array('success' => $success, 'responseType'=>$responseType, 'messages'=>"Error al validar token", 'value'=>$function);
+				return $data;
+			}
+
 
 			$send_mail_status_pago = false;
 			$update_pago = false;
