@@ -1,20 +1,20 @@
-﻿
+﻿<!--
  <section>
 				<div class="section yt-bg-player nomargin dark" data-quality="hd1080" data-start="0" data-stop="17" data-video="https://youtu.be/feodFYWZ4VM" style="height: 600px;"> 
 					<div class="container vertical-middle center clearfix">
-						<!--<i class="i-plain i-large icon-line-video divcenter" data-animate="fadeInDown"></i>
+						<i class="i-plain i-large icon-line-video divcenter" data-animate="fadeInDown"></i>
 						<div class="emphasis-title nomargin" data-animate="fadeInUp">
 							<h2 style="font-size: 56px;">Section with Background Youtube Video</h2>
-						</div>-->
+						</div>
 					</div>
 				</div>
 </section> 
-
+-->
 <section style="background:#24aeef">
         <div class="container clearfix ">
                 <div class="">
                 <div class="center topmargin-sm bottommargin-sm one-page-menu fadeInUp animated" data-caption-animate="fadeInUp" data-caption-delay="200">
-                                                                <a href="javascript:void(0)" data-href="#section-tickets" "="" class="button button-xlarge button-teal">Comprar Tickets</a>
+                                                                <a href="javascript:void(0)" data-href="#section-tickets" class="button button-xlarge button-teal">Comprar Tickets</a>
               <!--                                                  <a href="https://www.youtube.com/watch?v=feodFYWZ4VM" data-lightbox="iframe" class="button button-xlarge button-inverse hidden-xs">Ver Video</a> -->
                                                               <!--  <a href="#" data-href="#covid19" class="button button-xlarge button-inverse">COVID-19</a>       -->
                                                                 </div>
