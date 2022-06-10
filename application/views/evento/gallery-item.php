@@ -1,5 +1,4 @@
 <?php
-var_dump($item);
 $class = ($item['type'] == 'video') ? 'pf-graphics pf-video' : 'pf-media pf-fotos';
 $icon = ($item['type'] == 'video') ? 'icon-line-play' : 'icon-line-plus';
 $lightbox = ($item['type'] == 'video') ? 'iframe' : 'image';
