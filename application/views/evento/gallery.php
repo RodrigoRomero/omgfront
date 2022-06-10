@@ -24,6 +24,19 @@ $data = [
 	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/thumbs_gallery_10.jpg', 'src'=>'uploads/gallery/original/original_gallery_10.jpg', 'alt'=>'Argentina Visión 2020/40'],
 	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/thumbs_gallery_14.jpg', 'src'=>'uploads/gallery/original/original_gallery_14.jpg', 'alt'=>'Argentina Visión 2020/40'],
 	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/thumbs_gallery_16.jpg', 'src'=>'uploads/gallery/original/original_gallery_16.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_01.jpg', 'src'=>'uploads/gallery/original/2022/1.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_02.jpg', 'src'=>'uploads/gallery/original/2022/2.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_03.jpg', 'src'=>'uploads/gallery/original/2022/3.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_04.jpg', 'src'=>'uploads/gallery/original/2022/4.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_05.jpg', 'src'=>'uploads/gallery/original/2022/5.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_06.jpg', 'src'=>'uploads/gallery/original/2022/6.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_07.jpg', 'src'=>'uploads/gallery/original/2022/7.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_08.jpg', 'src'=>'uploads/gallery/original/2022/8.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_09.jpg', 'src'=>'uploads/gallery/original/2022/9.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_10.jpg', 'src'=>'uploads/gallery/original/2022/10.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_11.jpg', 'src'=>'uploads/gallery/original/2022/11.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_12.jpg', 'src'=>'uploads/gallery/original/2022/12.jpg', 'alt'=>'Argentina Visión 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/2022/thumbs_13.jpg', 'src'=>'uploads/gallery/original/2022/13.jpg', 'alt'=>'Argentina Visión 2020/40'],
 ];
 ?>
 <section id="section-gallery" class="page-section">
