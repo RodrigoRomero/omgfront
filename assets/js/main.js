@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+recaptchaToken()
 
 
 if(config.page_handle == 'cart/thanks'){
@@ -149,21 +149,47 @@ function validateForm(form) {
 
 }
 
-function recaptchaToken(){
+
+
+function setRecaptchaToken(t){
+	
 	$('form').each(function(){
-		console.log(form)
+		
+		const form = $(this);
+		var id = form.attr('id');
+		if($('#t'+id).length === 0) {
+			$('<input>').attr({
+				type: 'hidden',
+				id: 't'+id,
+				name: 'token',
+				
+			}).appendTo($(this)).val(t);
+		} else {
+			$('#t'+id).val(t)
+		}
+
 	})
-	grecaptcha.ready(function() {
-		// do request for recaptcha token
-		// response is promise with passed token
-			grecaptcha.execute('6LceBVogAAAAAJRfVlWI97U4lENb4nu0Z0UzMuJg', {action:'validate_captcha'})
-					  .then(function(token) {
-				// add token value to form
-				document.getElementById('token').value = token;
-			});
-		});
 }
 
+function recaptchaToken(){
+	
+		
+		
+		grecaptcha.ready(function() {
+			
+
+				grecaptcha.execute('6LceBVogAAAAAJRfVlWI97U4lENb4nu0Z0UzMuJg', {action:'validate_captcha'})
+					.then((token) =>{
+						setRecaptchaToken(token)
+					})
+					
+					
+			});
+
+			
+			// do request for recaptcha token
+			// response is promise with passed token
+}
 function clear_form_elements() {
     $(window).find(':input').each(function() {
 
@@ -223,6 +249,7 @@ function frm_send(form, ajaxUrl, ajaxId, extraData) {
 		url  : form.attr('action'),
 		data : form.serialize() + extraData,
 		success : function(data) {
+			recaptchaToken()
 			_frm_progress = false;
 			page_block(false);
 			data = frm_jsonDecode(data)
