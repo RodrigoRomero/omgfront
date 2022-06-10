@@ -149,6 +149,20 @@ function validateForm(form) {
 
 }
 
+function recaptchaToken(){
+	$('form').each(function(){
+		console.log(form)
+	})
+	grecaptcha.ready(function() {
+		// do request for recaptcha token
+		// response is promise with passed token
+			grecaptcha.execute('6LceBVogAAAAAJRfVlWI97U4lENb4nu0Z0UzMuJg', {action:'validate_captcha'})
+					  .then(function(token) {
+				// add token value to form
+				document.getElementById('token').value = token;
+			});
+		});
+}
 
 function clear_form_elements() {
     $(window).find(':input').each(function() {
