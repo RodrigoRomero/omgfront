@@ -17,13 +17,13 @@ class EmailSG_mod extends RR_Model {
                 $this->email = new \PHPMailer\PHPMailer\PHPMailer();
                 $this->email->isSMTP();
                 $this->email->SMTPDebug = 4;
-                $this->email->Host = 'smtp.sendgrid.net';
+                $this->email->Host = '';
                 $this->email->Port = 465;
                 //$this->email->SMTPAutoTLS = true;
                 $this->email->SMTPSecure = true;
                 $this->email->SMTPAuth = true;
-                $this->email->Username = 'apikey';
-                $this->email->Password = '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';
+                $this->email->Username = '';
+                $this->email->Password = '';
 
 
         }
