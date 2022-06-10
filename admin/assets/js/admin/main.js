@@ -202,7 +202,7 @@ function init(){
 	if(exists(('#chart_lines'))) {
 		setTimeout(setChart(), 8000);
 	}
-
+	recaptchaToken();
 
 	/*
 	 if(exists(('.fecha_nacimiento'))) {
@@ -806,9 +806,11 @@ $.each(extraData, function(e,a){
 		url  : form.attr('action'),
 		data : form.serialize() + extraData,
 		success : function(data) {
+			recaptchaToken()
 			_frm_progress = false;
 			page_block(false);
 			data = frm_jsonDecode(data)
+
 			switch(data.success) {
 				case "true":
 				case true:
@@ -1125,3 +1127,43 @@ accentsTidy = function(s){
 	r = r.replace(new RegExp("\\W", 'g'),"");
 	return r;
 };
+
+function setRecaptchaToken(t){
+	
+	$('form').each(function(){
+		
+		const form = $(this);
+		var id = form.attr('id');
+		if($('#t'+id).length === 0) {
+			$('<input>').attr({
+				type: 'hidden',
+				id: 't'+id,
+				name: 'token',
+				
+			}).appendTo($(this)).val(t);
+		} else {
+			$('#t'+id).val(t)
+		}
+
+	})
+}
+
+function recaptchaToken(){
+	
+		
+		
+		grecaptcha.ready(function() {
+			
+
+				grecaptcha.execute('6LceBVogAAAAAJRfVlWI97U4lENb4nu0Z0UzMuJg', {action:'validate_captcha'})
+					.then((token) =>{
+						setRecaptchaToken(token)
+					})
+					
+					
+			});
+
+			
+			// do request for recaptcha token
+			// response is promise with passed token
+}
