@@ -188,7 +188,7 @@ class orders_mod extends RR_Model {
 			$this->load->library('recaptcha');
 			$validateCaptcha = $this->recaptcha->validate($captcha);
 
-			if($validateCaptcha === true){
+			if($validateCaptcha === false){
 				$responseType = 'function';
 				$function     = 'appendFormMessages';
 				$messages     = validation_errors();
