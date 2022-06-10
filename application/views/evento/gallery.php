@@ -1,4 +1,10 @@
-﻿<section id="section-gallery" class="page-section">
+﻿<?php
+$data = [
+	['type'=> 'video', 'thumb' => 'uploads/gallery/thumbs/thumb_video_11.jpg', 'src'=>'https://www.youtube.com/watch?v=LUE9yVtxKlw', 'alt'=>'Alfonso Amat ARGENTINA VISIÓN 2020/40'],
+	['type'=> 'fotos', 'thumb' => 'uploads/gallery/thumbs/t22.jpg', 'src'=>'uploads/gallery/original/25.jpg', 'alt'=>'Argentina Visión 2020/40'],
+];
+?>
+<section id="section-gallery" class="page-section">
 
 
 			<div class="container clearfix" style="">
@@ -47,102 +53,16 @@
 				============================================= -->
 				<div id="portfolio" class="portfolio grid-container portfolio-3 clearfix">
 
-											
-					
-									<?php /*
-<<<<<<< HEAD
-									<img src="uploads/gallery/thumbs/1.jpg" alt="Open Imagination">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/1.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-							<!--<div class="portfolio-desc">
-								<h3><a href="portfolio-single.html">José Demicheli</a></h3>
-								<span>Director ADBlick Agro</span>
-							</div>-->
-					</article>
-					
-					<article class="portfolio-item pf-media pf-icons">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/2.jpg" alt="Open Imagination">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/2.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-							<div class="portfolio-desc">
-								<h3><a href="portfolio-single.html"></a></h3>
-								<span> </span>
-							</div>
-					</article>
-					
-					<article class="portfolio-item pf-media pf-icons">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/3.jpg" alt="Open Imagination">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/3.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-							<div class="portfolio-desc">
-								<h3><a href="portfolio-single.html"> </a></h3>
-								<span></span>
-							</div>
-					</article>
-					
-					<article class="portfolio-item pf-media pf-icons">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/4.jpg" alt="Open Imagination">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/4.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-							<div class="portfolio-desc">
-								<h3><a href="portfolio-single.html"></a></h3>
-								<span></span>
-							</div>
-					</article>
-					
-					<article class="portfolio-item pf-media pf-icons">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/7.jpg" alt="Open Imagination">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/7.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-							<div class="portfolio-desc">
-								<h3><a href="portfolio-single.html"></a></h3>
-								<span></span>
-							</div>
-					</article>
-					
-					<article class="portfolio-item pf-media pf-icons">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/8.jpg" alt="Open Imagination">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/8.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-							<div class="portfolio-desc">
-								<h3><a href="portfolio-single.html"></a></h3>
-								<span></span>
-							</div>
-					</article>
+				<?php
+			
+				foreach($data as $k => $item){
+					$this->load->view('evento/gallery-item', ['position'=>$k, 'item' => $item]);
+				}
+				?>							
 					
 
-=======
-*/ ?>
 
-					
+					-------------
 					<article class="portfolio-item pf-graphics pf-video">
 							<div class="portfolio-image">
 								<a href="#">
@@ -280,16 +200,7 @@
 
 					</article>
 					
-					<article class="portfolio-item pf-media pf-fotos">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/thumbs_gallery_2.jpg" alt="Argentina Visión 2020/40">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/original_gallery_2.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-					</article>
+				
 					
 					
 
@@ -410,16 +321,7 @@
 							</div>
 					</article>
 					
-					<article class="portfolio-item pf-media pf-fotos">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/thumbs_gallery_8.jpg" alt="Argentina Visión 2020/40">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/original_gallery_8.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-					</article>
+					
 					
 					<article class="portfolio-item pf-media pf-fotos">
 							<div class="portfolio-image">
@@ -443,38 +345,11 @@
 							</div>
 					</article>
 					
-					<article class="portfolio-item pf-media pf-fotos">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/thumbs_gallery_11.jpg" alt="Argentina Visión 2020/40">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/original_gallery_11.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-					</article>
+
 					
-					<article class="portfolio-item pf-media pf-fotos">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/thumbs_gallery_12.jpg" alt="Argentina Visión 2020/40">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/original_gallery_12.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-					</article>
 					
-					<article class="portfolio-item pf-media pf-fotos">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/thumbs_gallery_13.jpg" alt="Argentina Visión 2020/40">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/original_gallery_13.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-					</article>
+					
+					
 					
 					<article class="portfolio-item pf-media pf-fotos">
 							<div class="portfolio-image">
@@ -487,16 +362,7 @@
 							</div>
 					</article>
 					
-					<article class="portfolio-item pf-media pf-fotos">
-							<div class="portfolio-image">
-								<a href="portfolio-single.html">
-									<img src="uploads/gallery/thumbs/thumbs_gallery_15.jpg" alt="Argentina Visión 2020/40">
-								</a>
-								<div class="portfolio-overlay">
-									<a href="uploads/gallery/original/original_gallery_15.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
-								</div>
-							</div>
-					</article>
+				
 					
 					<article class="portfolio-item pf-media pf-fotos">
 							<div class="portfolio-image">
