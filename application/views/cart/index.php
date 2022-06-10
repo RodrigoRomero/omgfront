@@ -1,6 +1,6 @@
 <div class="container clearfix">
 
-	<?php $this->load->view('evento/almuerzo', ['almuerzos'=> $almuerzos]) ?>
+	<?php //$this->load->view('evento/almuerzo', ['almuerzos'=> $almuerzos]) ?>
 	<div class="fancy-title title-double-border">
 		<h1><span>Tus</span> Entradas</h1>
 	</div>
