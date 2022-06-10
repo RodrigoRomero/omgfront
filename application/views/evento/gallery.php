@@ -63,7 +63,7 @@ $data = [
 
 
 					-------------
-					<article class="portfolio-item pf-graphics pf-video">
+					<!-- <article class="portfolio-item pf-graphics pf-video">
 							<div class="portfolio-image">
 								<a href="#">
 									<img src="uploads/gallery/thumbs/thumb_video_11.jpg" alt="Alfonso Amat ARGENTINA VISIÓN 2020/40">
@@ -374,7 +374,7 @@ $data = [
 								</div>
 							</div>
 					</article>
-
+ -->
 
 				</div><!-- #portfolio end -->
 
