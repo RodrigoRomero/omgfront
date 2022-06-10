@@ -61,6 +61,7 @@ _base_url = "<?php echo config_item('base_url')?>"
 _categoria_id = "<?php echo $this->params['c']?>"
 _base_lang = "<?php echo $Clang ?>"
 </script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LceBVogAAAAAJRfVlWI97U4lENb4nu0Z0UzMuJg"></script>
 <link rel="shortcut icon" href="<?php echo image_asset_url('favicon.ico')?>" type="image/x-icon"/>
 <link rel="apple-touch-icon" href="<?php echo image_asset_url('favicon.ico')?>" />
 <meta name="viewport" content="width=device-width, initial-scale=1">

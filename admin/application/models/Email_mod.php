@@ -17,13 +17,13 @@ class Email_mod extends RR_Model {
 		$this->email = new \PHPMailer\PHPMailer\PHPMailer();
 		$this->email->isSMTP();
 		//$this->email->SMTPDebug = 4;
-		$this->email->Host = 'email-smtp.us-east-1.amazonaws.com';
+		$this->email->Host = '';
 		$this->email->Port = 465;
 		$this->email->SMTPAutoTLS = true;
 		$this->email->SMTPSecure = true;
 		$this->email->SMTPAuth = true;
-		$this->email->Username = 'AKIAIUR6LM2RNBYMQPRQ';
-		$this->email->Password = 'AmZuWRzENiazOqEMFSavnNO3ljS6x1WEtb9rS5krFxVJ';
+		$this->email->Username = '';
+		$this->email->Password = '';
 	
 
 	}
@@ -42,7 +42,7 @@ class Email_mod extends RR_Model {
 
 
 
-		$from      = "noreply@argentinavision2020.com";
+		$from      = "noreplyav2020@argentinavision2020.com";
 		$html      = $this->view("email/template", array("body"=>$body, "extra"=>$extra));
 
 		#echo $from;
