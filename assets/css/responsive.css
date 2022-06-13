@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------
 	Responsive CSS
 -----------------------------------------------------------------*/
-
+.swiper_wrapper .slider-caption h3 { margin-top: 30px; margin-bottom: 10px;}
 
 @media (max-width: 1199px) {
 
