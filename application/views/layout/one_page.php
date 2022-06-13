@@ -47,7 +47,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 							<div class="container clearfix">
 							<?php //ep($this->evento) ?>
 								<div class="slider-caption slider-caption-center">
-									<h3> 10º ENCUENTRO DE REFLEXIÓN</h3>
+									<h3 style="margin-top:40px"> 10º ENCUENTRO DE REFLEXIÓN</h3>
 									<h2 data-caption-animate="fadeInUp" style="margin-bottom: 0"><?php echo $this->evento->nombre ?></h2>
 
 
