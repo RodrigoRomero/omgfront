@@ -59,7 +59,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 <div class="row">
 	<div class="col-md-6 col-md-offset-3 text-center">
 	<?php if($fecha_inicio[0]==$fecha_cierre[0]) { ?>
-									<h3><?php echo $fecha_inicio_array[2] ?> de <?php echo ucfirst(getMes($fecha_inicio_array[1],true)) ?>, <?php echo $hora_inicio.' hs. a '.$hora_cierre.' hs.' ?></h3>
+									<h3 style="font-size:26px"><?php echo $fecha_inicio_array[2] ?> de <?php echo ucfirst(getMes($fecha_inicio_array[1],true)) ?>, <?php echo $hora_inicio.' hs. a '.$hora_cierre.' hs.' ?></h3>
 									<p style="font-weight:bold">Modalidad Presencial | CABA</p>
 <?php } ?>
 	</div>
