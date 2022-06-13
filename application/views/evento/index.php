@@ -53,91 +53,6 @@
 				
 	</div>
 </section>
-
-
-
-
-
-
-<!--<section>
-	<div class="container clearfix">
-
-						<div class="col_two_fifth topmargin-sm nobottommargin" style="min-height: 350px">
-							<canvas id="chart-radar"></canvas>
-						</div>
-
-						<div class="col_three_fifth nobottommargin col_last">
-
-							<div class="heading-block topmargin-sm">
-								<h2>Section with Light Background</h2>
-								<span>Show off your Important Content with Elegance &amp; Attitude.</span>
-							</div>
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero quod consequuntur quibusdam, enim expedita sed quia nesciunt incidunt accusamus necessitatibus modi adipisci officia libero accusantium esse hic, obcaecati, ullam, laboriosam!</p>
-
-							<a href="#" class="button button-3d button-large">Check out</a>
-
-						</div>
-
-					</div>
-</section>
--->
-
-
-
-
-
-
-
-
-
-
-
-<!--<section>
-	<div class="section parallax nomargin notopborder dark" style="background-image: url('images/parallax/2.jpg'); padding: 100px 0;" data-stellar-background-ratio="0.3">
-					<div class="container clearfix">
-
-						<div class="emphasis-title center">
-							<h2 style="font-size: 52px;">Section with Dark Parallax Background ESETE</h2>
-						</div>
-
-						<div class="row">
-
-							<div class="col-md-6 bottommargin">
-								<div class="testimonial">
-									<div class="testi-image">
-										<a href="#"><img src="images/testimonials/1.jpg" alt="Customer Testimonails"></a>
-									</div>
-									<div class="testi-content">
-										<p>Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero illo rerum repellendus!</p>
-										<div class="testi-meta">
-											John Doe
-											<span>XYZ Inc.</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-6 bottommargin">
-								<div class="testimonial">
-									<div class="testi-image">
-										<a href="#"><img src="images/testimonials/2.jpg" alt="Customer Testimonails"></a>
-									</div>
-									<div class="testi-content">
-										<p>Natus voluptatum enim quod necessitatibus quis expedita harum provident eos obcaecati id culpa corporis molestias.</p>
-										<div class="testi-meta">
-											Collis Ta'eed
-											<span>Envato Inc.</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-	</div>
-</section>-->
 <?php echo $agenda; ?>
 <?php echo $oradores; ?>
 <?php echo $sponsors; ?>
@@ -148,7 +63,7 @@
 					</div>
 </section>
 <?php echo $tickets; ?>
-
+<?php echo $this->load->view('evento/evento_virtual',[],true) ?>
 <?php // echo $lugar; ?>
 
 <!--
