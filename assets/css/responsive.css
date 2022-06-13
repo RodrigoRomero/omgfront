@@ -1496,7 +1496,7 @@
 
 	.swiper_wrapper:not(.force-full-screen),
 	.swiper_wrapper:not(.force-full-screen):not(.canvas-slider-grid) .swiper-slide { /*height: 300px !important; */}
-
+	.swiper_wrapper .slider-caption h3 { font-size: 16px;margin-top: 30px; margin-bottom: 10px;}
 	.swiper_wrapper .slider-caption h2 { font-size: 25px; margin-top:20px; }
 
 	.ei-slider { height: 250px; }
