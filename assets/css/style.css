@@ -10203,7 +10203,7 @@ body:not(.device-touch) .team-overlay {
 .pricing-box.pricing-extended .pricing-features li {
 	padding: 6px 0;
 	font-size: 15px;
-	width: 50%;
+	/* width: 50%; */
 	/*float: left;*/
 }
 
