@@ -4,8 +4,8 @@
 			<h1>Seleccioná tu entrada</h1>
 		</div>
 		
-<p>En Argentina, sólo el 13% de los jóvenes de contextos vulnerables logra realizar un estudio superior. ARGENTINA VISIÓN 2040 se realiza 100% a beneficio de BisBlick, ONG que brinda a jóvenes con alto potencial y escasos recursos económicos la oportunidad de convertirse en los primeros profesionales de sus familias.
-Con tu entrada ayudás a que más jóvenes puedan realizar una carrera universitaria/terciaria y transformar su futuro.   </p>
+<h3>En Argentina, sólo el 13% de los jóvenes de contextos vulnerables logra realizar un estudio superior. ARGENTINA VISIÓN 2040 se realiza 100% a beneficio de BisBlick, ONG que brinda a jóvenes con alto potencial y escasos recursos económicos la oportunidad de convertirse en los primeros profesionales de sus familias.
+Con tu entrada ayudás a que más jóvenes puedan realizar una carrera universitaria/terciaria y transformar su futuro.   </h3>
 
 		<div class="row pricing bottommargin clearfix">
 <?php
