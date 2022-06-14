@@ -10,7 +10,7 @@
 
 	foreach($oradores as $k => $item) {
 		if(!empty($item['oradores'])) {
-			$this->load->view('evento/orador-headline', ['position'=>$k, 'categoria'=>$item['categoria']]);
+			//$this->load->view('evento/orador-headline', ['position'=>$k, 'categoria'=>$item['categoria']]);
 			foreach ($item['oradores'] as $key => $value) {
 				$this->load->view('evento/orador-item', ['position'=>$key, 'item' => $value]);
 			}
