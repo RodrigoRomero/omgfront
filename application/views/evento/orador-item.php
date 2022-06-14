@@ -15,19 +15,19 @@
 			<?php if($this->evento->show_full_bio == 0) { ?>
 			<div class="center">
 			<?php if(!empty($social_arr->faceboook)) { ?>
-			<a href="http://www.facebook.com/<?php echo $social_arr->faceboook ?>" class="social-icon si-borderless si-text-color si-facebook">
+			<a href="http://www.facebook.com/<?php echo $social_arr->faceboook ?>" target="_blank" class="social-icon si-borderless si-text-color si-facebook">
 			<i class="icon-facebook"></i>
 			<i class="icon-facebook"></i>
 			</a>
 			<?php } ?>
             <?php if (!empty($social_arr->twitter)) { ?>
-			<a href="https://twitter.com/<?php echo $social_arr->twitter ?>" class="social-icon si-borderless si-text-color si-twitter">
+			<a href="https://twitter.com/<?php echo $social_arr->twitter ?>" target="_blank" class="social-icon si-borderless si-text-color si-twitter">
 			<i class="icon-twitter"></i>
 			<i class="icon-twitter"></i>
 			</a>
 			<?php } ?>
              <?php if (!empty($social_arr->linkedin)) { ?>
-			<a href="https://www.linkedin.com/in/<?php echo $social_arr->linkedin ?>" class="social-icon si-borderless si-text-color si-linkedin">
+			<a href="https://www.linkedin.com/in/<?php echo $social_arr->linkedin ?>" target="_blank" class="social-icon si-borderless si-text-color si-linkedin">
 			<i class="icon-linkedin"></i>
 			<i class="icon-linkedin"></i>
 			</a>
