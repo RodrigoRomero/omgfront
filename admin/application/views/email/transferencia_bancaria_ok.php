@@ -43,14 +43,10 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
         <td colspan="3">
 
             <p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
-
-           ¡Su pago ha sido aprobado!<br>
-           Lo esperamos del 12 al 15 de octubre de 8:30 a 10:00 para participar online de la Semana Argentina Visión 2040<br>
+			¡Su pago ha sido aprobado!<br>
+    
+	           Lo esperamos el  <?php echo $fecha_inicio_array[2] ?>, de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> a las 8.30hs, en el 10° Encuentro de Reflexión Argentina Visión 2040 en CABA, (lugar a confirmar). Pronto nos pondremos en contacto para brindarle los detalles del evento. <br><br>
            
-           <!--
-	           Lo esperamos <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> de 8:30 a 10:00 para participar online de la Semana  <?php echo $evento->nombre ?>
-	           -->
-            
            
            Recuerde que en caso de que haya comprado más de un ticket para el evento, deberá ingresar los datos de los asistentes para confirmar su inscripción: <br>
            1. Haga click <a href="http://argentinavision2020.com/evento/account/summary"> AQUI </a> y complete los datos de la cuenta con su mail y la contraseña que utilizó para registrarse. <br/>
