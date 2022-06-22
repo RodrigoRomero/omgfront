@@ -20,7 +20,7 @@
 							<div class="heading-block noborder">
 							<!--	<h3><?php echo $customer->empresa ?></h3> -->
 								<h3><?php echo $customer->nombre.' '.$customer->apellido?></h3>
-								<span>Por favor, nomine sus entradas con los datos correspondientes de los asistentes en la columna nominar del Evento en curso a través del  link "NOMINAR ENTRADA" . Es importante que para que cada uno de los asistentes reciba su mail de confirmación con el código de acceso al evento, haga click en el botón de INVITAR en la página que s.</span>
+								<span>Por favor, haga click en el botón celeste de "Nominar Entrada" para asignar la/s entrada/s a los asistentes. Es importante que realice este paso para que el/los asistentes sean acreditado/s y reciban  el e-mail con los detalles del evento. ¡Muchas gracias!</span>
 							</div>
 
 							<div class="clear"></div>
