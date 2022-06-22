@@ -40,7 +40,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 			
 			Puede contactarse con la organización <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> para que podamos ayudarlo a regularizar la situación <br>
 			¡Muchas gracias! <br>
-			Disculpe las molestias ocasionadas
+			Disculpe las molestias ocasionadas.
 
 			
 			

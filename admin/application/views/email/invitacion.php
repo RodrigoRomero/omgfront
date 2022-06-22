@@ -36,10 +36,12 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
             <!-- Texto con código de fecha
 	            Lo esperamos <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> de 8:30 a 10:00 para participar de la Semana <?php echo $evento->nombre ?>-->
 	            
-	           Su inscripción al 9º Encuentro de Reflexión Argentina Visión 2040 ha sido confirmada. 
+	           Su inscripción ha sido confirmada. <br />
 
-            Lo esperamos del 12 al 15 de octubre de 8:30 a 10:00 para participar online de la Semana Argentina Visión 2040<br>  
-                    
+Lo/a esperamos el jueves 25 de agosto, a las 8.30 hs., en el 10° Encuentro de Reflexión Argentina Visión 2040 en CABA (lugar a confirmar). <br />
+Pronto nos pondremos en contacto para brindarle los detalles del evento. <br />
+
+¡Muchas gracias! <br>	
             <!--<strong>Lo esperamos el <?php echo $fecha_inicio_array[2] ?> de <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> <?php echo $hora_inicio ?>Hs. <?php echo $evento->lugar ?></strong><br />-->
             <br />
             

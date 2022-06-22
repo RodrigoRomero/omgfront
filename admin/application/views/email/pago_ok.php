@@ -43,12 +43,13 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
             <p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 
            ¡Su pago ha sido aprobado!<br>
-    
-	           Lo esperamos el  <?php echo $fecha_inicio_array[2] ?>, a las <?php echo strtoupper(getMes($fecha_inicio_array[1])) ?> en el 10° Encuentro de Reflexión Argentina Visión 2040 en CABA, (lugar a confirmar). Pronto nos pondremos en contacto para brindarle los detalles del evento. 
- <br>
+		   Lo esperamos el jueves 25 de agosto, a las 8.30 hs., en el 10° Encuentro de Reflexión Argentina Visión 2040 en CABA (lugar a confirmar). <br />
+		   Pronto nos pondremos en contacto para brindarle los detalles del evento. 
+ 
+ <br /></p>
 	           
 	           
-           
+           <p style="<?php echo $p ?>">
            Recuerde que en caso de que haya comprado más de un ticket para el evento, deberá ingresar los datos de los asistentes para confirmar su inscripción: <br>
            1. Haga click <a href="http://argentinavision2020.com/evento/account/summary"> AQUI </a> y complete los datos de la cuenta con su mail y la contraseña que utilizó para registrarse. <br/>
            2. Haga click en "NOMINAR", complete los datos de los asistentes y, por último, en "INVITAR" para que cada uno de los invitados reciba el link y la contraseña para el encuentro. <br/>
