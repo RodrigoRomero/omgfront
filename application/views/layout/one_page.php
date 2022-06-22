@@ -69,7 +69,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
 
 									<div class="venue_place" style="font-weight:bold">
                                 <span class="icon-wifi-full"></span>
-                                <p><?php echo $place[0] ?><br /><?php echo $this->evento->lugar ?></p>
+                                <p><?php echo $this->evento->direccion ?></p>
                             </div>
 									</div>
 									<div class="col-md-3">
