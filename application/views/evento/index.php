@@ -63,7 +63,7 @@
 					</div>
 </section>
 <?php echo $tickets; ?>
-<?php echo $this->load->view('evento/evento_virtual',[],true) ?>
+<?php //echo $this->load->view('evento/evento_virtual',[],true) ?>
 <?php // echo $lugar; ?>
 
 <!--
