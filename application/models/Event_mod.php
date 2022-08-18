@@ -11,6 +11,7 @@ class event_mod extends RR_Model {
 
 
 	public function runtest(){
+		die;
 		$this->load->model('EmailSG_mod','Email');
 		$body  = $this->view('email/reminder_two',array('user'=>$acreditado, 'evento'=>$this->evento));
 		$email = $this->Email->send('email_info', "rodrigo.lolo.romero@gmail.com", $subject, $body);
@@ -23,12 +24,13 @@ class event_mod extends RR_Model {
 	}
 
 	public function _doReminder(){	
+		die;
 		$this->load->model('email_mod','Email');
 		$subject     = "Link de acceso: ".$this->evento->nombre.' '.$this->evento->bajada;
 		$reminder_one = strtotime($this->evento->reminder_one);
-        	$reminder_two = strtotime($this->evento->reminder_two);
-    		$fecha_evento = strtotime($this->evento->fecha_inicio);
-    		$hoy          = strtotime(date('Y-m-d'));
+		$reminder_two = strtotime($this->evento->reminder_two);
+		$fecha_evento = strtotime($this->evento->fecha_inicio);
+		$hoy          = strtotime(date('Y-m-d'));
 		echo 'Hoy '.date('Y-m-d');
 		echo ' Evento '.$this->evento->fecha_inicio;
 		echo ' Reminder '.$this->evento->reminder_one;
