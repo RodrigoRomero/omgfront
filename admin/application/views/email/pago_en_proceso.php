@@ -81,6 +81,9 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
             <p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 
             Su pago se encuentra en proceso de revisión</p>
+            
+            <p style="<?php echo $p ?>"><b> Ante cualquier duda, puede comunicarse con: <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> </b><br/>
+            </p>
         </td>
 
     </tr>

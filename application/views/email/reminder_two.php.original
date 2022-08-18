@@ -64,25 +64,13 @@ $header_content_h1 = "color: #444242;
 
     <tr>
         <td  style="padding: 10px" colspan="3">
-            <p style="color: #444242; font-size: 15px; text-align: left">Hola <?php echo $user->nombre.' '. $user->apellido ?>: <br/> Le escribimos para recordarle su inscripción a <b><?php echo $evento->nombre ?></b> que se llevará a cabo en 24 horas en el Centro Cultural de la Ciencia, Godoy Cruz 2270, Palermo.</p>
+            <p style="color: #444242; font-size: 15px; text-align: left">Hola <?php echo $user->nombre.' '. $user->apellido ?>: <br/> ¡Te esperamos mañana Jueves 25 de Agosto, a las 8hs., en  la 10° Edición de Argentina Visión 2040: Volver al futuro ¿Qué debería hacer el agro argentino para volver preparado al futuro? </p>
 
-           <p style="color: #444242; font-size: 15px; text-align: left">Dada la gran cantidad de inscriptos, la acreditación comienza 7.30hs y a las 9hs en punto comienza la exposición con el panel de apertura.</p>
+           <p style="color: #444242; font-size: 15px; text-align: left"> El evento se realizará  en el Auditorio de la Casa de Gobierno de la Ciudad de Buenos Aires, Uspallata e Iguazú, Parque Patricios (CABA).</p>
+           <p  style="color: #444242; font-size: 15px; text-align: left">Podés estacionar en la vía pública o en el estacionamiento más cercano (Av. Caseros 3057). </p>
+           <p  style="color: #444242; font-size: 15px; text-align: left">Vení a escuchar a los referentes del sector y a compartir un espacio de networking. </br>
 
-            ES IMPORTANTE que tenga este mail con usted en su celular o que lo traiga impreso, y que si usted:
-
-             <p style="color: #444242; font-size: 15px; text-align: left">
-                    1. Es categoría Premium (violeta), recuerde que la reserva de su butaca expira a las 8.50hs, por lo que le sugerimos llegar antes de las 8.30 hs para reservar su lugar en el auditorio.<br/><br/>
-
-                    2. Es categoría Superior (verde) recuerde que la reserva de su butaca expira a las 8.45hs, por lo que le sugerimos llegar antes de las 8.15hs para reservar su lugar en el auditorio.<br/><br/>
-
-                    3. Es categoría Standard (azul) Recuerde que su entrada es sujeta a espacio y se liberara el ingreso al auditorio a las 08.45hs.<br/><br/>
-
-                    4. Es categoría Anexa (amarilla) recuerde que tiene reservado su lugar en la sala anexa, podrá ingresar en el momento que quiera.<br/><br/>
-             </p>
-
-             <p  style="color: #444242; font-size: 15px; text-align: left">
-                    En el caso de que necesite estacionar, lo puede hacer en el estacionamiento del shopping Distrito Arcos cuyo ingreso es por Godoy Cruz 2490.<br/>
-                    Muchas gracias.</p>
+Equipo Argentina Visión 2040 </p>
         </td>
     </tr>
 

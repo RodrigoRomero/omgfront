@@ -42,8 +42,7 @@ $codeGenerated = getBarCode($user_info->id);
 				
 Su inscripción ha sido confirmada. <br />
 
-Lo/a esperamos el jueves 25 de agosto, a las 8.30 hs., en el 10° Encuentro de Reflexión Argentina Visión 2040 en CABA (lugar a confirmar). <br />
-Pronto nos pondremos en contacto para brindarle los detalles del evento. <br />
+Lo/la esperamos el jueves 25 de agosto, a las 8.30 hs. en el 10° Encuentro de Reflexión Argentina Visión 2040 en el <b>Auditorio de la Casa de Gobierno de la Ciudad de Buenos Aires, Uspallata e Iguazú, Parque Patricios (CABA). <br />
 
 ¡Muchas gracias! <br>	
 					

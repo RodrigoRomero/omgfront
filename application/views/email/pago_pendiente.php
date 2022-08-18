@@ -38,7 +38,7 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
 			¡Su pago para participar del evento <?php echo $evento->nombre ?> se encuentra pendiente!<br>
 			
-			En caso de que ya lo haya realizado, por favor contáctese con la organización <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a>  <br>
+			En caso de que ya lo haya realizado, por favor contáctese con la organización <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a>para comunicarnos el estado.  <br>
 			¡Muchas gracias! <br>
 			
 			</p>

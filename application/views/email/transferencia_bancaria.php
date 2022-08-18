@@ -33,9 +33,12 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 	<tr>
 		<td colspan="3">
 			<p style="<?php echo $p ?>"><?php echo $user_info->nombre.' '.$user_info->apellido ?><br />
+			
 			¡Hemos recibido su pre-inscripción para el evento <?php echo $evento->nombre ?>. <br />
+			
 			Para confirmar su registro y asegurar su inscripción, deberá enviar el comprobante de la transferencia bancaria a Noelia Villaca <a href="mailto:nvillaca@bisblick.org">nvillaca@bisblick.org</a> <br />
 			Muchas gracias. <br /><br/>
+			
 			Estos son los datos de la cuenta de BisBlick<br /><br />
 			
 			Cta.Cte. Número: 6594-0 335-6<br />
@@ -44,12 +47,8 @@ $btn = "background: none repeat scroll 0 0 #62AF66;
 			CBU: 0070335020000006594066<br />
 			CUIT: 30-71494767-9<br /><br/>
 			
-			           <b> Ante cualquier duda, puede comunicarse con: <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> </b><br/>
+			<b> Ante cualquier duda, puede comunicarse con: <a href="mailto:nvillaca@bisblick.org"> nvillaca@bisblick.org </a> </b><br/>
 
-
-			
-			
-			
 			<!--Confirmando su  registro mediante el pago, de la <b> Orden #<?php echo $order_id ?></b> podemos asegurar su inscripción.<br />
 			Usted seleccionó la opción de transferencia bancaria, estos son los datos de nuestra cuenta:
 			<br /><br />
