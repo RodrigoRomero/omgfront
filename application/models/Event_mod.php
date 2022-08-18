@@ -42,8 +42,7 @@ class event_mod extends RR_Model {
 				 echo 'Reminder 1';
 				//$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
 				$result = $this->db->where_in('id',[1804,1820])->get_where('acreditados',array('evento_id' => $this->evento->id),50)->result();
-				ep($result);
-				die ('r1');
+				
 				foreach($result as $acreditado){
 					$body  = $this->view('email/reminder_two',array('user'=>$acreditado, 'evento'=>$this->evento));
 					$email = $this->Email->send('email_info', $acreditado->email, $subject, $body);
