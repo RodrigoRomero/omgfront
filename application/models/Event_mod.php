@@ -34,15 +34,15 @@ class event_mod extends RR_Model {
 		echo ' Reminder '.$this->evento->reminder_one;
 		echo $this->evento->id;
 		
-		die;
+		
  	
 		if($hoy <= $fecha_evento){		
 		
-			if($hoy >= $reminder_one){
+			if($hoy <= $reminder_one){
 				 echo 'Reminder 1';
 				$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
 				ep($result);
-				die;
+				die ('r1');
 				foreach($result as $acreditado){
 					$body  = $this->view('email/reminder_two',array('user'=>$acreditado, 'evento'=>$this->evento));
 					$email = $this->Email->send('email_info', $acreditado->email, $subject, $body);
@@ -56,7 +56,7 @@ class event_mod extends RR_Model {
 					
 				}
 			} elseif($hoy >= $reminder_two && $hoy < $fecha_evento){
-				die;
+				die ('r2');
 				echo 'Reminder 2';
 				//$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>1, 'evento_id' => $this->evento->id),50)->result();
 			
