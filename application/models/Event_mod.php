@@ -29,19 +29,20 @@ class event_mod extends RR_Model {
         	$reminder_two = strtotime($this->evento->reminder_two);
     		$fecha_evento = strtotime($this->evento->fecha_inicio);
     		$hoy          = strtotime(date('Y-m-d'));
-		// echo 'Hoy '.date('Y-m-d');
-		// echo ' Evento '.$this->evento->fecha_inicio;
-		// echo ' Reminder '.$this->evento->reminder_one;
-		// echo $this->evento->id;
+		echo 'Hoy '.date('Y-m-d');
+		echo ' Evento '.$this->evento->fecha_inicio;
+		echo ' Reminder '.$this->evento->reminder_one;
+		echo $this->evento->id;
 		
-		
+		die;
  	
 		if($hoy <= $fecha_evento){		
 		
 			if($hoy >= $reminder_one){
 				 echo 'Reminder 1';
 				$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
-				
+				ep($result);
+				die;
 				foreach($result as $acreditado){
 					$body  = $this->view('email/reminder_two',array('user'=>$acreditado, 'evento'=>$this->evento));
 					$email = $this->Email->send('email_info', $acreditado->email, $subject, $body);

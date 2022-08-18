@@ -60,30 +60,21 @@ $header_content_h1 = "color: #444242;
 	                  text-align: center;
 	                  line-height: 150%;";
 ?>
-
-
 <table width="650" cellpadding="0" cellspacing="0" style="<?php echo $table ?>">
 
     <tr>
         <td  style="padding: 10px" colspan="3">
-            <p style="color: #444242; font-size: 15px; text-align: left">Hola <?php echo $user->nombre.' '. $user->apellido ?>: <br/> 
+            <p style="color: #444242; font-size: 15px; text-align: left">Hola <?php echo $user->nombre.' '. $user->apellido ?>: <br/> ¡Te esperamos mañana Jueves 25 de Agosto, a las 8hs., en  la 10° Edición de Argentina Visión 2040: Volver al futuro ¿Qué debería hacer el agro argentino para volver preparado al futuro? </p>
 
-               ¡Gracias por inscribirte a la <b>Semana Argentina Visión 2020/40!</b></p>
+           <p style="color: #444242; font-size: 15px; text-align: left"> El evento se realizará  en el Auditorio de la Casa de Gobierno de la Ciudad de Buenos Aires, Uspallata e Iguazú, Parque Patricios (CABA).</p>
+           <p  style="color: #444242; font-size: 15px; text-align: left">Podés estacionar en la vía pública o en el estacionamiento más cercano (Av. Caseros 3057). </p>
+           <p  style="color: #444242; font-size: 15px; text-align: left">Vení a escuchar a los referentes del sector y a compartir un espacio de networking. </br>
 
-            <p style="color: #444242; font-size: 15px; text-align: left">Podrás acceder  a los 4 días del evento a través del siguiente link: <a href="https://www.revistachacra.com.ar/0/seccion/index.vnc?id=semanaargentinavision" target="_blank">https://www.revistachacra.com.ar/semanaargentinavision/</a><br/>
-           </p>
-           
-            <p style="color: #444242; font-size: 15px; text-align: left">¡Te esperamos desde el martes 12 al 15 de octubre a las 8:30! </p>
-            
-            <p style="color: #444242; font-size: 15px; text-align: left">Añadir al Google Calendar <a target="_blank" href="https://calendar.google.com/calendar/u/0/r/eventedit?dates=20211012T1130000Z/20211015T133000Z&details=Argentina+Visión+2040+Agroindustria,+bioeconomía+y+alimentos:+Las+marcas+del+y+hacia+el+mundo&text=Argentina+Visión+2040+Agroindustria,+bioeconomía+y+alimentos:+Las+marcas+del+y+hacia+el+mundo"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_es.gif"></a><br/></p>
-
-             <p  style="color: #444242; font-size: 15px; text-align: left">Muchas gracias.</p>
+Equipo Argentina Visión 2040 </p>
         </td>
     </tr>
-    
-    
 
-    <!-- <tr>
+    <tr>
         <td  colspan="3">
             <h1 style="<?php echo $header_content_h1 ?>"><?php echo $evento->nombre ?></h1>
            </td>
@@ -120,6 +111,6 @@ $header_content_h1 = "color: #444242;
         <td colspan="3">
             <?php echo up_asset('barcodes/'.str_pad($user->id,12,'0',STR_PAD_LEFT).'.png', array('style'=>'display: block; margin: 40px auto;')) ?>
         </td>
-    </tr> -->
+    </tr>
 
 </table>
