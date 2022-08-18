@@ -38,7 +38,7 @@ class event_mod extends RR_Model {
  	
 		if($hoy <= $fecha_evento){		
 		
-			if($hoy <= $reminder_one){
+			if($hoy >= $reminder_one){
 				 echo 'Reminder 1';
 				$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
 				ep($result);
