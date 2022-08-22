@@ -24,7 +24,7 @@ class event_mod extends RR_Model {
 	}
 
 	public function _doReminder(){	
-		die;		
+			
 		$this->load->model('email_mod','Email');
 		$subject     = "Link de acceso: ".$this->evento->nombre.' '.$this->evento->bajada;
 		$reminder_one = strtotime($this->evento->reminder_one);
@@ -42,8 +42,8 @@ class event_mod extends RR_Model {
 		
 			if($hoy >= $reminder_one){
 				echo 'Reminder 1';
-				$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
-				//$result = $this->db->where_in('id',[1915])->get_where('acreditados',array('evento_id' => $this->evento->id),50)->result();
+				//$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
+				$result = $this->db->where_in('id',[1915])->get_where('acreditados',array('evento_id' => $this->evento->id),50)->result();
 				
 				foreach($result as $acreditado){
 					$body  = $this->view('email/reminder_two',array('user'=>$acreditado, 'evento'=>$this->evento));
