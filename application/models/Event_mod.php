@@ -23,8 +23,7 @@ class event_mod extends RR_Model {
 		return $evento;
 	}
 
-	public function _doReminder(){	
-		die;
+	public function _doReminder(){			
 		$this->load->model('email_mod','Email');
 		$subject     = "Link de acceso: ".$this->evento->nombre.' '.$this->evento->bajada;
 		$reminder_one = strtotime($this->evento->reminder_one);
