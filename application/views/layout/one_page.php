@@ -91,7 +91,7 @@ src="https://www.facebook.com/tr?id=1748104025451888&ev=PageView
                                 </div>
                                <div class="center topmargin-lg one-page-menu" data-caption-animate="fadeInUp" data-caption-delay="200">
 								<a href="javascript:void(0)" data-href="#section-tickets"" class="button button-xlarge button-white hidden-xs">Comprar Tickets</a>
-								<a href="https://www.revistachacra.com.ar/argentinavision2040/" target="_blank" class="button button-xlarge button-teal">Quiero verlo online</a>
+								<a href="https://www.revistachacra.com.ar/argentinavision2040/" target="_blank" class="button button-xlarge button-white hidden-xs">Quiero verlo online</a>
 								<!-- <a href="hhttps://www.youtube.com/watch?v=feodFYWZ4VM"  data-lightbox="iframe"  class="button button-xlarge button-inverse hidden-xs">Ver Video</a> -->
 							<!--	<a href="#" data-href="#covid19"  class="hidden-xs button button-xlarge button-inverse">COVID-19</a>	-->
 								</div>
