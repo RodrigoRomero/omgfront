@@ -11,7 +11,7 @@ class event_mod extends RR_Model {
 
 
 	public function runtest(){
-		
+		die;
 		$this->load->model('Email_mod','Email');
 		$result = $this->db->where_in('id',[1804])->get_where('acreditados',array('evento_id' => $this->evento->id),50)->result();
 		ep($result);
@@ -47,8 +47,8 @@ class event_mod extends RR_Model {
 		
 			if($hoy >= $reminder_one){
 				echo 'Reminder 1';
-				//$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
-				$result = $this->db->where_in('id',[1915])->get_where('acreditados',array('evento_id' => $this->evento->id),50)->result();
+				$result = $this->db->get_where('acreditados',array('status'=>1,'reminder'=>0, 'evento_id' => $this->evento->id),50)->result();
+				//$result = $this->db->where_in('id',[1915])->get_where('acreditados',array('evento_id' => $this->evento->id),50)->result();
 				
 				foreach($result as $acreditado){
 					$body  = $this->view('email/reminder_two',array('user'=>$acreditado, 'evento'=>$this->evento));
@@ -56,7 +56,7 @@ class event_mod extends RR_Model {
 					
 					if($email){
 					$this->db->where('id',$acreditado->id);
-						$this->db->update('acreditados', array('reminder'=>1));
+						$this->db->update('acreditados', array('reminder'=>2));
 						 echo $acreditado->id.' - OK';
 						 echo br();
 					} 
