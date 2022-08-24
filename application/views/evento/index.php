@@ -13,7 +13,7 @@
                 <div class="">
                 <div class="center topmargin-sm bottommargin-sm one-page-menu fadeInUp animated" data-caption-animate="fadeInUp" data-caption-delay="200">
                                                                 <a href="javascript:void(0)" data-href="#section-tickets" class="button button-xlarge button-teal">Comprar Tickets</a>
-																<a href="https://www.revistachacra.com.ar/argentinavision2040/" target="_blank" class="button button-xlarge button-teal">Quiero verlo online</a>
+																<a href="https://www.revistachacra.com.ar/argentinavision2040/" target="_blank" class="button button-xlarge button-teal">Ver evento en vivo</a>
               <!--                                                  <a href="https://www.youtube.com/watch?v=feodFYWZ4VM" data-lightbox="iframe" class="button button-xlarge button-inverse hidden-xs">Ver Video</a> -->
                                                               <!--  <a href="#" data-href="#covid19" class="button button-xlarge button-inverse">COVID-19</a>       -->
                                                                 </div>
